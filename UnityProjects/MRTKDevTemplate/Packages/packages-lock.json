@@ -38,14 +38,14 @@
       }
     },
     "com.magicleap.soundfield": {
-      "version": "3.4.1-230617.9.de83cb9",
+      "version": "3.4.2-230816.64.b8aa6f8",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "http://registry.npmjs.org"
     },
     "com.magicleap.unitysdk": {
-      "version": "1.9.0",
+      "version": "1.11.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -128,7 +128,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.18",
+      "version": "2.0.21",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -235,7 +235,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.arfoundation": {
-      "version": "5.0.6",
+      "version": "5.0.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -297,7 +297,7 @@
     },
     "com.unity.xr.magicleap": {
       "version": "7.0.0",
-      "depth": 1,
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.modules.screencapture": "1.0.0",
