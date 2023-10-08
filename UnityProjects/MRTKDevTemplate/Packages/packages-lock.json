@@ -22,6 +22,15 @@
       },
       "hash": "7747a48d5e994db800b4c60a0a8b95a5ae2ce39f"
     },
+    "com.magicleap.appsim": {
+      "version": "file:../../../UnityPackages/MagicLeapAppSimUnity/com.magicleap.appsim.tgz",
+      "depth": 0,
+      "source": "local-tarball",
+      "dependencies": {
+        "com.magicleap.unitysdk": "1.1.0",
+        "com.unity.editorcoroutines": "1.0.0"
+      }
+    },
     "com.magicleap.mrtk3": {
       "version": "file:../../../UnityPackages/MagicLeapMRTK3/com.magicleap.mrtk3-1.0.0-pre.5.tgz",
       "depth": 0,
@@ -107,6 +116,13 @@
     "com.unity.collab-proxy": {
       "version": "2.0.4",
       "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.editorcoroutines": {
+      "version": "1.0.0",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"

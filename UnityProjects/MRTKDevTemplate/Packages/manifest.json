@@ -3,6 +3,7 @@
     "com.atteneder.gltfast": "https://github.com/atteneder/glTFast.git#v4.8.3",
     "com.atteneder.ktx": "https://github.com/atteneder/KtxUnity.git#v2.1.2",
     "com.magicleap.mrtk3": "file:../../../UnityPackages/MagicLeapMRTK3/com.magicleap.mrtk3-1.0.0-pre.5.tgz",
+    "com.magicleap.appsim": "file:../../../UnityPackages/MagicLeapAppSimUnity/com.magicleap.appsim.tgz",
     "com.magicleap.soundfield": "3.4.2-230816.64.b8aa6f8",
     "com.magicleap.unitysdk": "1.11.0",
     "com.microsoft.mixedreality.openxr": "file:../../../ExternalDependencies/com.microsoft.mixedreality.openxr-1.7.0.tgz",
