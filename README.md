@@ -1,3 +1,6 @@
+**[SUITS 2024 Mission Description
+](https://www.nasa.gov/wp-content/uploads/2023/09/fy24-suits-mission-description.pdf)**
+
 ## MRTKDevTemplate project port to Magic Leap 2
 
 This repo is provided as a demonstration of getting an MRTK3 project running on the Magic Leap 2 platform, specifically the **MRTKDevTemplate** project, located at `UnityProjects/MRTKDevTemplate`, that is used in development of MRTK3.  For steps involved in preparing an MRTK3 project for Magic Leap 2, please see the README documentation that accompanies Magic Leap's `com.magicleap.mrtk3` package, located at `UnityPackages/MagicLeapMRTK3/README.md`.
