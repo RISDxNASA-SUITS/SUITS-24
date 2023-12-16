@@ -10,6 +10,11 @@ This repo is provided as a demonstration of getting an MRTK3 project running on 
 
 <br/>
 
+# NASA Telemetry Stream Server Github Repo
+
+* TSS: https://github.com/SUITS-Techteam/TSS_2024
+* TSS Unity Plug-in: https://github.com/SUITS-Techteam/TSS_Unity_Plugin_2024
+
 # Mixed Reality Toolkit for Unity
 
 ![Mixed Reality Toolkit](https://user-images.githubusercontent.com/13754172/122838732-89ea3400-d2ab-11eb-8c79-32dd84944989.png)
