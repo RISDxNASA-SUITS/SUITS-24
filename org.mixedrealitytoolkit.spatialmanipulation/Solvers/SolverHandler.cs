@@ -262,7 +262,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
         /// </remarks>
         public Handedness CurrentTrackedHandedness => currentTrackedHandedness;
 
-        // Stores controller side to favor if TrackedHandedness is set to both left and right.
+        // Stores contr oller side to favor if TrackedHandedness is set to both left and right.
         private Handedness preferredTrackedHandedness = Handedness.Left;
 
         /// <summary>
@@ -424,7 +424,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
         }
 
         /// <summary>
-        /// Clear the parent of the internally created tracking-target game object. 
+        /// Clear the parent of the internally created tracking-target game object.
         /// </summary>
         /// <remarks>
         /// A tracking-target is created when <see cref="AttachToNewTrackedObject"/> is called, and
@@ -529,7 +529,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
             new ProfilerMarker("[MRTK] SolverHandler.UpdateCachedHandJointTransform");
 
         /// <summary>
-        /// Update the cached transform's position to match that of the current track joint. 
+        /// Update the cached transform's position to match that of the current track joint.
         /// </summary>
         /// <returns>
         /// <see langword="true"/> if the tracked joint is found and cached transform is updated, <see langword="false"/> otherwise.
