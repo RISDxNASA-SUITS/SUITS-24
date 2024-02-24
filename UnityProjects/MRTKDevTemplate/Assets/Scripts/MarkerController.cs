@@ -32,23 +32,23 @@ public class MarkerController : MonoBehaviour
         public Vector2 GpsCoord;
         public readonly GameObject MapMarkerObj;
         public readonly RectTransform MapMarkerRT;
-        private readonly GameObject compassMarkerObj;
-        private readonly RectTransform compassMarkerRT;
+        // private readonly GameObject compassMarkerObj;
+        // private readonly RectTransform compassMarkerRT;
 
         public Marker(MarkerType type, Vector2 gpsCoord)
         {
             Type = type;
             GpsCoord = gpsCoord;
             MapMarkerObj = Instantiate(prefabDict[type], markersTf);
-            compassMarkerObj = Instantiate(prefabDict[type], compassMarkersRT);
+            // compassMarkerObj = Instantiate(prefabDict[type], compassMarkersRT);
             MapMarkerRT = MapMarkerObj.GetComponent<RectTransform>();
-            compassMarkerRT = compassMarkerObj.GetComponent<RectTransform>();
+            // compassMarkerRT = compassMarkerObj.GetComponent<RectTransform>();
         }
 
         public void CleanUp()
         {
             Destroy(MapMarkerObj);
-            Destroy(compassMarkerObj);
+            // Destroy(compassMarkerObj);
         }
 
         public void Update(Vector2 userGps, Vector3 userLook)
@@ -65,37 +65,39 @@ public class MarkerController : MonoBehaviour
             Vector2 markerRelGps = GpsCoord - userGps;  // delta (latitude, longitude)
             Vector3 markerDir = new Vector3(markerRelGps.y, 0.0f, markerRelGps.x);
             float angleToMarker = -Vector3.SignedAngle(markerDir, userLook, Vector3.up);
-            compassMarkerRT.offsetMin = new Vector2(angleToMarker * compassWidth, 0.0f);
-            compassMarkerRT.offsetMax = compassMarkerRT.offsetMin;
+            // compassMarkerRT.offsetMin = new Vector2(angleToMarker * compassWidth, 0.0f);
+            // compassMarkerRT.offsetMax = compassMarkerRT.offsetMin;
         }
 
         public void SetOpacity(float opacity)
         {
             MapMarkerObj.GetComponent<RawImage>().color = new Color(1, 1, 1, opacity);
-            compassMarkerObj.GetComponent<RawImage>().color = new Color(1, 1, 1, opacity);
+            // compassMarkerObj.GetComponent<RawImage>().color = new Color(1, 1, 1, opacity);
         }
 
         public void Hide()
         {
             MapMarkerObj.SetActive(false);
-            compassMarkerObj.SetActive(false);
+            // compassMarkerObj.SetActive(false);
         }
 
         public void Show()
         {
             MapMarkerObj.SetActive(true);
-            compassMarkerObj.SetActive(true);
+            // compassMarkerObj.SetActive(true);
         }
 
         public bool IsHidden()
         {
-            return !MapMarkerObj.activeSelf || !compassMarkerObj.activeSelf;
+            // return !MapMarkerObj.activeSelf || !compassMarkerObj.activeSelf;
+            return !MapMarkerObj.activeSelf;
         }
     }
 
     [SerializeField] private float markerEditSensitivity = 0.000033f;
 
-    private static RectTransform mapRT, compassRT, compassMarkersRT;
+    private static RectTransform mapRT;
+    // private static RectTransform mapRT, compassRT, compassMarkersRT;
     private static Transform markersTf;
     private static float compassWidth;
 
@@ -149,11 +151,11 @@ public class MarkerController : MonoBehaviour
         coord = GameObject.Find("Coordinate");
         coordText = coord.GetComponent<TMPro.TMP_Text>();
         mapRT = GameObject.Find("Map").GetComponent<RectTransform>();
-        compassRT = GameObject.Find("Compass Image").GetComponent<RectTransform>();
-        compassMarkersRT = GameObject.Find("Compass Markers").GetComponent<RectTransform>();
+        // compassRT = GameObject.Find("Compass Image").GetComponent<RectTransform>();
+        // compassMarkersRT = GameObject.Find("Compass Markers").GetComponent<RectTransform>();
         markersTf = transform;
         currLocRT = GameObject.Find("CurrLoc").GetComponent<RectTransform>();
-        compassWidth = compassRT.rect.width / 360.0f;
+        // compassWidth = compassRT.rect.width / 360.0f;
         actionButtons = GameObject.Find("Marker Action Buttons");
         roverButtons = GameObject.Find("Rover Action Buttons");
         navigation = GameObject.Find("Navigation").GetComponent<Navigation>();
