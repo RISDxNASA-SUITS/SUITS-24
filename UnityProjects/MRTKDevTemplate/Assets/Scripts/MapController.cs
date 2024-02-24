@@ -42,6 +42,12 @@ namespace MixedReality.Toolkit.Suits.Map
         private MarkerController markerController;
         private MarkerType selectedMarkerType;
 
+        private bool showDetailPage = false;
+        private RectTransform mapPanelRT;
+        private GameObject actionButtons;
+        private GameObject mapButtons;
+        private RectTransform currLocRT;
+
         void Start()
         {
             mainCamera = Camera.main;
@@ -50,6 +56,11 @@ namespace MixedReality.Toolkit.Suits.Map
             mapRT.localScale = GetLocalScale(zoomSeries[zoomIndex]);
             gps = GameObject.Find("GPS").GetComponent<GPS>();
             StartTimestamp = DateTime.Now;
+
+            mapPanelRT = GameObject.Find("Map Panel").GetComponent<RectTransform>();
+            actionButtons = GameObject.Find("Marker Action Buttons");
+            mapButtons = GameObject.Find("Map Buttons");
+            currLocRT = GameObject.Find("CurrLoc").GetComponent<RectTransform>();
         }
 
         void Update()
@@ -213,6 +224,21 @@ namespace MixedReality.Toolkit.Suits.Map
         public void RecordStartTime()
         {
             StartTimestamp = DateTime.Now;
+        }
+
+        public void ToggleDetailPage()
+        {
+            actionButtons.SetActive(false);
+            if (showDetailPage) {
+                mapPanelRT.sizeDelta = new Vector2(350, 350);
+                mapButtons.SetActive(true);
+                currLocRT.localScale = new Vector3(0.08f, 0.08f, 1);
+            } else {
+                mapPanelRT.sizeDelta = new Vector2(200, 350);
+                mapButtons.SetActive(false);
+                currLocRT.localScale = new Vector3(0.14f, 0.08f, 1);
+            }
+            showDetailPage = !showDetailPage;
         }
     }
 
