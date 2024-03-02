@@ -47,6 +47,7 @@ namespace MixedReality.Toolkit.Suits.Map
         private GameObject actionButtons;
         private GameObject mapButtons;
         private RectTransform currLocRT;
+        private GameObject MapBackButton;
 
         void Start()
         {
@@ -60,7 +61,9 @@ namespace MixedReality.Toolkit.Suits.Map
             mapPanelRT = GameObject.Find("Map Panel").GetComponent<RectTransform>();
             actionButtons = GameObject.Find("Marker Action Buttons");
             mapButtons = GameObject.Find("Map Buttons");
-            currLocRT = GameObject.Find("CurrLoc").GetComponent<RectTransform>();
+            currLocRT = GameObject.Find("CurrLoc").GetComponent<RectTransform>();   
+            MapBackButton = GameObject.Find("Map Back Button");
+            MapBackButton.SetActive(false);
         }
 
         void Update()
@@ -226,20 +229,42 @@ namespace MixedReality.Toolkit.Suits.Map
             StartTimestamp = DateTime.Now;
         }
 
-        public void ToggleDetailPage()
+        public void OpenDetailPage()
         {
+            MapBackButton.SetActive(true);
             actionButtons.SetActive(false);
-            if (showDetailPage) {
-                mapPanelRT.sizeDelta = new Vector2(350, 350);
-                mapButtons.SetActive(true);
-                currLocRT.localScale = new Vector3(0.08f, 0.08f, 1);
-            } else {
-                mapPanelRT.sizeDelta = new Vector2(200, 350);
-                mapButtons.SetActive(false);
-                currLocRT.localScale = new Vector3(0.14f, 0.08f, 1);
-            }
+            mapPanelRT.sizeDelta = new Vector2(200, 350); // change the shape of the map we see
+            mapButtons.SetActive(false); // hide the vertial map buttons
+            currLocRT.localScale = new Vector3(0.14f, 0.08f, 1); // for the current location (green) icon
             showDetailPage = !showDetailPage;
         }
+        public void closeDetailPage()
+        {
+            MapBackButton.SetActive(false);
+            actionButtons.SetActive(false);
+            mapPanelRT.sizeDelta = new Vector2(350, 350);
+            mapButtons.SetActive(true);
+            currLocRT.localScale = new Vector3(0.08f, 0.08f, 1);
+            showDetailPage = !showDetailPage;
+        }
+        // public void ToggleDetailPage()
+        // {
+        //     MapBackButton.SetActive(false);
+        //     actionButtons.SetActive(false);
+        //     if (showDetailPage)
+        //     {
+        //         mapPanelRT.sizeDelta = new Vector2(350, 350);
+        //         mapButtons.SetActive(true);
+        //         currLocRT.localScale = new Vector3(0.08f, 0.08f, 1);
+        //     }
+        //     else
+        //     {
+        //         mapPanelRT.sizeDelta = new Vector2(200, 350); // change the shape of the map we see
+        //         mapButtons.SetActive(false); // hide the vertial map buttons
+        //         currLocRT.localScale = new Vector3(0.14f, 0.08f, 1); // for the current location (green) icon
+        //     }
+        //     showDetailPage = !showDetailPage;
+        // }
     }
 
 
