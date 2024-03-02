@@ -47,23 +47,23 @@ Material:
     - _Edge_Power_: 0
     - _Edge_Width_: 0.5
     - _Fade_Out_: 1
-    - _Filter_Width_: 1
+    - _Filter_Width_: 0.71
     - _Frequency_: 0.96
     - _Gradient_Disabled_: 0
     - _Gradient_Enable_: 0
     - _GridScale: 0.02
     - _Highlight_: 0.33
-    - _Highlight_Width_: 0.25
+    - _Highlight_Width_: 1.53
     - _Iridescence_Edge_Intensity_: 1
     - _Iridescence_Enable_: 0
-    - _Iridescence_Intensity_: 0.35
+    - _Iridescence_Intensity_: 0.572
     - _Line_Disabled_: 0
     - _Line_Enable_: 1
     - _Line_Gradient_Blend_: 0
     - _Line_Width_: 1
     - _Occluded_Intensity_: 1
     - _Orthographic_Distance_: 400
-    - _Rate_: 0
+    - _Rate_: 1
     - _Reflected_: 1
     - _Smooth_Edges_: 1
     - _SrcBlend: 1
@@ -81,10 +81,10 @@ Material:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _ClipRectRadii: {r: 10, g: 10, b: 10, a: 10}
     - _Gradient_Color_: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 0}
-    - _Highlight_Color_: {r: 0.827451, g: 0.32924673, b: 0.23921569, a: 1}
+    - _Highlight_Color_: {r: 1, g: 1, b: 1, a: 1}
     - _Highlight_Transform_: {r: 1, g: 1, b: 0, a: 0}
     - _Iridescence_Tint_: {r: 1, g: 1, b: 1, a: 1}
-    - _Line_Color_: {r: 0.39520293, g: 0.5176712, b: 0.7830189, a: 1}
+    - _Line_Color_: {r: 0.44428623, g: 0.754717, b: 0.71805197, a: 0.38431373}
     - _OccludedColor: {r: 0, g: 0.5, b: 1, a: 1}
     - _Top_Left_: {r: 0, g: 0.02745098, b: 0.17254902, a: 1}
     - _Top_Right_: {r: 0, g: 0.02745098, b: 0.17254902, a: 1}
