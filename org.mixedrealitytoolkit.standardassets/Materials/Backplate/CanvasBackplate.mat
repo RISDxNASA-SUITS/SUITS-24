@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: CanvasBackplate
   m_Shader: {fileID: 4800000, guid: 29b058829dc4dbf449bc59c038dfa631, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _EDGE_ONLY_
   - _GRADIENT_DISABLED_
@@ -23,6 +25,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -42,6 +45,7 @@ Material:
     m_Floats:
     - _Angle_: -45
     - _DstBlend: 0
+    - _DstBlendAlpha: 1
     - _Edge_Only_: 1
     - _Edge_Power_: 0
     - _Edge_Width_: 0.5
@@ -61,10 +65,12 @@ Material:
     - _Line_Gradient_Blend_: 0
     - _Line_Width_: 1
     - _Occluded_Intensity_: 1
+    - _Orthographic_Distance_: 400
     - _Rate_: 0
     - _Reflected_: 1
     - _Smooth_Edges_: 1
     - _SrcBlend: 1
+    - _SrcBlendAlpha: 1
     - _StencilComparison: 0
     - _StencilOperation: 0
     - _StencilReference: 0

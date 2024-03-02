@@ -12,9 +12,6 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _EDGE_ONLY_
-  - _GRADIENT_DISABLED_
-  - _IRIDESCENCE_ENABLE_
   - _SMOOTH_EDGES_
   m_InvalidKeywords:
   - _LINE_ENABLE_
@@ -44,21 +41,21 @@ Material:
     m_Ints: []
     m_Floats:
     - _Angle_: -45
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _DstBlendAlpha: 1
-    - _Edge_Only_: 1
+    - _Edge_Only_: 0
     - _Edge_Power_: 0
     - _Edge_Width_: 0.5
     - _Fade_Out_: 1
     - _Filter_Width_: 1
     - _Frequency_: 0.96
-    - _Gradient_Disabled_: 1
+    - _Gradient_Disabled_: 0
     - _Gradient_Enable_: 0
     - _GridScale: 0.02
-    - _Highlight_: 0
+    - _Highlight_: 0.33
     - _Highlight_Width_: 0.25
     - _Iridescence_Edge_Intensity_: 1
-    - _Iridescence_Enable_: 1
+    - _Iridescence_Enable_: 0
     - _Iridescence_Intensity_: 0.35
     - _Line_Disabled_: 0
     - _Line_Enable_: 1
@@ -79,16 +76,16 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Base_Color_: {r: 0, g: 0.02745098, b: 0.17254902, a: 1}
-    - _Bottom_Left_: {r: 0, g: 0.33, b: 0.88, a: 1}
-    - _Bottom_Right_: {r: 1, g: 1, b: 1, a: 1}
+    - _Bottom_Left_: {r: 0.08522601, g: 0.6061869, b: 0.7924528, a: 1}
+    - _Bottom_Right_: {r: 0.08627451, g: 0.60784316, b: 0.79215693, a: 1}
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _ClipRectRadii: {r: 10, g: 10, b: 10, a: 10}
-    - _Gradient_Color_: {r: 0.631373, g: 0.631373, b: 0.631373, a: 1}
+    - _Gradient_Color_: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 0}
     - _Highlight_Color_: {r: 0.827451, g: 0.32924673, b: 0.23921569, a: 1}
     - _Highlight_Transform_: {r: 1, g: 1, b: 0, a: 0}
     - _Iridescence_Tint_: {r: 1, g: 1, b: 1, a: 1}
     - _Line_Color_: {r: 0.39520293, g: 0.5176712, b: 0.7830189, a: 1}
     - _OccludedColor: {r: 0, g: 0.5, b: 1, a: 1}
-    - _Top_Left_: {r: 1, g: 0.690196, b: 0.976471, a: 1}
-    - _Top_Right_: {r: 0, g: 0.33, b: 0.88, a: 1}
+    - _Top_Left_: {r: 0, g: 0.02745098, b: 0.17254902, a: 1}
+    - _Top_Right_: {r: 0, g: 0.02745098, b: 0.17254902, a: 1}
   m_BuildTextureStacks: []
