@@ -90,7 +90,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
         [Tooltip("With this active, solver will activate the UI after the palm threshold has been met and the user gazes at the activation point. If eye gaze information is not available, the head gaze will be used.")]
         private bool useGazeActivation = false;
 
-        /// <summary> 
+        /// <summary>
         /// With this active, solver will activate after the palm threshold has been met and the user gazes at the activation point.  If eye gaze information is not available, the head gaze will be used.
         /// </summary>
         public bool UseGazeActivation
@@ -133,7 +133,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
             new ProfilerMarker("[MRTK] HandConstraintPalmUp.IsValidController");
 
         /// <summary>
-        /// Determines if a hand meets the requirements for use with constraining the 
+        /// Determines if a hand meets the requirements for use with constraining the
         /// tracked object and determines if the palm is currently facing the user.
         /// </summary>
         /// <param name="hand">XRNode representing the hand to validate.</param>
@@ -194,6 +194,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
                     if (!palmFacingThresholdMet)
                     {
                         gazeActivationAlreadyTriggered = false;
+                        //tell menu to go away
                     }
 
                     return palmFacingThresholdMet;
@@ -207,7 +208,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
             new ProfilerMarker("[MRTK] HandConstraintPalmUp.IsPalmMeetingThresholdRequirements");
 
         /// <summary>
-        /// Checks to see if the palm is currently facing the user; and if required, 
+        /// Checks to see if the palm is currently facing the user; and if required,
         /// if it is currently flat.
         /// </summary>
         /// <param name="hand">
@@ -257,7 +258,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
             new ProfilerMarker("[MRTK] HandConstraintPalmUp.IsUserGazeMeetingThresholdRequirements");
 
         /// <summary>
-        /// Checks to see if the user is currently gazing at the activation point; it first attempts to do so 
+        /// Checks to see if the user is currently gazing at the activation point; it first attempts to do so
         /// using eye gaze, and then falls back to head-based gaze if eye gaze isn't available for use.
         /// </summary>
         /// <param name="hand">
@@ -314,8 +315,8 @@ namespace MixedReality.Toolkit.SpatialManipulation
         }
 
         /// <summary>
-        /// Coroutine function called by the ObjectManipulator of the attached object whenever the object is done 
-        /// being manipulated by the user. This triggers a coroutine that checks to see whether the object should 
+        /// Coroutine function called by the ObjectManipulator of the attached object whenever the object is done
+        /// being manipulated by the user. This triggers a coroutine that checks to see whether the object should
         /// reattach to the hand.
         /// </summary>
         public void StartWorldLockReattachCheckCoroutine()
@@ -452,7 +453,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
         }
 
         /// <summary>
-        /// Coroutine function that's invoked when the attached object becomes world-locked. It uses the 
+        /// Coroutine function that's invoked when the attached object becomes world-locked. It uses the
         /// logical checks invoked during IsValidController to determine whether the menu should reattach
         /// to the hand or not.
         /// </summary>
@@ -487,7 +488,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
         /// A Unity event function that is called when the script component has been enabled.
         /// </summary>
         /// <remarks>
-        /// When enabled, ensure that there are no outlying status changes that would prevent HandConstraintPalmUp from 
+        /// When enabled, ensure that there are no outlying status changes that would prevent HandConstraintPalmUp from
         /// properly working (like gazeActivationAlreadyTriggered being set to true previously)
         /// </remarks>
         protected override void OnEnable()
