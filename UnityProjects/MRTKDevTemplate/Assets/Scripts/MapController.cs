@@ -247,24 +247,6 @@ namespace MixedReality.Toolkit.Suits.Map
             currLocRT.localScale = new Vector3(0.08f, 0.08f, 1);
             showDetailPage = !showDetailPage;
         }
-        // public void ToggleDetailPage()
-        // {
-        //     MapBackButton.SetActive(false);
-        //     actionButtons.SetActive(false);
-        //     if (showDetailPage)
-        //     {
-        //         mapPanelRT.sizeDelta = new Vector2(350, 350);
-        //         mapButtons.SetActive(true);
-        //         currLocRT.localScale = new Vector3(0.08f, 0.08f, 1);
-        //     }
-        //     else
-        //     {
-        //         mapPanelRT.sizeDelta = new Vector2(200, 350); // change the shape of the map we see
-        //         mapButtons.SetActive(false); // hide the vertial map buttons
-        //         currLocRT.localScale = new Vector3(0.14f, 0.08f, 1); // for the current location (green) icon
-        //     }
-        //     showDetailPage = !showDetailPage;
-        // }
     }
 
 
