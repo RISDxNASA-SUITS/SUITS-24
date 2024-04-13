@@ -49,6 +49,7 @@ namespace MixedReality.Toolkit.Suits.Map
         private RectTransform currLocRT;
         private GameObject MapBackButton;
         private GameObject mapDetails;
+        private GameObject mapTitle;
 
         void Start()
         {
@@ -67,6 +68,7 @@ namespace MixedReality.Toolkit.Suits.Map
             MapBackButton = GameObject.Find("Map Back Button");
             MapBackButton.SetActive(false);
             mapDetails.SetActive(false);
+            mapTitle = GameObject.Find("Map Title");
         }
 
         void Update()
@@ -238,6 +240,7 @@ namespace MixedReality.Toolkit.Suits.Map
             actionButtons.SetActive(false);
             mapPanelRT.sizeDelta = new Vector2(200, 350); // change the shape of the map we see
             mapButtons.SetActive(false); // hide the vertial map buttons
+            mapTitle.SetActive(false);
             Debug.Log("Open Detail Page");
             mapDetails.SetActive(true); // show the detail page
             currLocRT.localScale = new Vector3(0.14f, 0.08f, 1); // for the current location (green) icon
@@ -250,6 +253,7 @@ namespace MixedReality.Toolkit.Suits.Map
             mapDetails.SetActive(false);
             mapPanelRT.sizeDelta = new Vector2(350, 350);
             mapButtons.SetActive(true);
+            mapTitle.SetActive(true);
             Debug.Log("Close Detail Page");
             currLocRT.localScale = new Vector3(0.08f, 0.08f, 1);
             showDetailPage = !showDetailPage;
