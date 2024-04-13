@@ -121,6 +121,8 @@ public class MarkerController : MonoBehaviour
     private GameObject actionButtons;
     private GameObject roverButtons;
 
+    private GameObject deleteConfirmation;
+
     private Navigation navigation;
     private Marker navigatingTo;
     private bool isNavigating;
@@ -158,6 +160,7 @@ public class MarkerController : MonoBehaviour
         // compassWidth = compassRT.rect.width / 360.0f;
         actionButtons = GameObject.Find("Marker Action Buttons");
         roverButtons = GameObject.Find("Rover Action Buttons");
+        deleteConfirmation = GameObject.Find("Delete Confirmation");
         navigation = GameObject.Find("Navigation").GetComponent<Navigation>();
         markerImages = new Dictionary<MarkerType, GameObject>
         {
@@ -194,6 +197,7 @@ public class MarkerController : MonoBehaviour
 
         actionButtons.SetActive(false);
         roverButtons.SetActive(false);
+        deleteConfirmation.SetActive(false);
         foreach (var kvp in glowingMarkerImages)
         {
             kvp.Value.SetActive(false);
@@ -377,6 +381,7 @@ public class MarkerController : MonoBehaviour
         currMarker.CleanUp();
         currMarker = null;
 
+        deleteConfirmation.SetActive(false);
         actionButtons.SetActive(false);
         mode = MarkerActionMode.None;
     }
