@@ -40,7 +40,7 @@ namespace MixedReality.Toolkit.Suits.Map
         // Each marker is a (type, gpsCoords, mapMarkerObj, compassMarkerObj, mapRT, compassRT) 5-tuple
         // private Dictionary<GameObject, (MarkerType, Vector2, GameObject, GameObject, RectTransform, RectTransform)> markers;
         private MarkerController markerController;
-        private MarkerType selectedMarkerType;
+        private MapMarkerType selectedMarkerType;
 
         private bool showDetailPage = false;
         private RectTransform mapPanelRT;
