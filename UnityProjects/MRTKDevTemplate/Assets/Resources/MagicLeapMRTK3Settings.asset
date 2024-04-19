@@ -119,7 +119,7 @@ MonoBehaviour:
   dangerousPermissions:
   - permission: android.permission.CAMERA
     label: CAMERA
-    enabled: 0
+    enabled: 1
   - permission: android.permission.RECORD_AUDIO
     label: RECORD_AUDIO
     enabled: 0
