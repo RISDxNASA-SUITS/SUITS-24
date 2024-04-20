@@ -28,6 +28,8 @@ public class SimpleCamera : MonoBehaviour
     private Renderer _screenRendererRGB = null;
     [SerializeField, Tooltip("The animation curve for flash effect")]
     private AnimationCurve flashAnimationCurve;
+    [SerializeField, Tooltip("The duration of the system message (seconds)")]
+    float systemMsgDurationSecs = 2.5f;
 
     //The identifier can either target the Main or CV cameras.
     // private MLCamera.Identifier _identifier = MLCamera.Identifier.Main;
@@ -44,15 +46,19 @@ public class SimpleCamera : MonoBehaviour
 
     //The camera capture state
     bool _isCapturing;
+    bool _updateViewFinder = true;
 
     private GameObject optionButtons;
     private GameObject shutterButton;
+
+    private GameObject systemMsgObj;
+    private TextMeshProUGUI systemMsg;
 
     private GameObject flashObject;
     private Image flashImage;
 
     void Start()
-    {        
+    {
         optionButtons = GameObject.Find("Option Buttons");
         shutterButton = GameObject.Find("Shutter Button");
         flashObject = GameObject.Find("Flash");
@@ -61,10 +67,15 @@ public class SimpleCamera : MonoBehaviour
 
         _videoImage = GameObject.Find("Image Note Content").GetComponent<Image>();
         
+        systemMsgObj = GameObject.Find("System Message");
+        systemMsg = GameObject.Find("System Message Text").GetComponent<TextMeshProUGUI>();
+
         flashObject.SetActive(false);
         optionButtons.SetActive(false);
+        systemMsgObj.SetActive(false);
 
-        StartCoroutine(EnableMLCamera());
+
+        OnEnable();
     }
 
 
@@ -72,7 +83,7 @@ public class SimpleCamera : MonoBehaviour
     void OnEnable()
     {
         //This script assumes that camera permissions were already granted.
-        // StartCoroutine(EnableMLCamera());
+        StartCoroutine(EnableMLCamera());
     }
 
     void OnDisable()
@@ -106,16 +117,43 @@ public class SimpleCamera : MonoBehaviour
         shutterButton.SetActive(false);
         flashObject.SetActive(true);
 
+        _updateViewFinder = false;
+
         StartCoroutine(flashCoro(0.4f));
-
-
-
     }
 
-    public void RetakeCallback()
+    public void DiscardCallback()
     {
+        systemMsg.text = "Image Discarded!";
+        StartCoroutine(DisplaySystemMsgForSeconds(systemMsgDurationSecs));
+
         optionButtons.SetActive(false);
         shutterButton.SetActive(true);
+        _updateViewFinder = true;
+    }
+
+    public void SaveCallback()
+    {
+        // We have the last captured image stored as a texture.
+        // TODO: POST it here to the LMCC server.
+
+        systemMsg.text = "Image Saved!";
+        StartCoroutine(DisplaySystemMsgForSeconds(systemMsgDurationSecs));
+
+        optionButtons.SetActive(false);
+        shutterButton.SetActive(true);
+        _updateViewFinder = true;
+    }
+
+    private IEnumerator DisplaySystemMsgForSeconds(float seconds)
+    {
+        systemMsgObj.SetActive(true);
+
+        yield return new WaitForSeconds(seconds); 
+
+        systemMsgObj.SetActive(false);
+
+        yield return null;
     }
 
     //Waits for the camera to be ready and then connects to it.
@@ -232,7 +270,7 @@ public class SimpleCamera : MonoBehaviour
 
     void RawVideoFrameAvailable(MLCamera.CameraOutput output, MLCamera.ResultExtras extras, MLCameraBase.Metadata metadataHandle)
     {
-        if (output.Format == MLCamera.OutputFormat.RGBA_8888)
+        if (output.Format == MLCamera.OutputFormat.RGBA_8888 && _updateViewFinder)
         {
             //Flips the frame vertically so it does not appear upside down.
             MLCamera.FlipFrameVertically(ref output);
