@@ -278,7 +278,8 @@ public class MarkerController : MonoBehaviour
             case MarkerActionMode.Select:
                 Vector3 pos = currMarker.MapMarkerObj.transform.position;
                 pos.z -= 0.015f;
-                pos.y -= 0.015f;
+                // pos.y -= 0.015f;
+                pos.y -= (-0.055f);
                 if (currMarker.Type == MarkerType.RoverMarker) roverButtons.transform.position = pos;
                 else actionButtons.transform.position = pos;
                 var myCoord = currMarker.GpsCoord;
