@@ -8,7 +8,8 @@ using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 
-
+namespace MixedReality.Toolkit.Suits.Map
+{
 public enum MarkerType
 {
     POI,
@@ -131,6 +132,8 @@ public class MarkerController : MonoBehaviour
     private GameObject roverPrefab;
     private Marker rover;
 
+    [SerializeField] private MapController mapController;
+
     List<Vector2> InitialRoverMarkerLocs = new List<Vector2>
     {
         new Vector2(29.5648150f, -95.0817410f),
@@ -187,6 +190,7 @@ public class MarkerController : MonoBehaviour
     {
         // Initialize marker-related fields and states
         markers = new Dictionary<GameObject, Marker>();
+        // mapController = GameObject.Find("Map Panel").GetComponent<MapController>();
         showMarker = new Dictionary<MarkerType, bool>
         {
             { MarkerType.POI, true },
@@ -382,6 +386,8 @@ public class MarkerController : MonoBehaviour
         currMarker.CleanUp();
         currMarker = null;
 
+        mapController.closeDetailPage();
+
         deleteConfirmation.SetActive(false);
         actionButtons.SetActive(false);
         mode = MarkerActionMode.None;
@@ -479,4 +485,5 @@ public class MarkerController : MonoBehaviour
             selectedMarkerType = type;
         }
     }
+}
 }
