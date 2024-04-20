@@ -38,6 +38,10 @@ public class SimpleCamera : MonoBehaviour
     private MLCamera.CaptureConfig _captureConfig;
 
     private Texture2D _videoTextureRgb;
+    // private CanvasRenderer _videoRenderer;
+    // private Sprite _videoSpriteRgb;
+    private Image _videoImage;
+
     //The camera capture state
     bool _isCapturing;
 
@@ -48,12 +52,21 @@ public class SimpleCamera : MonoBehaviour
     private Image flashImage;
 
     void Start()
-    {
+    {        
+
         optionButtons = GameObject.Find("Option Buttons");
         shutterButton = GameObject.Find("Shutter Button");
         flashObject = GameObject.Find("Flash");
 
         flashImage = flashObject.GetComponent<Image>();
+
+        _videoImage = GameObject.Find("Image Note Content").GetComponent<Image>();
+        // _videoRenderer = GameObject.Find("Image Note Content").GetComponent<CanvasRenderer>();
+        // var rendererMaterial = new Material(Shader.Find("UI/Default"));
+        // Debug.Log("rendererMaterial", rendererMaterial);
+        // Debug.Log("Shader", Shader.Find("UI/Default"));
+        // _videoRenderer.SetMaterial(rendererMaterial, 0);
+        // Debug.Log("Material: ", _videoRenderer.GetMaterial());
         
         flashObject.SetActive(false);
         optionButtons.SetActive(false);
@@ -246,8 +259,10 @@ public class SimpleCamera : MonoBehaviour
             videoTextureRGB = new Texture2D((int)imagePlane.Width, (int)imagePlane.Height, TextureFormat.RGBA32, false);
             videoTextureRGB.filterMode = FilterMode.Bilinear;
 
-            Material material = renderer.material;
-            material.mainTexture = videoTextureRGB;
+            _videoImage.material.mainTexture = videoTextureRGB;
+
+            // Material material = renderer.material;
+            // material.mainTexture = videoTextureRGB;
         }
 
         int actualWidth = (int)(imagePlane.Width * imagePlane.PixelStride);
