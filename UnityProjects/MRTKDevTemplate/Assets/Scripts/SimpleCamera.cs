@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.MagicLeap;
 using UnityEngine.UI;
-// using UnityEngine.CoreModule;
+using TMPro;
 
 static class GraphicExtension
 {
@@ -30,7 +30,8 @@ public class SimpleCamera : MonoBehaviour
     private AnimationCurve flashAnimationCurve;
 
     //The identifier can either target the Main or CV cameras.
-    private MLCamera.Identifier _identifier = MLCamera.Identifier.Main;
+    // private MLCamera.Identifier _identifier = MLCamera.Identifier.Main;
+    private MLCamera.Identifier _identifier = MLCamera.Identifier.CV;
     private MLCamera _camera;
     //Is true if the camera is ready to be connected.
     private bool _cameraDeviceAvailable;
@@ -38,8 +39,7 @@ public class SimpleCamera : MonoBehaviour
     private MLCamera.CaptureConfig _captureConfig;
 
     private Texture2D _videoTextureRgb;
-    // private CanvasRenderer _videoRenderer;
-    // private Sprite _videoSpriteRgb;
+    private Sprite _videoSpriteRgb;
     private Image _videoImage;
 
     //The camera capture state
@@ -53,7 +53,6 @@ public class SimpleCamera : MonoBehaviour
 
     void Start()
     {        
-
         optionButtons = GameObject.Find("Option Buttons");
         shutterButton = GameObject.Find("Shutter Button");
         flashObject = GameObject.Find("Flash");
@@ -61,15 +60,11 @@ public class SimpleCamera : MonoBehaviour
         flashImage = flashObject.GetComponent<Image>();
 
         _videoImage = GameObject.Find("Image Note Content").GetComponent<Image>();
-        // _videoRenderer = GameObject.Find("Image Note Content").GetComponent<CanvasRenderer>();
-        // var rendererMaterial = new Material(Shader.Find("UI/Default"));
-        // Debug.Log("rendererMaterial", rendererMaterial);
-        // Debug.Log("Shader", Shader.Find("UI/Default"));
-        // _videoRenderer.SetMaterial(rendererMaterial, 0);
-        // Debug.Log("Material: ", _videoRenderer.GetMaterial());
         
         flashObject.SetActive(false);
         optionButtons.SetActive(false);
+
+        StartCoroutine(EnableMLCamera());
     }
 
 
@@ -77,7 +72,7 @@ public class SimpleCamera : MonoBehaviour
     void OnEnable()
     {
         //This script assumes that camera permissions were already granted.
-        StartCoroutine(EnableMLCamera());
+        // StartCoroutine(EnableMLCamera());
     }
 
     void OnDisable()
@@ -130,6 +125,7 @@ public class SimpleCamera : MonoBehaviour
         while (!_cameraDeviceAvailable)
         {
             MLResult result = MLCamera.GetDeviceAvailabilityStatus(_identifier, out _cameraDeviceAvailable);
+
             if (result.IsOk == false || _cameraDeviceAvailable == false)
             {
                 // Wait until camera device is available
@@ -148,7 +144,7 @@ public class SimpleCamera : MonoBehaviour
             connectContext.CamId = _identifier;
             //MLCamera.Identifier.Main is the only camera that can access the virtual and mixed reality flags
             connectContext.Flags = MLCamera.ConnectFlag.CamOnly;
-            connectContext.EnableVideoStabilization = true;
+            // connectContext.EnableVideoStabilization = true;
 
             _camera = MLCamera.CreateAndConnect(connectContext);
             if (_camera != null)
@@ -246,7 +242,6 @@ public class SimpleCamera : MonoBehaviour
 
     private void UpdateRGBTexture(ref Texture2D videoTextureRGB, MLCamera.PlaneInfo imagePlane, Renderer renderer)
     {
-
         if (videoTextureRGB != null &&
             (videoTextureRGB.width != imagePlane.Width || videoTextureRGB.height != imagePlane.Height))
         {
@@ -258,11 +253,9 @@ public class SimpleCamera : MonoBehaviour
         {
             videoTextureRGB = new Texture2D((int)imagePlane.Width, (int)imagePlane.Height, TextureFormat.RGBA32, false);
             videoTextureRGB.filterMode = FilterMode.Bilinear;
-
-            _videoImage.material.mainTexture = videoTextureRGB;
-
-            // Material material = renderer.material;
-            // material.mainTexture = videoTextureRGB;
+            
+            _videoSpriteRgb = Sprite.Create(videoTextureRGB, new Rect(0, 0, videoTextureRGB.width, videoTextureRGB.height), new Vector2(0.5f, 0.5f));
+            _videoImage.sprite = _videoSpriteRgb;
         }
 
         int actualWidth = (int)(imagePlane.Width * imagePlane.PixelStride);
