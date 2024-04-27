@@ -11,6 +11,11 @@ public class SimpleAudio : MonoBehaviour
     [SerializeField, Tooltip("The audio source that should replay the captured audio.")]
     private AudioSource _playbackAudioSource = null;
 
+    [SerializeField]
+    private Sprite _startSprite = null;
+    [SerializeField]
+    private Sprite _stopSprite = null;
+
     //Support Max 5mins of recording
     private const int AUDIO_CLIP_LENGTH_SECONDS = 300;
 
@@ -20,8 +25,7 @@ public class SimpleAudio : MonoBehaviour
     private GameObject recordingSystemMsg;
 
     private GameObject recordingButton;
-    private GameObject startRecording;
-    private GameObject recording;
+    private Image recordingImage;
 
     private GameObject timeCounterObj;
     private TextMeshProUGUI timeCounter;
@@ -37,16 +41,14 @@ public class SimpleAudio : MonoBehaviour
         recordingSystemMsg = GameObject.Find("System Message Text");
 
         recordingButton = GameObject.Find("Recording Button");
-        startRecording = GameObject.Find("Start Recording");
-        recording = GameObject.Find("Recording");
+        recordingImage = GameObject.Find("Recording Button Image").GetComponent<Image>();
+        recordingImage.sprite = _startSprite;
 
         timeCounterObj = GameObject.Find("Counter");
         timeCounter = GameObject.Find("Time").GetComponent<TextMeshProUGUI>();
 
         recordingOptionButtons.SetActive(false);
         recordingSystemMsg.SetActive(false);
-        recording.SetActive(false);
-
 
         OnEnable();
     }
@@ -84,8 +86,7 @@ public class SimpleAudio : MonoBehaviour
         var sampleRate = MLAudioInput.GetSampleRate(captureType);
         mlAudioBufferClip = new MLAudioInput.BufferClip(captureType, AUDIO_CLIP_LENGTH_SECONDS, sampleRate);
 
-        startRecording.SetActive(false);
-        recording.SetActive(true);
+        recordingImage.sprite = _stopSprite;
 
         isTimeRunning = true;
 
@@ -94,19 +95,10 @@ public class SimpleAudio : MonoBehaviour
 
     public void StopCapture()
     {
-        recordingButton.SetActive(false);
-        timeCounterObj.SetActive(false);
-        recordingOptionButtons.SetActive(true);
-        recordingSystemMsg.SetActive(true);
+        uiRecordingToConfirmation();
 
-        mlAudioBufferClip.Dispose();
-        //Make AudioBufferClip playable
-        _playbackAudioSource.clip = mlAudioBufferClip.FlushToClip();
-
-        _playbackAudioSource.time = 0;
+        discardRecordingNoFlush();
         // _playbackAudioSource.Play();
-
-        mlAudioBufferClip = null;
 
         // Stop audio playback source and reset settings.
         // _playbackAudioSource.Stop();
@@ -114,6 +106,59 @@ public class SimpleAudio : MonoBehaviour
         // _playbackAudioSource.pitch = 1;
         // _playbackAudioSource.loop = false;
         // _playbackAudioSource.clip = null;
+    }
+
+    public void DiscardCallback()
+    {
+        // Throw away the buffer clip
+        discardRecordingNoFlush();
+        
+        // UI: Go back to first page
+        uiConfirmationToRecording();
+    }
+
+    public void SaveCallback()
+    {
+        discardRecordingFlush();
+        //TODO: Post to server
+
+        // UI: Go back to first page
+        uiConfirmationToRecording();
+    }
+
+    private void uiRecordingToConfirmation()
+    {
+        recordingButton.SetActive(false);
+        timeCounterObj.SetActive(false);
+
+        recordingOptionButtons.SetActive(true);
+        recordingSystemMsg.SetActive(true);
+    }
+
+    private void uiConfirmationToRecording()
+    {
+        recordingButton.SetActive(true);
+        timeCounterObj.SetActive(true);
+
+        recordingOptionButtons.SetActive(false);
+        recordingSystemMsg.SetActive(false);
+    }
+
+    private void discardRecordingFlush()
+    {
+        _playbackAudioSource.clip = mlAudioBufferClip?.FlushToClip();
+        discardRecordingNoFlush();
+    }
+
+    private void discardRecordingNoFlush()
+    {
+        _playbackAudioSource.time = 0;
+        mlAudioBufferClip?.Dispose();
+        mlAudioBufferClip = null;
+        isTimeRunning = false;
+        currentTime = 0f;
+        timeCounter.text = "00:00:00";
+        recordingImage.sprite = _startSprite;
     }
 
     private void DetectAudio(float[] samples)
