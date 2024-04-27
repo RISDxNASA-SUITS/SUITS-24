@@ -66,7 +66,7 @@ public class SimpleCamera : MonoBehaviour
         flashImage = flashObject.GetComponent<Image>();
 
         _videoImage = GameObject.Find("Image Note Content").GetComponent<Image>();
-        
+
         systemMsgObj = GameObject.Find("System Message");
         systemMsg = GameObject.Find("System Message Text").GetComponent<TextMeshProUGUI>();
 
@@ -149,7 +149,7 @@ public class SimpleCamera : MonoBehaviour
     {
         systemMsgObj.SetActive(true);
 
-        yield return new WaitForSeconds(seconds); 
+        yield return new WaitForSeconds(seconds);
 
         systemMsgObj.SetActive(false);
 
@@ -199,7 +199,7 @@ public class SimpleCamera : MonoBehaviour
         //Gets the stream capabilities the selected camera. (Supported capture types, formats and resolutions)
         MLCamera.StreamCapability[] streamCapabilities = MLCamera.GetImageStreamCapabilitiesForCamera(_camera, MLCamera.CaptureType.Video);
 
-        if(streamCapabilities.Length== 0)
+        if (streamCapabilities.Length == 0)
             return;
 
         //Set the default capability stream
@@ -291,7 +291,7 @@ public class SimpleCamera : MonoBehaviour
         {
             videoTextureRGB = new Texture2D((int)imagePlane.Width, (int)imagePlane.Height, TextureFormat.RGBA32, false);
             videoTextureRGB.filterMode = FilterMode.Bilinear;
-            
+
             _videoSpriteRgb = Sprite.Create(videoTextureRGB, new Rect(0, 0, videoTextureRGB.width, videoTextureRGB.height), new Vector2(0.5f, 0.5f));
             _videoImage.sprite = _videoSpriteRgb;
         }
