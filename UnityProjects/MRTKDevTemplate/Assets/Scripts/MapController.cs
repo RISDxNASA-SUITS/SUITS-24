@@ -240,7 +240,7 @@ namespace MixedReality.Toolkit.Suits.Map
         {
             MapBackButton.SetActive(true);
             actionButtons.SetActive(false);
-            mapPanelRT.sizeDelta = new Vector2(200, 350); // change the shape of the map we see
+            mapPanelRT.sizeDelta = new Vector2(200, 324); // change the shape of the map we see
             mapButtons.SetActive(false); // hide the vertial map buttons
             mapTitle.SetActive(false);
             ZoomInOut.SetActive(false);
@@ -254,7 +254,7 @@ namespace MixedReality.Toolkit.Suits.Map
             MapBackButton.SetActive(false);
             actionButtons.SetActive(false);
             mapDetails.SetActive(false);
-            mapPanelRT.sizeDelta = new Vector2(350, 350);
+            mapPanelRT.sizeDelta = new Vector2(324, 324);
             mapButtons.SetActive(true);
             mapTitle.SetActive(true);
             ZoomInOut.SetActive(true);
