@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 160364351}
   - component: {fileID: 160364354}
   m_Layer: 5
-  m_Name: Add Note
+  m_Name: Voice Note
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
