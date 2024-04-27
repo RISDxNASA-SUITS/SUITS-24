@@ -246,7 +246,7 @@ namespace MixedReality.Toolkit.Suits.Map
             ZoomInOut.SetActive(false);
             Debug.Log("Open Detail Page");
             mapDetails.SetActive(true); // show the detail page
-            currLocRT.localScale = new Vector3(0.14f, 0.08f, 1); // for the current location (green) icon
+            currLocRT.localScale = new Vector3(0.3f, 0.185f, 1); // for the current location (green) icon
             showDetailPage = !showDetailPage;
         }
         public void closeDetailPage()
@@ -259,7 +259,7 @@ namespace MixedReality.Toolkit.Suits.Map
             mapTitle.SetActive(true);
             ZoomInOut.SetActive(true);
             Debug.Log("Close Detail Page");
-            currLocRT.localScale = new Vector3(0.08f, 0.08f, 1);
+            currLocRT.localScale = new Vector3(0.2f, 0.2f, 1);
             showDetailPage = !showDetailPage;
         }
     }
