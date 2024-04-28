@@ -32,7 +32,7 @@ public class SimpleAudio : MonoBehaviour
 
     private float currentTime = 0f;
 
-    private bool isTimeRunning;
+    private IEnumerator timeUpdateIEnum;
 
 
     void Start()
@@ -53,13 +53,20 @@ public class SimpleAudio : MonoBehaviour
         OnEnable();
     }
 
-    void Update()
+    private IEnumerator updateTime()
     {
-        if (isTimeRunning)
+        while (true) 
         {
-            updateTime();
-        }
+            currentTime += Time.deltaTime;
 
+            int minutes = Mathf.FloorToInt(currentTime / 60f);
+            int seconds = Mathf.FloorToInt(currentTime % 60f);
+            int milliseconds = Mathf.FloorToInt((currentTime * 100f) % 100f);
+
+            timeCounter.text = string.Format("{0:00}:{1:00}.{2:00}", minutes, seconds, milliseconds);
+
+            yield return new WaitForSeconds(10 * 0.001f); // 10ms
+        }
     }
 
     void OnEnable()
@@ -77,6 +84,11 @@ public class SimpleAudio : MonoBehaviour
     void OnDisable()
     {
         StopCapture();
+
+        if (timeUpdateIEnum != null)
+        {
+            StopCoroutine(timeUpdateIEnum);
+        }
     }
 
     public void StartMicrophone()
@@ -87,18 +99,25 @@ public class SimpleAudio : MonoBehaviour
         mlAudioBufferClip = new MLAudioInput.BufferClip(captureType, AUDIO_CLIP_LENGTH_SECONDS, sampleRate);
 
         recordingImage.sprite = _stopSprite;
-
-        isTimeRunning = true;
-
         // mlAudioBufferClip.OnReceivedSamples += DetectAudio;
+
+        StartCoroutine((timeUpdateIEnum = updateTime()));
     }
 
     public void StopCapture()
     {
         uiRecordingToConfirmation();
 
-        discardRecordingNoFlush();
-        // _playbackAudioSource.Play();
+        Debug.Log("Calling discardRecordingFlush");
+        discardRecordingFlush();
+        Debug.Log("Called discardRecordingFlush");
+
+        currentTime = 0f;
+        timeCounter.text = "00:00:00";
+
+        //only for deploy testing
+        // discardRecordingFlush();
+        _playbackAudioSource.Play();
 
         // Stop audio playback source and reset settings.
         // _playbackAudioSource.Stop();
@@ -111,7 +130,7 @@ public class SimpleAudio : MonoBehaviour
     public void DiscardCallback()
     {
         // Throw away the buffer clip
-        discardRecordingNoFlush();
+        // discardRecordingNoFlush();
         
         // UI: Go back to first page
         uiConfirmationToRecording();
@@ -119,8 +138,9 @@ public class SimpleAudio : MonoBehaviour
 
     public void SaveCallback()
     {
-        discardRecordingFlush();
-        //TODO: Post to server
+        // discardRecordingFlush();
+
+        //TODO: Post _playbackAudioSource.clip to server
 
         // UI: Go back to first page
         uiConfirmationToRecording();
@@ -155,9 +175,16 @@ public class SimpleAudio : MonoBehaviour
         _playbackAudioSource.time = 0;
         mlAudioBufferClip?.Dispose();
         mlAudioBufferClip = null;
-        isTimeRunning = false;
+
+
+        Debug.Log("Stopping coroutine...");
+        StopCoroutine(timeUpdateIEnum);
+        timeUpdateIEnum = null;
+        Debug.Log("Stopped coroutine.");
+
         currentTime = 0f;
         timeCounter.text = "00:00:00";
+
         recordingImage.sprite = _startSprite;
     }
 
@@ -166,16 +193,16 @@ public class SimpleAudio : MonoBehaviour
 
     }
 
-    private void updateTime()
-    {
-        currentTime += Time.deltaTime;
+    // private void updateTime()
+    // {
+    //     currentTime += Time.deltaTime;
 
-        int minutes = Mathf.FloorToInt(currentTime / 60f);
-        int seconds = Mathf.FloorToInt(currentTime % 60f);
-        int milliseconds = Mathf.FloorToInt((currentTime * 100f) % 100f);
+    //     int minutes = Mathf.FloorToInt(currentTime / 60f);
+    //     int seconds = Mathf.FloorToInt(currentTime % 60f);
+    //     int milliseconds = Mathf.FloorToInt((currentTime * 100f) % 100f);
 
-        timeCounter.text = string.Format("{0:00}:{1:00}.{2:00}", minutes, seconds, milliseconds);
-    }
+    //     timeCounter.text = string.Format("{0:00}:{1:00}.{2:00}", minutes, seconds, milliseconds);
+    // }
 
     // private void OnPermissionGranted(string permission)
     // {
