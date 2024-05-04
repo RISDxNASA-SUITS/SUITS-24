@@ -8,7 +8,8 @@ using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 
-
+namespace MixedReality.Toolkit.Suits.Map
+{
 public enum MarkerType
 {
     POI,
@@ -121,6 +122,8 @@ public class MarkerController : MonoBehaviour
     private GameObject actionButtons;
     private GameObject roverButtons;
 
+    private GameObject deleteConfirmation;
+
     private Navigation navigation;
     private Marker navigatingTo;
     private bool isNavigating;
@@ -128,6 +131,8 @@ public class MarkerController : MonoBehaviour
     // Rover
     private GameObject roverPrefab;
     private Marker rover;
+
+    [SerializeField] private MapController mapController;
 
     List<Vector2> InitialRoverMarkerLocs = new List<Vector2>
     {
@@ -158,6 +163,7 @@ public class MarkerController : MonoBehaviour
         // compassWidth = compassRT.rect.width / 360.0f;
         actionButtons = GameObject.Find("Marker Action Buttons");
         roverButtons = GameObject.Find("Rover Action Buttons");
+        deleteConfirmation = GameObject.Find("Delete Confirmation");
         navigation = GameObject.Find("Navigation").GetComponent<Navigation>();
         markerImages = new Dictionary<MarkerType, GameObject>
         {
@@ -184,6 +190,7 @@ public class MarkerController : MonoBehaviour
     {
         // Initialize marker-related fields and states
         markers = new Dictionary<GameObject, Marker>();
+        // mapController = GameObject.Find("Map Panel").GetComponent<MapController>();
         showMarker = new Dictionary<MarkerType, bool>
         {
             { MarkerType.POI, true },
@@ -194,6 +201,7 @@ public class MarkerController : MonoBehaviour
 
         actionButtons.SetActive(false);
         roverButtons.SetActive(false);
+        deleteConfirmation.SetActive(false);
         foreach (var kvp in glowingMarkerImages)
         {
             kvp.Value.SetActive(false);
@@ -274,7 +282,8 @@ public class MarkerController : MonoBehaviour
             case MarkerActionMode.Select:
                 Vector3 pos = currMarker.MapMarkerObj.transform.position;
                 pos.z -= 0.015f;
-                pos.y -= 0.015f;
+                // pos.y -= 0.015f;
+                pos.y -= (-0.055f);
                 if (currMarker.Type == MarkerType.RoverMarker) roverButtons.transform.position = pos;
                 else actionButtons.transform.position = pos;
                 var myCoord = currMarker.GpsCoord;
@@ -377,6 +386,9 @@ public class MarkerController : MonoBehaviour
         currMarker.CleanUp();
         currMarker = null;
 
+        mapController.closeDetailPage();
+
+        deleteConfirmation.SetActive(false);
         actionButtons.SetActive(false);
         mode = MarkerActionMode.None;
     }
@@ -473,4 +485,5 @@ public class MarkerController : MonoBehaviour
             selectedMarkerType = type;
         }
     }
+}
 }

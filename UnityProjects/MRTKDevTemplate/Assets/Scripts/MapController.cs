@@ -49,6 +49,8 @@ namespace MixedReality.Toolkit.Suits.Map
         private RectTransform currLocRT;
         private GameObject MapBackButton;
         private GameObject mapDetails;
+        private GameObject mapTitle;
+        private GameObject ZoomInOut;
 
         void Start()
         {
@@ -67,6 +69,8 @@ namespace MixedReality.Toolkit.Suits.Map
             MapBackButton = GameObject.Find("Map Back Button");
             MapBackButton.SetActive(false);
             mapDetails.SetActive(false);
+            mapTitle = GameObject.Find("Map Title");
+            ZoomInOut = GameObject.Find("ZoomInOut");
         }
 
         void Update()
@@ -236,11 +240,13 @@ namespace MixedReality.Toolkit.Suits.Map
         {
             MapBackButton.SetActive(true);
             actionButtons.SetActive(false);
-            mapPanelRT.sizeDelta = new Vector2(200, 350); // change the shape of the map we see
+            mapPanelRT.sizeDelta = new Vector2(200, 324); // change the shape of the map we see
             mapButtons.SetActive(false); // hide the vertial map buttons
+            mapTitle.SetActive(false);
+            ZoomInOut.SetActive(false);
             Debug.Log("Open Detail Page");
             mapDetails.SetActive(true); // show the detail page
-            currLocRT.localScale = new Vector3(0.14f, 0.08f, 1); // for the current location (green) icon
+            currLocRT.localScale = new Vector3(0.3f, 0.185f, 1); // for the current location (green) icon
             showDetailPage = !showDetailPage;
         }
         public void closeDetailPage()
@@ -248,10 +254,12 @@ namespace MixedReality.Toolkit.Suits.Map
             MapBackButton.SetActive(false);
             actionButtons.SetActive(false);
             mapDetails.SetActive(false);
-            mapPanelRT.sizeDelta = new Vector2(350, 350);
+            mapPanelRT.sizeDelta = new Vector2(324, 324);
             mapButtons.SetActive(true);
+            mapTitle.SetActive(true);
+            ZoomInOut.SetActive(true);
             Debug.Log("Close Detail Page");
-            currLocRT.localScale = new Vector3(0.08f, 0.08f, 1);
+            currLocRT.localScale = new Vector3(0.2f, 0.2f, 1);
             showDetailPage = !showDetailPage;
         }
     }
