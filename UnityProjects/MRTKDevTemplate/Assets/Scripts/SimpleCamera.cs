@@ -29,7 +29,7 @@ public class SimpleCamera : MonoBehaviour
     [SerializeField, Tooltip("The animation curve for flash effect")]
     private AnimationCurve flashAnimationCurve;
     [SerializeField, Tooltip("The duration of the system message (seconds)")]
-    float systemMsgDurationSecs = 2.5f;
+    float systemMsgDurationSecs = 1.5f;
 
     //The identifier can either target the Main or CV cameras.
     // private MLCamera.Identifier _identifier = MLCamera.Identifier.Main;
