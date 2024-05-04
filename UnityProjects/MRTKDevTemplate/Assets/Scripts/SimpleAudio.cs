@@ -41,7 +41,10 @@ public class SimpleAudio : MonoBehaviour
         recordingSystemMsg = GameObject.Find("System Message Text");
 
         recordingButton = GameObject.Find("Recording Button");
-        recordingImage = GameObject.Find("Recording Button Image").GetComponent<Image>();
+        recordingImage = recordingButton.transform.Find(
+            "Frontplate/AnimatedContent/Icon/UIButtonSpriteIcon").GetComponent<Image>();
+
+        // recordingImage = GameObject.Find("Recording Button Image").GetComponent<Image>();
         recordingImage.sprite = _startSprite;
 
         timeCounterObj = GameObject.Find("Counter");
