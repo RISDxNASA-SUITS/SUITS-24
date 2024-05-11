@@ -60,7 +60,7 @@ Material:
     - _Fixed_Unit_Multiplier_: 1
     - _Gaze_Focus_: 0
     - _Gaze_Intensity_: 1
-    - _Line_Width_: 1
+    - _Line_Width_: 0
     - _Pinched_: 0
     - _Proximity_Anisotropy_: 1
     - _Proximity_Far_Distance_: 0.16
