@@ -135,7 +135,7 @@ Material:
     - _RimLight: 0
     - _RimPower: 0.25
     - _RoundCornerMargin: 0.02
-    - _RoundCornerRadius: 9
+    - _RoundCornerRadius: 3
     - _RoundCorners: 1
     - _RoundCornersHideInterior: 0
     - _Smoothness: 0.5
@@ -167,7 +167,7 @@ Material:
     - _BlurBackgroundRect: {r: 0, g: 0, b: 1, a: 1}
     - _BorderColor: {r: 1, g: 0.89019597, b: 0.9850724, a: 0.25}
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
-    - _ClipRectRadii: {r: 10, g: 10, b: 10, a: 10}
+    - _ClipRectRadii: {r: 12, g: 10, b: 10, a: 10}
     - _ClippingBorderColor: {r: 1, g: 0.2, b: 0, a: 1}
     - _Color: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
     - _Color_: {r: 0.48160002, g: 0.67080003, b: 0.86, a: 1}
