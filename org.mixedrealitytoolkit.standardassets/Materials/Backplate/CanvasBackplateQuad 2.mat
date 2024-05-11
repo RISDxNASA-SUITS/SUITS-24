@@ -72,7 +72,7 @@ Material:
     - _BorderLightOpaqueAlpha: 1
     - _BorderLightReplacesAlbedo: 0
     - _BorderMinValue: 0.161
-    - _BorderWidth: 0.5
+    - _BorderWidth: 1.5
     - _ClippingBorder: 0
     - _ClippingBorderWidth: 0.161
     - _ColorMask: 15
