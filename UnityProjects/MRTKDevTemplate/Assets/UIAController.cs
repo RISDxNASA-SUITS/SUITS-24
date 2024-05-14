@@ -25,16 +25,17 @@ public class UIAController : MonoBehaviour
     private GameObject taskListItemPrefab;
     private GameObject[] taskListItems;
 
-    void Awake()
-    {
-        taskTitle = GameObject.Find("UIA Task Title").GetComponent<TMPro.TMP_Text>();
-        taskListItemPrefab = Resources.Load<GameObject>("Prefabs/UIA/UIA Task Item");
-        taskListParentT = GameObject.Find("UIA Task List").transform;
-    }
+    private UIStateManager ui;
 
     // Start is called before the first frame update
     void Start()
     {
+        taskTitle = GameObject.Find("UIA Task Title").GetComponent<TMPro.TMP_Text>();
+        taskListItemPrefab = Resources.Load<GameObject>("Prefabs/UIA/UIA Task Item");
+        taskListParentT = GameObject.Find("UIA Task List").transform;
+
+        ui = GameObject.Find("SceneContent").GetComponent<UIStateManager>();
+
         SetupTask();
     }
 
@@ -72,11 +73,14 @@ public class UIAController : MonoBehaviour
         taskListItems[currStep - 1].transform.Find("UIA Task Status").transform.Find("UIA Status Complete").gameObject.SetActive(true);
 
         //Bound Checking
-        if(currStep >= taskSteps[currTask].Count) {
-            Debug.Log("Finished tasks");
-            return;
+        if (currStep < taskSteps[currTask].Count) {
+            Debug.Log($"Current Step: {currStep}");
+            taskListItems[currStep].transform.Find("UIA Task Status").transform.Find("UIA Status Inprogress").gameObject.SetActive(true);
         }
-        Debug.Log($"Current Step: {currStep}");
-        taskListItems[currStep].transform.Find("UIA Task Status").transform.Find("UIA Status Inprogress").gameObject.SetActive(true);
+        else
+        {
+            Debug.Log("Finished tasks");
+            ui.transitionOutOfEgressUI();
+        }
     }
 }
