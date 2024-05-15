@@ -16,14 +16,6 @@ using UnityEngine.XR.Interaction.Toolkit.UI.BodyUI;
 
 public class UIStateManager : MonoBehaviour
 {
-    [Tooltip("The image note game object")]
-    [SerializeField]
-    private GameObject imageNoteUI;
-
-    [Tooltip("The voice note game object")]
-    [SerializeField]
-    private GameObject voiceNoteUI;
-
     [Tooltip("The navigation game object")]
     [SerializeField]
     private GameObject navUI;
@@ -42,8 +34,6 @@ public class UIStateManager : MonoBehaviour
 
     void Start()
     {
-        imageNoteUI.SetActive(false);
-        voiceNoteUI.SetActive(false);
         navUI.SetActive(false);
         uiaUI.SetActive(false);
 
@@ -68,16 +58,6 @@ public class UIStateManager : MonoBehaviour
     public void hideCurrentUI()
     {
         transitionToUI(null);
-    }
-
-    public void transitionToImageNoteUI()
-    {
-        transitionToUI(imageNoteUI);    
-    }
-
-    public void transitionToVoiceNoteUI()
-    {
-        transitionToUI(voiceNoteUI);
     }
 
     public void transitionToNavUI()
