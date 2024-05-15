@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.XR.Interaction.Toolkit.UI.BodyUI;
@@ -73,7 +72,7 @@ public class UIStateManager : MonoBehaviour
 
     public void transitionToImageNoteUI()
     {
-        transitionToUI(imageNoteUI);
+        transitionToUI(imageNoteUI);    
     }
 
     public void transitionToVoiceNoteUI()

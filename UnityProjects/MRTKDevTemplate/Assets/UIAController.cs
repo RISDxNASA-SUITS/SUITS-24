@@ -34,7 +34,7 @@ public class UIAController : MonoBehaviour
         taskListItemPrefab = Resources.Load<GameObject>("Prefabs/UIA/UIA Task Item");
         taskListParentT = GameObject.Find("UIA Task List").transform;
 
-        ui = GameObject.Find("SceneContent").GetComponent<UIStateManager>();
+        ui = GameObject.Find("UI Controller").GetComponent<UIStateManager>();
 
         SetupTask();
     }
