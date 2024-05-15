@@ -52,7 +52,7 @@ public class Navigation : MonoBehaviour
         panelTf = GameObject.Find("Map Panel").GetComponent<Transform>();
         markerLr = GameObject.Find("Map").GetComponent<LineRenderer>();
         currLocRT = GameObject.Find("CurrLoc").GetComponent<RectTransform>();
-        Rect canvasR = GameObject.Find("Main Canvas").GetComponent<RectTransform>().rect;
+        Rect canvasR = GameObject.Find("Nav Canvas").GetComponent<RectTransform>().rect;
         canvasHalfWidth = canvasR.width / 2;
         canvasHalfHeight = canvasR.height / 2;
         gps = GameObject.Find("GPS").GetComponent<GPS>();
