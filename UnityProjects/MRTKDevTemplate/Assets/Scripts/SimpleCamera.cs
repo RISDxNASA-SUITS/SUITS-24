@@ -42,38 +42,42 @@ public class SimpleCamera : MonoBehaviour
 
     private Texture2D _videoTextureRgb;
     private Sprite _videoSpriteRgb;
+
+    [SerializeField]
     private Image _videoImage;
 
     //The camera capture state
     bool _isCapturing;
     bool _updateViewFinder = true;
 
+    [SerializeField]
     private GameObject optionButtons;
+    [SerializeField]
     private GameObject shutterButton;
 
+    [SerializeField]
     private GameObject systemMsgObj;
+    [SerializeField]
     private TextMeshProUGUI systemMsg;
 
+    [SerializeField]
     private GameObject flashObject;
+    [SerializeField]
     private Image flashImage;
 
     void Start()
     {
-        optionButtons = GameObject.Find("Option Buttons");
-        shutterButton = GameObject.Find("Shutter Button");
-        flashObject = GameObject.Find("Flash");
-
-        flashImage = flashObject.GetComponent<Image>();
-
-        _videoImage = GameObject.Find("Image Note Content").GetComponent<Image>();
-
-        systemMsgObj = GameObject.Find("System Message");
-        systemMsg = GameObject.Find("System Message Text").GetComponent<TextMeshProUGUI>();
+        // optionButtons = GameObject.Find("Option Buttons");
+        // shutterButton = GameObject.Find("Shutter Button");
+        // flashObject = GameObject.Find("Flash");
+        // flashImage = flashObject.GetComponent<Image>();
+        // _videoImage = GameObject.Find("Image Note Content").GetComponent<Image>();
+        // systemMsgObj = GameObject.Find("System Message");
+        // systemMsg = GameObject.Find("System Message Text").GetComponent<TextMeshProUGUI>();
 
         flashObject.SetActive(false);
         optionButtons.SetActive(false);
         systemMsgObj.SetActive(false);
-
 
         OnEnable();
     }
