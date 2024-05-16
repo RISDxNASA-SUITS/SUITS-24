@@ -164,6 +164,7 @@ public class MarkerController : MonoBehaviour
     {
         // Initialize marker-related fields and states
         markers = new Dictionary<GameObject, Marker>();
+        glowingMarkerImages[selectedMarkerType].SetActive(false);
         showMarker = new Dictionary<MarkerType, bool>
         {
             { MarkerType.POI, true },
@@ -336,9 +337,9 @@ public class MarkerController : MonoBehaviour
         currMarker = null;
 
         mapController.closeDetailPage();
-
-        deleteConfirmation.SetActive(false);
-        actionButtons.SetActive(false);
+    
+        // deleteConfirmation.SetActive(false);
+        // actionButtons.SetActive(false);
         mode = MarkerActionMode.None;
     }
 
