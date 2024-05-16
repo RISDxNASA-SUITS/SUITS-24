@@ -24,13 +24,21 @@ public class UIStateManager : MonoBehaviour
     [SerializeField]
     private GameObject uiaUI;
 
+    [Tooltip("The geo sampling game object")]
+    [SerializeField]
+    private GameObject geoSamplingUI;
+
     [Tooltip("The hand menu game object")]
     [SerializeField]
     private GameObject handMenuUI;
 
+    
+
     // UI object currently in display
     private GameObject currentUI;
     // private UIState state;
+
+    private GameObject testUI;
 
     void Start()
     {
@@ -38,11 +46,12 @@ public class UIStateManager : MonoBehaviour
         uiaUI.SetActive(false);
 
         transitionToEgressUI();
+        
     }
 
     void Update()
     {
-        
+
     }
 
     private void transitionToUI(GameObject toUI)
@@ -55,14 +64,22 @@ public class UIStateManager : MonoBehaviour
         }
     }
 
-    public void hideCurrentUI()
+    public void hideCurrentUI(GameObject hideUI)
     {
-        transitionToUI(null);
+        // transitionToUI(hideUI);
+        hideUI.SetActive(false);
     }
 
     public void transitionToNavUI()
     {
+        handMenuUI.SetActive(false);
         transitionToUI(navUI);
+    }
+
+    public void transitionOutofNavUI()
+    {
+        hideCurrentUI(navUI);
+        handMenuUI.SetActive(true);
     }
 
     public void transitionToEgressUI()
@@ -73,7 +90,7 @@ public class UIStateManager : MonoBehaviour
 
     public void transitionOutOfEgressUI()
     {
-        hideCurrentUI();
+        hideCurrentUI(uiaUI);
         handMenuUI.SetActive(true);
     }
 
@@ -87,4 +104,17 @@ public class UIStateManager : MonoBehaviour
     {
         // Do something here?
     }
+
+    public void transitionToGeoSamplingUI()
+    {
+        handMenuUI.SetActive(false);
+        transitionToUI(geoSamplingUI);
+    }
+
+    public void transitionOutofGeoSamplingUI()
+    {
+        hideCurrentUI(geoSamplingUI);
+        handMenuUI.SetActive(true);
+    }    
+
 }
