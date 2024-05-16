@@ -36,7 +36,7 @@ public class TSScConnection : MonoBehaviour
     public void ConnectToHost(string host, int team_number)
     {
         this.host = host;
-        this.port = "14141";
+        this.port = "14145";
         this.team_number = team_number;
         this.url = "http://" + this.host + ":" + this.port;
         Debug.Log(this.url);
@@ -68,7 +68,7 @@ public class TSScConnection : MonoBehaviour
             {
                 // Pull TSSc Updates
                 StartCoroutine(GetUIAState());
-                StartCoroutine(GetDCUState()); 
+                StartCoroutine(GetDCUState());
                 StartCoroutine(GetROVERState());
                 StartCoroutine(GetSPECState());
                 StartCoroutine(GetTELEMETRYState());
