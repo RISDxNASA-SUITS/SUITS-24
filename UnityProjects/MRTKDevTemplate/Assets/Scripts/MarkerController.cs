@@ -337,9 +337,9 @@ public class MarkerController : MonoBehaviour
         currMarker = null;
 
         mapController.closeDetailPage();
-
-        deleteConfirmation.SetActive(false);
-        actionButtons.SetActive(false);
+    
+        // deleteConfirmation.SetActive(false);
+        // actionButtons.SetActive(false);
         mode = MarkerActionMode.None;
     }
 

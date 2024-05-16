@@ -244,7 +244,7 @@ namespace MixedReality.Toolkit.Suits.Map
             mapButtons.SetActive(false); // hide the vertial map buttons
             mapTitle.SetActive(false);
             ZoomInOut.SetActive(false);
-            Debug.Log("Open Detail Page");
+            // Debug.Log("Open Detail Page");
             mapDetails.SetActive(true); // show the detail page
             currLocRT.localScale = new Vector3(0.3f, 0.185f, 1); // for the current location (green) icon
             showDetailPage = !showDetailPage;
@@ -258,7 +258,7 @@ namespace MixedReality.Toolkit.Suits.Map
             mapButtons.SetActive(true);
             mapTitle.SetActive(true);
             ZoomInOut.SetActive(true);
-            Debug.Log("Close Detail Page");
+            // Debug.Log("Close Detail Page");
             currLocRT.localScale = new Vector3(0.2f, 0.2f, 1);
             showDetailPage = !showDetailPage;
         }
