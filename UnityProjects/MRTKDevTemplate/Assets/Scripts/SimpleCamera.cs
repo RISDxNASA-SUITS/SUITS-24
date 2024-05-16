@@ -78,11 +78,7 @@ public class SimpleCamera : MonoBehaviour
         flashObject.SetActive(false);
         optionButtons.SetActive(false);
         systemMsgObj.SetActive(false);
-
-        OnEnable();
     }
-
-
 
     void OnEnable()
     {

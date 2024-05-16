@@ -42,6 +42,9 @@ namespace MixedReality.Toolkit.Suits.Map
         private MarkerController markerController;
         private MarkerType selectedMarkerType;
 
+        private GameObject markerImageNote;
+        private GameObject markerVoiceNote;
+
         private bool showDetailPage = false;
         private RectTransform mapPanelRT;
         private GameObject actionButtons;
@@ -71,6 +74,11 @@ namespace MixedReality.Toolkit.Suits.Map
             mapDetails.SetActive(false);
             mapTitle = GameObject.Find("Map Title");
             ZoomInOut = GameObject.Find("ZoomInOut");
+
+            markerImageNote = GameObject.Find("Marker Image Note");
+            markerVoiceNote = GameObject.Find("Marker Voice Note");
+            markerImageNote.SetActive(false);
+            markerVoiceNote.SetActive(false);
         }
 
         void Update()
