@@ -24,7 +24,7 @@ public class UpdateGeoFields : MonoBehaviour
 
         if (tss.Rocks.Any())
         {
-            Debug.Log(tss.Rocks[0]);
+            Debug.Log(tss.Rocks[0]); 
             Title.text = tss.Rocks[0].name;
         }
     }
