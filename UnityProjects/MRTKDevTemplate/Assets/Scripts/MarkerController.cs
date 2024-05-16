@@ -132,7 +132,7 @@ public class MarkerController : MonoBehaviour
         new Vector2(29.5648850f, -95.0808360f),
     };
 
-    void Awake()
+    void Start()
     {
         mainCamera = Camera.main;
         gps = GameObject.Find("GPS").GetComponent<GPS>();
@@ -158,10 +158,7 @@ public class MarkerController : MonoBehaviour
             { MarkerType.Rover, Resources.Load<GameObject>("CustomPrefabs/Rover") },
             { MarkerType.Obstacle, Resources.Load<GameObject>("CustomPrefabs/Obstacle Marker") },
         };
-    }
 
-    void Start()
-    {
         // Initialize marker-related fields and states
         markers = new Dictionary<GameObject, Marker>();
         glowingMarkerImages[selectedMarkerType].SetActive(false);
@@ -253,7 +250,6 @@ public class MarkerController : MonoBehaviour
     public void HideActionButtons()
     {
         if (currMarker != null && currMarker.Type == MarkerType.RoverMarker) currMarker.SetOpacity(0.3f);
-        currMarker = null;
         actionButtons.SetActive(false);
         mode = MarkerActionMode.None;
     }
@@ -269,7 +265,7 @@ public class MarkerController : MonoBehaviour
 
     public void OnMapEnter(Vector2 touchCoord)
     {
-        if (mode != MarkerActionMode.None) return;
+        if (mode != MarkerActionMode.None || deleteConfirmation.activeSelf) return;
 
         float minDist = markerEditSensitivity + 1;
         Vector2 touchGps = gps.MapPosToGps(touchCoord);
@@ -332,6 +328,7 @@ public class MarkerController : MonoBehaviour
         {
             navigation.StopMarkerNavigate();
         }
+        
         markers.Remove(currMarker.MapMarkerObj);
         currMarker.CleanUp();
         currMarker = null;
