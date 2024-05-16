@@ -116,7 +116,7 @@ namespace MixedReality.Toolkit.Suits.Map
                         focusMode = MapFocusMode.MapNoFocus;
 
                         // Marker
-                        markerController.OnMapEnter(localTouchPosition);
+                        if (!mapDetails.activeSelf) markerController.OnMapEnter(localTouchPosition);
                     }
 
                     if (markerController.mode == MarkerActionMode.None)
