@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.XR.MagicLeap;
 using System.Linq;
 using TMPro;
+using MixedReality.Toolkit.UX;
 
 public class SimpleAudio : MonoBehaviour
 {
@@ -21,13 +22,21 @@ public class SimpleAudio : MonoBehaviour
 
     private MLAudioInput.BufferClip mlAudioBufferClip;
 
+    [SerializeField]
     private GameObject recordingOptionButtons;
+    [SerializeField]
     private GameObject recordingSystemMsg;
 
+    [SerializeField]
     private GameObject recordingButton;
+    [SerializeField]
+    private PressableButton recordingPressableButton;
+    [SerializeField]
     private Image recordingImage;
 
+    [SerializeField]
     private GameObject timeCounterObj;
+    [SerializeField]
     private TextMeshProUGUI timeCounter;
 
     private float currentTime = 0f;
@@ -35,21 +44,21 @@ public class SimpleAudio : MonoBehaviour
     private IEnumerator timeUpdateIEnum;
 
 
-    void Awake()
+/*    void Awake()
     {
-        recordingOptionButtons = GameObject.Find("VN Option Buttons");
+*//*        recordingOptionButtons = GameObject.Find("VN Option Buttons");
         recordingSystemMsg = GameObject.Find("VN System Message Text");
-
-        Debug.Log("Start(): Finding recordingButton");
-        recordingButton = GameObject.Find("VN Recording Button");
-        Debug.Log("recordingButton: " + recordingButton);
+*//*
+        //Debug.Log("Start(): Finding recordingButton");
+*//*        recordingButton = GameObject.Find("VN Recording Button");
+        //Debug.Log("recordingButton: " + recordingButton);
         recordingImage = recordingButton.transform.Find(
             "Frontplate/AnimatedContent/Icon/UIButtonSpriteIcon").GetComponent<Image>();
 
         timeCounterObj = GameObject.Find("VN Counter");
         timeCounter = GameObject.Find("VN Time").GetComponent<TextMeshProUGUI>();
-    }
-
+*//*    }
+*/
     private IEnumerator updateTime()
     {
         while (true) 
@@ -123,7 +132,7 @@ public class SimpleAudio : MonoBehaviour
         _playbackAudioSource.Play();
 
         // Don't need the buffer clip. Dispose it.
-        mlAudioBufferClip.Dispose();
+        mlAudioBufferClip?.Dispose();
         mlAudioBufferClip = null;
 
         // Stop the time update coroutine
@@ -157,6 +166,8 @@ public class SimpleAudio : MonoBehaviour
 
     private void uiNewRecording()
     {
+        recordingPressableButton.ForceSetToggled(false);
+
         recordingButton.SetActive(true);
         timeCounterObj.SetActive(true);
 

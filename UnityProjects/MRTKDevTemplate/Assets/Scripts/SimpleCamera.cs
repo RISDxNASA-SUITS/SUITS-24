@@ -67,14 +67,6 @@ public class SimpleCamera : MonoBehaviour
 
     void Start()
     {
-        // optionButtons = GameObject.Find("Option Buttons");
-        // shutterButton = GameObject.Find("Shutter Button");
-        // flashObject = GameObject.Find("Flash");
-        // flashImage = flashObject.GetComponent<Image>();
-        // _videoImage = GameObject.Find("Image Note Content").GetComponent<Image>();
-        // systemMsgObj = GameObject.Find("System Message");
-        // systemMsg = GameObject.Find("System Message Text").GetComponent<TextMeshProUGUI>();
-
         flashObject.SetActive(false);
         optionButtons.SetActive(false);
         systemMsgObj.SetActive(false);
