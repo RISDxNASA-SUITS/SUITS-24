@@ -13,9 +13,9 @@ public class TssStateManger : MonoBehaviour
     // Start is called before the first frame update
     public string Host = "localhost";
     public int RisdTeamNum = 10;
-    public string Port;
+    public string Port = "14145";
     private TSScConnection tss;
-    public IEnumerable<Rock> Rocks;
+    public List<Rock> Rocks;
     public UiaData uia;
     private System.Timers.Timer rockTimer;
     private string url;
@@ -23,21 +23,20 @@ public class TssStateManger : MonoBehaviour
 
     IEnumerator GetRocks()
     {
-        Debug.Log("called");
+
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url + "/json_data/rocks/RockData.json"))
         {
             // Request and wait for the desired page.
-            yield return webRequest.SendWebRequest();
 
+            yield return webRequest.SendWebRequest();
             switch (webRequest.result)
             {
                 case UnityWebRequest.Result.Success:
-                    Debug.Log(webRequest.downloadHandler.text);
-                    Rocks = JsonConvert.DeserializeObject<RockList>(webRequest.downloadHandler.text).ROCKS;
+
+                    Rocks = JsonConvert.DeserializeObject<RockList>(webRequest.downloadHandler.text).ROCKS.ToList();
                     break;
                 default:
-                    Rocks = null;
-                    Debug.Log("failed");
+
                     break;
 
 
@@ -49,7 +48,7 @@ public class TssStateManger : MonoBehaviour
     void UpdateRocks()
     {
         StartCoroutine(GetRocks());
-        Debug.Log("called");
+
 
     }
 
@@ -58,6 +57,7 @@ public class TssStateManger : MonoBehaviour
         tss = gameObject.AddComponent<TSScConnection>();
         tss.ConnectToHost(Host, RisdTeamNum);
         url = "http://" + this.Host + ":" + this.Port;
+        Rocks = new List<Rock>();
 
 
 
