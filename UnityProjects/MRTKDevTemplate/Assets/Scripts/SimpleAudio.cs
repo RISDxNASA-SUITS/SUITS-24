@@ -35,25 +35,19 @@ public class SimpleAudio : MonoBehaviour
     private IEnumerator timeUpdateIEnum;
 
 
-    void Start()
+    void Awake()
     {
-        recordingOptionButtons = GameObject.Find("Voice Option Buttons");
-        recordingSystemMsg = GameObject.Find("System Message Text");
+        recordingOptionButtons = GameObject.Find("VN Option Buttons");
+        recordingSystemMsg = GameObject.Find("VN System Message Text");
 
-        recordingButton = GameObject.Find("Recording Button");
+        Debug.Log("Start(): Finding recordingButton");
+        recordingButton = GameObject.Find("VN Recording Button");
+        Debug.Log("recordingButton: " + recordingButton);
         recordingImage = recordingButton.transform.Find(
             "Frontplate/AnimatedContent/Icon/UIButtonSpriteIcon").GetComponent<Image>();
 
-        // recordingImage = GameObject.Find("Recording Button Image").GetComponent<Image>();
-        recordingImage.sprite = _startSprite;
-
-        timeCounterObj = GameObject.Find("Counter");
-        timeCounter = GameObject.Find("Time").GetComponent<TextMeshProUGUI>();
-
-        recordingOptionButtons.SetActive(false);
-        recordingSystemMsg.SetActive(false);
-
-        OnEnable();
+        timeCounterObj = GameObject.Find("VN Counter");
+        timeCounter = GameObject.Find("VN Time").GetComponent<TextMeshProUGUI>();
     }
 
     private IEnumerator updateTime()
@@ -71,7 +65,7 @@ public class SimpleAudio : MonoBehaviour
             yield return new WaitForSeconds(10 * 0.001f); // 10ms
         }
     }
-
+    
     void OnEnable()
     {
         if (_playbackAudioSource == null)
@@ -82,18 +76,26 @@ public class SimpleAudio : MonoBehaviour
             _playbackAudioSource.clip = null;
             _playbackAudioSource.loop = false;
         }
+
+        uiNewRecording();
     }
 
     void OnDisable()
     {
-        StopCapture();
+        mlAudioBufferClip?.Dispose();
+        mlAudioBufferClip = null;
 
+        _playbackAudioSource?.Stop();
+
+        // Stop the time update coroutine
         if (timeUpdateIEnum != null)
         {
             StopCoroutine(timeUpdateIEnum);
         }
     }
 
+    // Callback for the record button
+    // Start time update coroutine
     public void StartMicrophone()
     {
         _playbackAudioSource.Stop();
@@ -104,52 +106,47 @@ public class SimpleAudio : MonoBehaviour
         recordingImage.sprite = _stopSprite;
         // mlAudioBufferClip.OnReceivedSamples += DetectAudio;
 
+        // Start the time update coroutine
         StartCoroutine((timeUpdateIEnum = updateTime()));
     }
 
+    // Callback for the stop button
+    // Flush the clip to audio source
+    // Stop time update coroutine
     public void StopCapture()
     {
-        uiRecordingToConfirmation();
+        // Flush the clip
+        // _playbackAudioSource.clip = mlAudioBufferClip.FlushToClip();
+        _playbackAudioSource.time = 0;
 
-        Debug.Log("Calling discardRecordingFlush");
-        discardRecordingFlush();
-        Debug.Log("Called discardRecordingFlush");
-
-        currentTime = 0f;
-        timeCounter.text = "00:00:00";
-
-        //only for deploy testing
-        // discardRecordingFlush();
+        // !!! TODO: Only Play for testing. Remove later!!!!!
         _playbackAudioSource.Play();
 
-        // Stop audio playback source and reset settings.
-        // _playbackAudioSource.Stop();
-        // _playbackAudioSource.time = 0;
-        // _playbackAudioSource.pitch = 1;
-        // _playbackAudioSource.loop = false;
-        // _playbackAudioSource.clip = null;
+        // Don't need the buffer clip. Dispose it.
+        mlAudioBufferClip.Dispose();
+        mlAudioBufferClip = null;
+
+        // Stop the time update coroutine
+        StopCoroutine(timeUpdateIEnum);
+
+        uiConfirmation();
     }
 
     public void DiscardCallback()
     {
-        // Throw away the buffer clip
-        // discardRecordingNoFlush();
-        
         // UI: Go back to first page
-        uiConfirmationToRecording();
+        uiNewRecording();
     }
 
     public void SaveCallback()
     {
-        // discardRecordingFlush();
-
-        //TODO: Post _playbackAudioSource.clip to server
+        // TODO: Post _playbackAudioSource.clip to server
 
         // UI: Go back to first page
-        uiConfirmationToRecording();
+        uiNewRecording();
     }
 
-    private void uiRecordingToConfirmation()
+    private void uiConfirmation()
     {
         recordingButton.SetActive(false);
         timeCounterObj.SetActive(false);
@@ -158,58 +155,51 @@ public class SimpleAudio : MonoBehaviour
         recordingSystemMsg.SetActive(true);
     }
 
-    private void uiConfirmationToRecording()
+    private void uiNewRecording()
     {
         recordingButton.SetActive(true);
         timeCounterObj.SetActive(true);
 
         recordingOptionButtons.SetActive(false);
         recordingSystemMsg.SetActive(false);
+
+        recordingImage.sprite = _startSprite;
+        currentTime = 0f;
+        timeCounter.text = "00:00:00";
     }
 
-    private void discardRecordingFlush()
+/*    private void discardRecordingFlush()
     {
         _playbackAudioSource.clip = mlAudioBufferClip?.FlushToClip();
         discardRecordingNoFlush();
     }
+*/
 
-    private void discardRecordingNoFlush()
+/*    private void resetUI()
+    {
+        if (timeUpdateIEnum != null)
+        {
+            Debug.Log("Stopping time UI update coroutine...");
+            StopCoroutine(timeUpdateIEnum);
+            timeUpdateIEnum = null;
+            Debug.Log("Stopped time UI update coroutine.");
+        }
+        currentTime = 0f;
+        timeCounter.text = "00:00:00";
+        recordingImage.sprite = _startSprite;
+    }
+*/
+/*    private void discardRecordingNoFlush()
     {
         _playbackAudioSource.time = 0;
         mlAudioBufferClip?.Dispose();
         mlAudioBufferClip = null;
 
-
-        Debug.Log("Stopping coroutine...");
-        StopCoroutine(timeUpdateIEnum);
-        timeUpdateIEnum = null;
-        Debug.Log("Stopped coroutine.");
-
-        currentTime = 0f;
-        timeCounter.text = "00:00:00";
-
-        recordingImage.sprite = _startSprite;
+        resetUI();
     }
-
-    private void DetectAudio(float[] samples)
-    {
-
-    }
-
-    // private void updateTime()
-    // {
-    //     currentTime += Time.deltaTime;
-
-    //     int minutes = Mathf.FloorToInt(currentTime / 60f);
-    //     int seconds = Mathf.FloorToInt(currentTime % 60f);
-    //     int milliseconds = Mathf.FloorToInt((currentTime * 100f) % 100f);
-
-    //     timeCounter.text = string.Format("{0:00}:{1:00}.{2:00}", minutes, seconds, milliseconds);
-    // }
-
-    // private void OnPermissionGranted(string permission)
-    // {
-    //     StartMicrophone();
-    //     Debug.Log($"Succeeded in requesting {permission}.");
-    // }
+*/
+//    private void DetectAudio(float[] samples)
+//    {
+//
+//    }
 }
