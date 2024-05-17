@@ -2911,7 +2911,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navUI: {fileID: 293885541}
   egressUI: {fileID: 1233624650}
-  geoSamplingUI: {fileID: 0}
+  geoSamplingUI: {fileID: 1547004317}
   handMenuUI: {fileID: 1163376422}
 --- !u!1 &279403681
 GameObject:
