@@ -128,10 +128,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/VoiceNote.unity
     guid: 1dc83cf0eda9e3246a8eeedb7a718b6c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 683ce42c79cdd734fb298a26ce8c7441
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Scratch/Main_nav_test1.unity
     guid: 422f155c0116747348ed89e2b55245b2
   m_configObjects:
