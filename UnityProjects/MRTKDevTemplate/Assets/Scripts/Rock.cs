@@ -12,13 +12,13 @@
     {
         public float SiO2;
         public float TiO2;
-        public float Al203;
+        public float Al2O3;
         public float FeO;
         public float MnO;
         public float MgO;
         public float CaO;
         public float K2O;
-        public float P2O5;
+        public float P2O3;
         public float other;
     }
 
@@ -28,9 +28,15 @@
         public int id;
         public RockData data;
     }
-    public record RockList
+    public record RockInfo
     {
-        public IEnumerable<Rock> ROCKS;
+        public Rock eva1;
+        public Rock eva2;
+    }
+
+    public record DeserializeRock
+    {
+        public RockInfo spec;
     }
 }
 

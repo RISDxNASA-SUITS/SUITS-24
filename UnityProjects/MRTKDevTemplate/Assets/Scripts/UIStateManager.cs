@@ -32,7 +32,7 @@ public class UIStateManager : MonoBehaviour
     [SerializeField]
     private GameObject handMenuUI;
 
-    
+
 
     // UI object currently in display
     private GameObject currentUI;
@@ -47,7 +47,7 @@ public class UIStateManager : MonoBehaviour
         geoSamplingUI.SetActive(false);
 
         transitionToEgressUI();
-        
+
     }
 
     private void transitionToUI(GameObject toUI)
@@ -111,6 +111,6 @@ public class UIStateManager : MonoBehaviour
     {
         hideCurrentUI(geoSamplingUI);
         handMenuUI.SetActive(true);
-    }    
+    }
 
 }
