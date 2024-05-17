@@ -20,9 +20,9 @@ public class UIStateManager : MonoBehaviour
     [SerializeField]
     private GameObject navUI;
 
-    [Tooltip("The UIA game object")]
+    [Tooltip("The egress game object")]
     [SerializeField]
-    private GameObject uiaUI;
+    private GameObject egressUI;
 
     [Tooltip("The geo sampling game object")]
     [SerializeField]
@@ -43,16 +43,11 @@ public class UIStateManager : MonoBehaviour
     void Start()
     {
         navUI.SetActive(false);
-        uiaUI.SetActive(false);
+        egressUI.SetActive(false);
         geoSamplingUI.SetActive(false);
 
         transitionToEgressUI();
         
-    }
-
-    void Update()
-    {
-
     }
 
     private void transitionToUI(GameObject toUI)
@@ -86,19 +81,19 @@ public class UIStateManager : MonoBehaviour
     public void transitionToEgressUI()
     {
         handMenuUI.SetActive(false);
-        transitionToUI(uiaUI);
+        transitionToUI(egressUI);
     }
 
     public void transitionOutOfEgressUI()
     {
-        hideCurrentUI(uiaUI);
+        hideCurrentUI(egressUI);
         handMenuUI.SetActive(true);
     }
 
     public void transitionToIngressUI()
     {
         handMenuUI.SetActive(false);
-        transitionToUI(uiaUI);
+        transitionToUI(egressUI);
     }
 
     public void transitionOutOfIngressUI()

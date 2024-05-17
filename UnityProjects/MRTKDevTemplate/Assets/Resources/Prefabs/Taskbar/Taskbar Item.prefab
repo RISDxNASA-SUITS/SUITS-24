@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8972946485041546039}
   - component: {fileID: 8140086874244345912}
   m_Layer: 5
-  m_Name: UIA Status Inprogress
+  m_Name: Inprogress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 8750149178744071106}
   - component: {fileID: 7194323561936166718}
   m_Layer: 5
-  m_Name: UIA Task Description
+  m_Name: Task Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 9160234623743888750}
   - component: {fileID: 8908270240228845029}
   m_Layer: 5
-  m_Name: UIA Task Item
+  m_Name: Taskbar Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 5616222044017070762}
   - component: {fileID: 5842209628712237915}
   m_Layer: 5
-  m_Name: UIA Status Complete
+  m_Name: Complete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 3773613328063209954}
   - component: {fileID: 5702731616900790914}
   m_Layer: 5
-  m_Name: UIA Task Status
+  m_Name: Task Status
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
