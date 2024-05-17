@@ -39,8 +39,8 @@ public class TSScConnection : MonoBehaviour
     // Connect to TSSc with a specific team number
     public void ConnectToHost(string host, int team_number)
     {
-        this.host = host;
-        this.port = "8080";
+        this.host = "localhost";
+        this.port = "14145";
         this.team_number = team_number;
         this.url = "http://" + this.host + ":" + this.port;
         Debug.Log(this.url);
