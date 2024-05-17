@@ -5,11 +5,17 @@ using UnityEngine;
 public abstract class TaskDescriptor : MonoBehaviour
 {
     protected string[] taskHeadings;
+    protected string[] taskTitles;
     protected string[][] taskSteps;
 
     public virtual string[] TaskHeadings
     {
         get { return taskHeadings; }
+    }
+
+    public virtual string[] TaskTitles
+    {
+        get { return taskTitles; }
     }
 
     public virtual string[][] TaskSteps

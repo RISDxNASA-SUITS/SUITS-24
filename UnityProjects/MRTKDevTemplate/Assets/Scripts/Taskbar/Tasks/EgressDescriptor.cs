@@ -20,6 +20,22 @@ public class EgressDescriptor : TaskDescriptor
         "END Depress, Check Switches and Disconnect (3)"
     };
 
+    private string[] myTaskTitles = {
+        // step 1
+        "Connect",
+        // step 2
+        "O2",
+        "",
+        "",
+        // step 3
+        "Water",
+        "",
+        // step 4
+        "Disconnect",
+        "",
+        ""
+    };
+
     private string[][] myTaskSteps = {
         new string[] {
             // step 1
@@ -87,6 +103,11 @@ public class EgressDescriptor : TaskDescriptor
     public override string[] TaskHeadings
     {
         get { return myTaskHeadings; }
+    }
+
+    public override string[] TaskTitles
+    {
+        get { return myTaskTitles; }
     }
 
     public override string[][] TaskSteps
