@@ -75,6 +75,7 @@ public class SimpleCamera : MonoBehaviour
     void OnEnable()
     {
         //This script assumes that camera permissions were already granted.
+        _updateViewFinder = true;
         StartCoroutine(EnableMLCamera());
         shutterButton.SetActive(true);
     }
