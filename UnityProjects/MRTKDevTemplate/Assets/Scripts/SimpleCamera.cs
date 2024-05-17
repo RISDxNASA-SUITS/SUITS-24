@@ -128,6 +128,7 @@ public class SimpleCamera : MonoBehaviour
         _updateViewFinder = true;
     }
 
+    //SaveCallback() for Nav
     public void SaveCallback()
     {
         // We have the last captured image stored as a texture.
