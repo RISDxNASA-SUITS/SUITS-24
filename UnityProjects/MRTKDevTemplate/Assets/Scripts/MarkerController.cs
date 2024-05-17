@@ -15,8 +15,9 @@ public enum MarkerType
     POI,
     Rover,
     Obstacle,
-    RoverMarker,
+    Stations,
 };
+
 public enum MarkerActionMode
 {
     None,
@@ -34,11 +35,11 @@ public class MarkerController : MonoBehaviour
         public readonly GameObject MapMarkerObj;
         public readonly RectTransform MapMarkerRT;
 
-        public Marker(MarkerType type, Vector2 gpsCoord)
+        public Marker(MarkerType type, GameObject prefab, Vector2 gpsCoord)
         {
             Type = type;
             GpsCoord = gpsCoord;
-            MapMarkerObj = Instantiate(prefabDict[type], markersTf);
+            MapMarkerObj = Instantiate(prefab, markersTf);
             MapMarkerRT = MapMarkerObj.GetComponent<RectTransform>();
         }
 
@@ -86,7 +87,7 @@ public class MarkerController : MonoBehaviour
         }
     }
 
-    [SerializeField] private float markerEditSensitivity = 0.000033f;
+    private float markerEditSensitivity = 2f;
 
     private static RectTransform mapRT;
     private static Transform markersTf;
@@ -119,18 +120,19 @@ public class MarkerController : MonoBehaviour
 
     [SerializeField] private MapController mapController;
 
-    List<Vector2> InitialRoverMarkerLocs = new List<Vector2>
+    private readonly Dictionary<string, Tuple<float, float>> stations = new Dictionary<string, Tuple<float, float>>
     {
-        new Vector2(29.5648150f, -95.0817410f),
-        new Vector2(29.5646824f, -95.0811564f),
-        new Vector2(29.5650460f, -95.0810944f),
-        new Vector2(29.5645430f, -95.0516440f),
-        new Vector2(29.5648290f, -95.0813750f),
-        new Vector2(29.5647012f, -95.0813750f),
-        new Vector2(29.5651359f,-95.0807408f),
-        new Vector2(29.5651465f, -95.0814092f),
-        new Vector2(29.5648850f, -95.0808360f),
+        { "A", new Tuple<float, float>  (298323.2559f, 3272354.329f) },
+        { "B", new Tuple<float, float>  (298337.6355f, 3272363.173f) },
+        { "C", new Tuple<float, float>  (298330.4457f, 3272371.512f) },
+        { "D", new Tuple<float, float>  (298337.7444f, 3272379.85f) },
+        { "E", new Tuple<float, float>  (298355.6099f, 3272375.555f)},
+        { "G", new Tuple<float, float>  (298355.6099f, 3272392.358f) },
+        { "F", new Tuple<float, float>  (298373.8023f, 3272392.358f)},
+        { "UIA", new Tuple<float, float> (298359.2048f, 3272350.918f)}, 
+        { "COMM", new Tuple<float, float>(298377.1793f, 3272383.767f)},
     };
+        
 
     void Start()
     {
@@ -167,6 +169,7 @@ public class MarkerController : MonoBehaviour
             { MarkerType.POI, true },
             { MarkerType.Obstacle, true },
             { MarkerType.Rover, false },
+            { MarkerType.Stations, true }
         };
 
         actionButtons.SetActive(false);
@@ -176,9 +179,18 @@ public class MarkerController : MonoBehaviour
             kvp.Value.SetActive(false);
         };
 
+        // Initialize default stations
+        foreach (var kvp in stations)
+        {
+            Vector2 utmCoord = new Vector2(kvp.Value.Item1, kvp.Value.Item2);
+            string path = "Prefabs/Markers/" + kvp.Key;
+            var stationMarker = new Marker(MarkerType.Stations, Resources.Load<GameObject>(path), utmCoord);
+            markers.Add(stationMarker.MapMarkerObj, stationMarker);
+        }
+
         // Initialize rover
         Vector2 roverGpsCoord = new Vector2(GPS.SatCenterLatitude, GPS.SatCenterLongitude);
-        rover = new Marker(MarkerType.Rover, roverGpsCoord);
+        rover = new Marker(MarkerType.Rover, prefabDict[MarkerType.Rover], roverGpsCoord);
         markers.Add(rover.MapMarkerObj, rover);
     }
 
@@ -215,12 +227,12 @@ public class MarkerController : MonoBehaviour
         {
             MarkerType type = kvp.Value.Type;
 
-            if (showMarker[type]) kvp.Value.Show();
-            else
-            {
-                kvp.Value.Hide();
-                continue;
-            }
+            // if (showMarker[type]) kvp.Value.Show();
+            // else
+            // {
+            //     kvp.Value.Hide();
+            //     continue;
+            // }
 
             kvp.Value.Update(userGps, userLook);
         }
@@ -249,14 +261,13 @@ public class MarkerController : MonoBehaviour
 
     public void HideActionButtons()
     {
-        if (currMarker != null && currMarker.Type == MarkerType.RoverMarker) currMarker.SetOpacity(0.3f);
         actionButtons.SetActive(false);
         mode = MarkerActionMode.None;
     }
 
     private void AddMarker(Vector2 touchCoord)
     {
-        currMarker = new Marker(selectedMarkerType, gps.MapPosToGps(touchCoord));
+        currMarker = new Marker(selectedMarkerType, prefabDict[selectedMarkerType], gps.MapPosToGps(touchCoord));
         currMarker.SetOpacity(0.5f);
         markers.Add(currMarker.MapMarkerObj, currMarker);
         markerImages[selectedMarkerType].SetActive(true);
@@ -267,7 +278,7 @@ public class MarkerController : MonoBehaviour
     {
         if (mode != MarkerActionMode.None || deleteConfirmation.activeSelf) return;
 
-        float minDist = markerEditSensitivity + 1;
+        float minDist = markerEditSensitivity;
         Vector2 touchGps = gps.MapPosToGps(touchCoord);
 
         foreach (var kvp in markers)
@@ -280,6 +291,7 @@ public class MarkerController : MonoBehaviour
             }
         }
 
+        Debug.Log(minDist);
         if (minDist < markerEditSensitivity)
         {
             actionButtons.SetActive(true);
@@ -309,10 +321,6 @@ public class MarkerController : MonoBehaviour
     public void OnPoiPressed()
     {
         SelectNewMarkerType(MarkerType.POI);
-    }
-    public void OnRoverMarkerPressed()
-    {
-        SelectNewMarkerType(MarkerType.RoverMarker);
     }
 
     public void OnMarkerMovePressed()
@@ -363,23 +371,7 @@ public class MarkerController : MonoBehaviour
         // Toggling the same marker type
         if (selectedMarkerType == type)
         {
-            if (type == MarkerType.RoverMarker)
-            {
-                if (markerImages[type].activeSelf)
-                {
-                    // Start rover command
-                    showMarker[type] = true;
-                }
-                else
-                {
-                    // Cancel rover command
-                    showMarker[type] = false;
-                }
-            }
-            else
-            {
-                mode = markerImages[type].activeSelf ? MarkerActionMode.Add : MarkerActionMode.None;
-            }
+            mode = markerImages[type].activeSelf ? MarkerActionMode.Add : MarkerActionMode.None;
             markerImages[type].SetActive(!markerImages[type].activeSelf);
             glowingMarkerImages[type].SetActive(!glowingMarkerImages[type].activeSelf);
         }
@@ -388,10 +380,6 @@ public class MarkerController : MonoBehaviour
             // State reset if another marker is selected
             if (glowingMarkerImages[selectedMarkerType].activeSelf)
             {
-                if (selectedMarkerType == MarkerType.RoverMarker)
-                {
-                    // Hide all rover markers again
-                }
                 markerImages[selectedMarkerType].SetActive(true);
                 glowingMarkerImages[selectedMarkerType].SetActive(false);
             }
@@ -403,10 +391,11 @@ public class MarkerController : MonoBehaviour
                 case MarkerType.Obstacle:
                     mode = MarkerActionMode.Add;
                     break;
-                case MarkerType.RoverMarker:
-                    showMarker[type] = true;
+                default:
+                    mode = MarkerActionMode.None;
                     break;
             }
+
             markerImages[type].SetActive(false);
             glowingMarkerImages[type].SetActive(true);
             selectedMarkerType = type;
