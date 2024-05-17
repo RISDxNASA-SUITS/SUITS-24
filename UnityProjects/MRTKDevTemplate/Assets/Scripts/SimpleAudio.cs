@@ -43,22 +43,6 @@ public class SimpleAudio : MonoBehaviour
 
     private IEnumerator timeUpdateIEnum;
 
-
-/*    void Awake()
-    {
-*//*        recordingOptionButtons = GameObject.Find("VN Option Buttons");
-        recordingSystemMsg = GameObject.Find("VN System Message Text");
-*//*
-        //Debug.Log("Start(): Finding recordingButton");
-*//*        recordingButton = GameObject.Find("VN Recording Button");
-        //Debug.Log("recordingButton: " + recordingButton);
-        recordingImage = recordingButton.transform.Find(
-            "Frontplate/AnimatedContent/Icon/UIButtonSpriteIcon").GetComponent<Image>();
-
-        timeCounterObj = GameObject.Find("VN Counter");
-        timeCounter = GameObject.Find("VN Time").GetComponent<TextMeshProUGUI>();
-*//*    }
-*/
     private IEnumerator updateTime()
     {
         while (true) 
@@ -79,7 +63,7 @@ public class SimpleAudio : MonoBehaviour
     {
         if (_playbackAudioSource == null)
         {
-            Debug.LogError("PlaybackAudioSource is not set, adding component to " + gameObject.name);
+            Debug.LogWarning("PlaybackAudioSource is not set, adding component to " + gameObject.name);
             _playbackAudioSource = gameObject.AddComponent<AudioSource>();
             // _playbackAudioSource.pitch = _pitch;
             _playbackAudioSource.clip = null;
@@ -179,36 +163,6 @@ public class SimpleAudio : MonoBehaviour
         timeCounter.text = "00:00:00";
     }
 
-/*    private void discardRecordingFlush()
-    {
-        _playbackAudioSource.clip = mlAudioBufferClip?.FlushToClip();
-        discardRecordingNoFlush();
-    }
-*/
-
-/*    private void resetUI()
-    {
-        if (timeUpdateIEnum != null)
-        {
-            Debug.Log("Stopping time UI update coroutine...");
-            StopCoroutine(timeUpdateIEnum);
-            timeUpdateIEnum = null;
-            Debug.Log("Stopped time UI update coroutine.");
-        }
-        currentTime = 0f;
-        timeCounter.text = "00:00:00";
-        recordingImage.sprite = _startSprite;
-    }
-*/
-/*    private void discardRecordingNoFlush()
-    {
-        _playbackAudioSource.time = 0;
-        mlAudioBufferClip?.Dispose();
-        mlAudioBufferClip = null;
-
-        resetUI();
-    }
-*/
 //    private void DetectAudio(float[] samples)
 //    {
 //

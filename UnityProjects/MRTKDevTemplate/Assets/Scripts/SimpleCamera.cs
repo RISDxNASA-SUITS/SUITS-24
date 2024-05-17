@@ -29,7 +29,7 @@ public class SimpleCamera : MonoBehaviour
     [SerializeField, Tooltip("The animation curve for flash effect")]
     private AnimationCurve flashAnimationCurve;
     [SerializeField, Tooltip("The duration of the system message (seconds)")]
-    float systemMsgDurationSecs = 1.5f;
+    float systemMsgDurationSecs = 0.5f;
 
     //The identifier can either target the Main or CV cameras.
     // private MLCamera.Identifier _identifier = MLCamera.Identifier.Main;
@@ -47,7 +47,7 @@ public class SimpleCamera : MonoBehaviour
     private Image _videoImage;
 
     //The camera capture state
-    bool _isCapturing;
+    bool _isCapturing = false;
     bool _updateViewFinder = true;
 
     [SerializeField]
@@ -76,11 +76,14 @@ public class SimpleCamera : MonoBehaviour
     {
         //This script assumes that camera permissions were already granted.
         StartCoroutine(EnableMLCamera());
+        shutterButton.SetActive(true);
     }
 
     void OnDisable()
     {
         StopCapture();
+        systemMsgObj.SetActive(false);
+        optionButtons.SetActive(false);
     }
 
     private IEnumerator doFlash(float durationSec)
@@ -248,8 +251,12 @@ public class SimpleCamera : MonoBehaviour
             _camera.CaptureVideoStop();
         }
 
-        _camera.Disconnect();
-        _camera.OnRawVideoFrameAvailable -= RawVideoFrameAvailable;
+        if (_camera != null)
+        {
+            _camera.Disconnect();
+            _camera.OnRawVideoFrameAvailable -= RawVideoFrameAvailable;
+        }
+
         _isCapturing = false;
     }
 
