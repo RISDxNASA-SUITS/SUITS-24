@@ -44,6 +44,7 @@ public class UIStateManager : MonoBehaviour
     {
         navUI.SetActive(false);
         uiaUI.SetActive(false);
+        geoSamplingUI.SetActive(false);
 
         transitionToEgressUI();
         
