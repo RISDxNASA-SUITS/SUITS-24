@@ -1,0 +1,47 @@
+{
+    "instructions": [
+        {
+            "name": "Connect UIA to DCU and start Depress",
+            "steps": [
+                {
+                    "name": "EV1 and EV2 connect UIA and DCU umbilical",
+                    "tag": "UIA and DCU",
+                    "condition": null
+                },
+                {
+                    "name": "EV-1, EV-2 PWR - ON",
+                    "tag": "UIA",
+                    "condition": {
+                        "eva": {
+                            "eva1_power": true,
+                            "eva2_power": true
+                        }
+                    }
+                },
+                {
+                    "name": "BATT - UMB",
+                    "tag": "BOTH DCU",
+                    "condition": {
+                        "dcu": {
+                            "eva1": {
+                                "batt": true
+                            },
+                            "eva2": {
+                                "batt": true
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "DEPRESS PUMP PWR - ON",
+                    "tag": "UIA",
+                    "condition": {
+                        "uia": {
+                            "depress": true
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

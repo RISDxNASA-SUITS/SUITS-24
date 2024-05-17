@@ -1,0 +1,18 @@
+body {
+  font-family: "IBM Plex Sans", sans-serif;
+  background-image: url('/bg.svg');
+  background-repeat: no-repeat;
+  color: white;
+}
+
+h1 {
+  font-weight: 300;
+}
+
+h2 {
+  font-weight: 500;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

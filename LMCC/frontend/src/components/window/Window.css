@@ -1,0 +1,31 @@
+.window {
+    background-color: #13141980;
+    overflow: hidden;
+    opacity: 99%;
+
+    width: 100%;
+    min-height: 150px;
+
+    border-radius: 16px;
+    /* border-color: white;
+    border-width: 2px; */
+
+    margin-bottom: 4rem;
+    z-index: 1;
+
+    user-select: none;
+}
+
+.window-cover {
+    background-image: url('/bg.svg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    position: absolute;
+
+    width: 100%;
+    min-height: 150px;
+    border-radius: 16px;
+
+    z-index: 0;
+}
