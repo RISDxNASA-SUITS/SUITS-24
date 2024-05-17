@@ -26,7 +26,7 @@ public class EgressDescriptor : TaskDescriptor
             "(UIA and DCU) EV1 and EV2 connect UIA and DCU umbilical",
             "(UIA) EV-1, EV-2 PWR - ON",
             "(BOTH DCU) BATT - UMB",
-            "(UIA) EPRESS PUMP PWR - ON"
+            "(DCU) EPRESS PUMP PWR - ON"
         },
         new string[] {
             // step 2 part 1
@@ -87,12 +87,42 @@ public class EgressDescriptor : TaskDescriptor
     public override string[] TaskHeadings
     {
         get { return myTaskHeadings; }
-        set { this.myTaskHeadings = value; }
     }
 
     public override string[][] TaskSteps
     {
         get { return myTaskSteps; }
-        set { this.myTaskSteps = value; }
+    }
+
+    public override bool StepCompleted(int currTask, int currStep, TSScConnection tss)
+    {
+        if (currTask < 0 || currTask >= myTaskHeadings.Length) return false;
+        if (currStep < 0 || currStep >= myTaskSteps[currTask].Length) return false;
+
+        UIA uia = tss.GetUIA();
+        DCU dcu = tss.GetDCU();
+        
+        if (uia == null || dcu == null) return false;
+
+        switch (currTask)
+        {
+            case 0: // Connect UIA to DCU and start Depress
+                switch (currStep)
+                {
+                    case 0: // (UIA and DCU) EV1 and EV2 connect UIA and DCU umbilical
+                        return false;
+                    case 1: // (UIA) EV-1, EV-2 PWR - ON
+                        return uia.eva1_power && uia.eva2_power;
+                    case 2: // (BOTH DCU) BATT - UMB
+                        return dcu.eva1.batt && dcu.eva2.batt;
+                    case 3: // (DCU) EPRESS PUMP PWR - ON
+                        return dcu.eva1.pump && dcu.eva2.pump;
+                    default:
+                        return false;
+                }
+
+            default:
+                return false;
+        }
     }
 }

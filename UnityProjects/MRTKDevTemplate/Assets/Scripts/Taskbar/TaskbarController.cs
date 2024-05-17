@@ -11,10 +11,11 @@ public class TaskbarController : MonoBehaviour
     private GameObject taskListItemPrefab;
     private GameObject[] taskListItems;
     private GameObject[] taskProgressDots;
-    private UIStateManager ui;
+    private UIStateManager uiStateManager;
 
     [SerializeField]
     private TaskDescriptor taskDescriptor;
+    private TSScConnection tssConn;
 
     // Start is called before the first frame update
     void Start()
@@ -25,14 +26,20 @@ public class TaskbarController : MonoBehaviour
         taskListItemPrefab = Resources.Load<GameObject>("Prefabs/Taskbar/Taskbar Item");
         taskListParentT = transform.Find("Taskbar Panel").Find("Task List");
 
-        ui = GameObject.Find("UI Controller").GetComponent<UIStateManager>();
-
+        uiStateManager = GameObject.Find("UI Controller").GetComponent<UIStateManager>();
+        tssConn = GameObject.Find("TSS Agent").GetComponent<TSScConnection>();
+    
         taskProgressDots = new GameObject[taskHeadings.Length];
         for (int i = 0; i < taskHeadings.Length; i++) {
             taskProgressDots[i] = GameObject.Find(taskHeadings[i]);
         }
 
         SetupTask();
+    }
+
+    void Update()
+    {
+        if (taskDescriptor.StepCompleted(currTask, currStep, tssConn)) NextStep();
     }
     
     void SetupTask()
@@ -54,8 +61,6 @@ public class TaskbarController : MonoBehaviour
         int numSteps = taskSteps[currTask].Length;
         taskListItems = new GameObject[numSteps];
 
-        Debug.Log(numSteps);
-
         taskTitle.text = taskHeadings[currTask];
         for (int i = 0; i < numSteps; i++)
         {
@@ -68,7 +73,7 @@ public class TaskbarController : MonoBehaviour
         taskListItems[0].transform.Find("Task Status").Find("Inprogress").gameObject.SetActive(true);
     }
 
-    public void NextBtnOnClick()
+    public void NextStep()
     {
         string[] taskHeadings = taskDescriptor.TaskHeadings;
         string[][] taskSteps = taskDescriptor.TaskSteps;
@@ -96,7 +101,7 @@ public class TaskbarController : MonoBehaviour
             else {
                 // All tasks are complete
                 Debug.Log("Finished tasks");
-                ui.transitionOutOfEgressUI();
+                uiStateManager.transitionOutOfEgressUI();
             }
         }
     }

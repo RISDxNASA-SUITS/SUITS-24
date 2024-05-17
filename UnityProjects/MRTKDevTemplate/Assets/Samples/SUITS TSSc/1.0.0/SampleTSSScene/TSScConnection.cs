@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-
+using Newtonsoft.Json;
 using TMPro;
 
 public class TSScConnection : MonoBehaviour
@@ -32,11 +32,15 @@ public class TSScConnection : MonoBehaviour
     bool IMUUpdated;
     string IMUJsonString;
 
+    // Deserialized Jsons
+    UIA uia;
+    DCU dcu;
+
     // Connect to TSSc with a specific team number
     public void ConnectToHost(string host, int team_number)
     {
         this.host = host;
-        this.port = "14145";
+        this.port = "8080";
         this.team_number = team_number;
         this.url = "http://" + this.host + ":" + this.port;
         Debug.Log(this.url);
@@ -53,7 +57,7 @@ public class TSScConnection : MonoBehaviour
     // This Function is called when the program begins
     void Start()
     {
-        this.connected = false;
+        ConnectToHost("localhost", 10);
     }
 
     // This Function is called each render frame
@@ -121,6 +125,7 @@ public class TSScConnection : MonoBehaviour
                     {
                         this.UIAUpdated = true;
                         this.UIAJsonString = webRequest.downloadHandler.text;
+                        this.uia = JsonConvert.DeserializeObject<UIAWrapper>(this.UIAJsonString).uia;
                     }
                     break;
             }
@@ -132,6 +137,12 @@ public class TSScConnection : MonoBehaviour
     {
         UIAUpdated = false;
         return this.UIAJsonString;
+    }
+
+    public UIA GetUIA()
+    {
+        UIAUpdated = false;
+        return this.uia;
     }
 
     public bool isUIAUpdated()
@@ -155,7 +166,7 @@ public class TSScConnection : MonoBehaviour
                     {
                         this.DCUUpdated = true;
                         this.DCUJsonString = webRequest.downloadHandler.text;
-                        Debug.Log(this.DCUJsonString);
+                        this.dcu = JsonConvert.DeserializeObject<DCUWrapper>(this.DCUJsonString).dcu;
                     }
                     break;
             }
@@ -167,6 +178,12 @@ public class TSScConnection : MonoBehaviour
     {
         DCUUpdated = false;
         return this.DCUJsonString;
+    }
+
+    public DCU GetDCU()
+    {
+        DCUUpdated = false;
+        return this.dcu;
     }
 
     public bool isDCUUpdated()
@@ -190,7 +207,7 @@ public class TSScConnection : MonoBehaviour
                     {
                         this.ROVERUpdated = true;
                         this.ROVERJsonString = webRequest.downloadHandler.text;
-                        Debug.Log(this.ROVERJsonString);
+                        // Debug.Log(this.ROVERJsonString);
                     }
                     break;
             }
@@ -225,7 +242,7 @@ public class TSScConnection : MonoBehaviour
                     {
                         this.SPECUpdated = true;
                         this.SPECJsonString = webRequest.downloadHandler.text;
-                        Debug.Log(this.SPECJsonString);
+                        // Debug.Log(this.SPECJsonString);
                     }
                     break;
             }
@@ -260,7 +277,7 @@ public class TSScConnection : MonoBehaviour
                     {
                         this.TELEMETRYUpdated = true;
                         this.TELEMETRYJsonString = webRequest.downloadHandler.text;
-                        Debug.Log(this.TELEMETRYJsonString);
+                        // Debug.Log(this.TELEMETRYJsonString);
                     }
                     break;
             }
@@ -295,7 +312,7 @@ public class TSScConnection : MonoBehaviour
                     {
                         this.COMMUpdated = true;
                         this.COMMJsonString = webRequest.downloadHandler.text;
-                        Debug.Log(this.COMMJsonString);
+                        // Debug.Log(this.COMMJsonString);
                     }
                     break;
             }
@@ -330,7 +347,7 @@ public class TSScConnection : MonoBehaviour
                     {
                         this.IMUUpdated = true;
                         this.IMUJsonString = webRequest.downloadHandler.text;
-                        Debug.Log(this.IMUJsonString);
+                        // Debug.Log(this.IMUJsonString);
                     }
                     break;
             }
