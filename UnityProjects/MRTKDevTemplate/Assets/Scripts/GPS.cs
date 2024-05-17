@@ -6,11 +6,11 @@ public class GPS : MonoBehaviour
 {
     /************* Satellite **************/
     // hard coded center
-    public const float SatCenterLatitude = 29.564575f;   // latitude at the center of the satellite image, in degree
-    public const float SatCenterLongitude = -95.081164f;  // longitude at the center of the satellite image, in degree
+    public const float SatCenterLatitude = 298355f;   // latitude at the center of the satellite image, in degree
+    public const float SatCenterLongitude = 3272383f;  // longitude at the center of the satellite image, in degree
     // hard coded scale
-    const float SatLatitudeRange = 0.002216f;  // the satellite image covers this much latitudes in degree
-    const float SatLongitudeRange = 0.00255f;  // the satellite image covers this much longitudes in degree
+    const float SatLatitudeRange = 100f;  // the satellite image covers this much latitudes in degree
+    const float SatLongitudeRange = 108f;  // the satellite image covers this much longitudes in degree
 
     /************* GameObject References **************/
     private Camera mainCamera;
@@ -29,7 +29,7 @@ public class GPS : MonoBehaviour
     {
         Vector3 worldPos = mainCamera.transform.position;
         Vector2 gpsCoords = new Vector2(SatCenterLatitude, SatCenterLongitude);
-        gpsCoords += 5e-5f * new Vector2(worldPos.z, worldPos.x);
+        gpsCoords += 50 * new Vector2(worldPos.z, worldPos.x); // in mapnav, shift+w/a/s/d to move cur position
         return gpsCoords;
         // return userGps;
     }
