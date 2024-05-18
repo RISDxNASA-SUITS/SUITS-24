@@ -5,6 +5,7 @@ using Unity.Collections;
 using UnityEngine.XR.Interaction.Toolkit;
 using MixedReality.Toolkit.Input;
 using RectTransform = UnityEngine.RectTransform;
+using UnityEngine.UI;
 
 namespace MixedReality.Toolkit.Suits.Map
 {
@@ -55,6 +56,12 @@ namespace MixedReality.Toolkit.Suits.Map
         private GameObject mapTitle;
         private GameObject ZoomInOut;
 
+        /* Coordinates */
+        private RectTransform xCoordsRT;
+        private RectTransform yCoordsRT;
+        private HorizontalLayoutGroup xCoordsHGroup;
+        private   VerticalLayoutGroup yCoordsVGroup;
+
         void Start()
         {
             mainCamera = Camera.main;
@@ -79,6 +86,13 @@ namespace MixedReality.Toolkit.Suits.Map
             markerVoiceNote = GameObject.Find("Marker Voice Note");
             markerImageNote.SetActive(false);
             markerVoiceNote.SetActive(false);
+
+            var xCoords = GameObject.Find("X Coordinates");
+            var yCoords = GameObject.Find("Y Coordinates");
+            xCoordsRT = xCoords.GetComponent<RectTransform>();
+            yCoordsRT = yCoords.GetComponent<RectTransform>();
+            xCoordsHGroup = xCoords.GetComponent<HorizontalLayoutGroup>();
+            yCoordsVGroup = yCoords.GetComponent<VerticalLayoutGroup>();
         }
 
         void Update()
@@ -92,6 +106,20 @@ namespace MixedReality.Toolkit.Suits.Map
                     AlignMapWithUser();
                     break;
             }
+
+            // Scale and translate the coordinates
+            const float BASE_SPACING = 11.7f;
+            var spacing = mapRT.localScale.x * BASE_SPACING;
+            xCoordsHGroup.spacing = spacing;
+            yCoordsVGroup.spacing = spacing;
+
+            var xCoordsLocalPos = xCoordsRT.localPosition;
+            xCoordsLocalPos.x = mapRT.offsetMin.x;
+            xCoordsRT.localPosition = xCoordsLocalPos;
+
+            var yCoordsLocalPos = yCoordsRT.localPosition;
+            yCoordsLocalPos.y = mapRT.offsetMin.y;
+            yCoordsRT.localPosition = yCoordsLocalPos;
         }
 
         public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
