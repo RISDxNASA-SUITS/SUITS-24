@@ -75,6 +75,7 @@ public class SimpleCamera : MonoBehaviour
     void OnEnable()
     {
         //This script assumes that camera permissions were already granted.
+        _updateViewFinder = true;
         StartCoroutine(EnableMLCamera());
         shutterButton.SetActive(true);
     }
@@ -127,6 +128,7 @@ public class SimpleCamera : MonoBehaviour
         _updateViewFinder = true;
     }
 
+    //SaveCallback() for Nav
     public void SaveCallback()
     {
         // We have the last captured image stored as a texture.

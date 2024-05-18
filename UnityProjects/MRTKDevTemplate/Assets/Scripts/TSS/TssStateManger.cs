@@ -33,7 +33,7 @@ public class TssStateManger : MonoBehaviour
             {
                 case UnityWebRequest.Result.Success:
 
-                    Rocks = JsonConvert.DeserializeObject<RockList>(webRequest.downloadHandler.text).ROCKS.ToList();
+                    //Rocks = JsonConvert.DeserializeObject<RockList>(webRequest.downloadHandler.text).ROCKS.ToList();
                     break;
                 default:
 
