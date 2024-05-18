@@ -1,7 +1,10 @@
 from flask import Flask, request, send_file, jsonify
+from flask_cors import CORS
+import json
 import os
 
 app = Flask(__name__)
+CORS(app)
 
 # LMCC -> HMD
 actions = []
@@ -14,10 +17,23 @@ state = {}
 new_state = False
 
 # Backend configuration
-ROOT_FOLDER = "root"
-app.config["ROOT_FOLDER"] = ROOT_FOLDER
-if not os.path.exists(ROOT_FOLDER):
-    os.makedirs(ROOT_FOLDER)
+EVA_NUM = 1
+FS_ROOT = "root"
+MISSION_FOLDER = "mission"
+if not os.path.exists(FS_ROOT):
+    os.makedirs(FS_ROOT)
+
+
+@app.route("/get-tasks", methods=["GET"])
+def get_tasks():
+    task_titles = ["egress"]
+    tasks = []
+
+    for title in task_titles:
+        with open(f"{MISSION_FOLDER}/{title}.json", "r") as f:
+            tasks.append(json.load(f))
+
+    return jsonify(tasks), 200
 
 
 @app.route("/post-action", methods=["POST"])
@@ -47,6 +63,7 @@ def get_state():
     else:
         return jsonify({})
 
+
 @app.route("/post-notification", methods=["POST"])
 def post_notification():
     global notifications
@@ -75,10 +92,10 @@ def upload_file():
     fpath = request.form.get("file_path", "")
 
     # Create the directory if it doesn't exist
-    dir_path = os.path.dirname(os.path.join(app.config["ROOT_FOLDER"], fpath))
+    dir_path = os.path.dirname(os.path.join(FS_ROOT, fpath))
     os.makedirs(dir_path, exist_ok=True)
 
-    full_fpath = os.path.join(app.config["ROOT_FOLDER"], fpath)
+    full_fpath = os.path.join(FS_ROOT, fpath)
     file.save(full_fpath)
 
     return jsonify({"message": "File uploaded successfully"}), 200
@@ -88,7 +105,7 @@ def upload_file():
 def list_files():
     # Get the directory from the request parameters
     dir = request.args.get("directory", "")
-    dir_path = os.path.join(app.config["ROOT_FOLDER"], dir)
+    dir_path = os.path.join(FS_ROOT, dir)
     if not os.path.exists(dir_path):
         return jsonify({"message": "Directory not found"}), 404
 
@@ -100,7 +117,7 @@ def list_files():
 @app.route("/download", methods=["GET"])
 def download_file():
     fpath = request.args.get("file_path", "")
-    full_fpath = os.path.join(app.config["ROOT_FOLDER"], fpath)
+    full_fpath = os.path.join(FS_ROOT, fpath)
     if not os.path.exists(full_fpath):
         return jsonify({"message": "File not found"}), 404
 
@@ -110,7 +127,7 @@ def download_file():
 @app.route("/delete", methods=["DELETE"])
 def delete_file():
     fpath = request.args.get("file_path", "")
-    full_fpath = os.path.join(app.config["ROOT_FOLDER"], fpath)
+    full_fpath = os.path.join(FS_ROOT, fpath)
     if not os.path.exists(full_fpath):
         return jsonify({"message": "File not found"}), 404
 
