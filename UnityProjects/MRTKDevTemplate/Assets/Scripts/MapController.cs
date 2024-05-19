@@ -6,6 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 using MixedReality.Toolkit.Input;
 using RectTransform = UnityEngine.RectTransform;
 using UnityEngine.UI;
+using UnityEditor.PackageManager;
 
 namespace MixedReality.Toolkit.Suits.Map
 {
@@ -56,11 +57,16 @@ namespace MixedReality.Toolkit.Suits.Map
         private GameObject mapTitle;
         private GameObject ZoomInOut;
 
-        /* Coordinates */
-        private RectTransform xCoordsRT;
-        private RectTransform yCoordsRT;
+        /* Coordinates overlay */
+        private RectTransform xCoordsTextsRT;
+        private RectTransform yCoordsTextsRT;
         private HorizontalLayoutGroup xCoordsHGroup;
-        private   VerticalLayoutGroup yCoordsVGroup;
+        private VerticalLayoutGroup yCoordsVGroup;
+
+        private RectTransform xCoordsRT;
+
+        private static float mapPanelWidth = 324.0f;
+        private static float detailMapPanelWidth = 200.0f;
 
         void Start()
         {
@@ -72,6 +78,8 @@ namespace MixedReality.Toolkit.Suits.Map
             StartTimestamp = DateTime.Now;
 
             mapPanelRT = GameObject.Find("Map Panel").GetComponent<RectTransform>();
+            mapPanelRT.sizeDelta = new Vector2(mapPanelWidth, mapPanelWidth);
+
             actionButtons = GameObject.Find("Marker Action Buttons");
             mapButtons = GameObject.Find("Map Buttons");
             mapDetails = GameObject.Find("Map Details");
@@ -87,12 +95,14 @@ namespace MixedReality.Toolkit.Suits.Map
             markerImageNote.SetActive(false);
             markerVoiceNote.SetActive(false);
 
-            var xCoords = GameObject.Find("X Coordinates/Texts");
-            var yCoords = GameObject.Find("Y Coordinates/Texts");
-            xCoordsRT = xCoords.GetComponent<RectTransform>();
-            yCoordsRT = yCoords.GetComponent<RectTransform>();
-            xCoordsHGroup = xCoords.GetComponent<HorizontalLayoutGroup>();
-            yCoordsVGroup = yCoords.GetComponent<VerticalLayoutGroup>();
+            var xCoordsTexts = GameObject.Find("X Coordinates/Texts");
+            var yCoordsTexts = GameObject.Find("Y Coordinates/Texts");
+            xCoordsTextsRT = xCoordsTexts.GetComponent<RectTransform>();
+            yCoordsTextsRT = yCoordsTexts.GetComponent<RectTransform>();
+            xCoordsHGroup = xCoordsTexts.GetComponent<HorizontalLayoutGroup>();
+            yCoordsVGroup = yCoordsTexts.GetComponent<VerticalLayoutGroup>();
+
+            xCoordsRT = GameObject.Find("X Coordinates").GetComponent<RectTransform>();
         }
 
         void Update()
@@ -112,13 +122,13 @@ namespace MixedReality.Toolkit.Suits.Map
             xCoordsHGroup.spacing = spacing;
             yCoordsVGroup.spacing = spacing;
 
-            var xCoordsLocalPos = xCoordsRT.localPosition;
+            var xCoordsLocalPos = xCoordsTextsRT.localPosition;
             xCoordsLocalPos.x = mapRT.offsetMin.x;
-            xCoordsRT.localPosition = xCoordsLocalPos;
+            xCoordsTextsRT.localPosition = xCoordsLocalPos;
 
-            var yCoordsLocalPos = yCoordsRT.localPosition;
+            var yCoordsLocalPos = yCoordsTextsRT.localPosition;
             yCoordsLocalPos.y = mapRT.offsetMin.y;
-            yCoordsRT.localPosition = yCoordsLocalPos;
+            yCoordsTextsRT.localPosition = yCoordsLocalPos;
         }
 
         public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
@@ -282,7 +292,7 @@ namespace MixedReality.Toolkit.Suits.Map
         {
             MapBackButton.SetActive(true);
             actionButtons.SetActive(false);
-            mapPanelRT.sizeDelta = new Vector2(200, 324); // change the shape of the map we see
+            mapPanelRT.sizeDelta = new Vector2(detailMapPanelWidth, mapPanelWidth); // change the shape of the map we see
             mapButtons.SetActive(false); // hide the vertial map buttons
             mapTitle.SetActive(false);
             ZoomInOut.SetActive(false);
@@ -290,19 +300,38 @@ namespace MixedReality.Toolkit.Suits.Map
             mapDetails.SetActive(true); // show the detail page
             currLocRT.localScale = new Vector3(0.3f, 0.185f, 1); // for the current location (green) icon
             showDetailPage = !showDetailPage;
+
+            // Adjust the xCoords
+            var newSize = xCoordsRT.sizeDelta;
+            newSize.x = detailMapPanelWidth;
+            xCoordsRT.sizeDelta = newSize;
+
+            var newPos = xCoordsRT.anchoredPosition;
+            newPos.x = (detailMapPanelWidth - mapPanelWidth) * 0.5f;
+            xCoordsRT.anchoredPosition = newPos;
         }
+
         public void closeDetailPage()
         {
             MapBackButton.SetActive(false);
             actionButtons.SetActive(false);
             mapDetails.SetActive(false);
-            mapPanelRT.sizeDelta = new Vector2(324, 324);
+            mapPanelRT.sizeDelta = new Vector2(mapPanelWidth, mapPanelWidth);
             mapButtons.SetActive(true);
             mapTitle.SetActive(true);
             ZoomInOut.SetActive(true);
             // Debug.Log("Close Detail Page");
             currLocRT.localScale = new Vector3(0.2f, 0.2f, 1);
             showDetailPage = !showDetailPage;
+
+            // Adjust the xCoords
+            var newSize = xCoordsRT.sizeDelta;
+            newSize.x = mapPanelWidth;
+            xCoordsRT.sizeDelta = newSize;
+
+            var newPos = xCoordsRT.anchoredPosition;
+            newPos.x = 0.0f;
+            xCoordsRT.anchoredPosition = newPos;
         }
     }
 

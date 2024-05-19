@@ -301,7 +301,7 @@ public class MarkerController : MonoBehaviour
             }
         }
 
-        Debug.Log(minDist);
+        // Debug.Log(minDist);
         if (minDist < markerEditSensitivity)
         {
             actionButtons.SetActive(true);
