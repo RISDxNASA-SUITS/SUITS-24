@@ -10,7 +10,17 @@ CORS(app)
 actions = []
 
 # HMD -> LMCC
-notifications = []
+notifications = [
+    # Mock
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+]
 
 # Mission Progress
 state = {}
@@ -133,6 +143,68 @@ def delete_file():
 
     os.remove(full_fpath)
     return jsonify({"message": "File deleted successfully"}), 200
+
+
+# Mock TSS
+tss = {
+    "telemetry": {
+        "eva_time": 4,
+        "eva1": {
+            "batt_time_left": 4184.880859,
+            "oxy_pri_storage": 15.204723,
+            "oxy_sec_storage": 24.481083,
+            "oxy_pri_pressure": 0.000000,
+            "oxy_sec_pressure": 734.434692,
+            "oxy_time_left": 4286,
+            "heart_rate": 90.000000,
+            "oxy_consumption": 0.103577,
+            "co2_production": 0.104614,
+            "suit_pressure_oxy": 3.072349,
+            "suit_pressure_co2": 0.001071,
+            "suit_pressure_other": 11.554200,
+            "suit_pressure_total": 14.627621,
+            "fan_pri_rpm": 0.000000,
+            "fan_sec_rpm": 29855.638672,
+            "helmet_pressure_co2": 0.005966,
+            "scrubber_a_co2_storage": 0.000000,
+            "scrubber_b_co2_storage": 0.497545,
+            "temperature": 72.085022,
+            "coolant_ml": 21.814507,
+            "coolant_gas_pressure": 0.000000,
+            "coolant_liquid_pressure": 120.961479,
+        },
+        "eva2": {
+            "batt_time_left": 5393.291016,
+            "oxy_pri_storage": 16.324224,
+            "oxy_sec_storage": 17.517467,
+            "oxy_pri_pressure": 0.002680,
+            "oxy_sec_pressure": 525.527954,
+            "oxy_time_left": 3654,
+            "heart_rate": 90.000000,
+            "oxy_consumption": 0.098664,
+            "co2_production": 0.095775,
+            "suit_pressure_oxy": 3.072346,
+            "suit_pressure_cO2": 0.001163,
+            "suit_pressure_other": 11.554200,
+            "suit_pressure_total": 14.627710,
+            "fan_pri_rpm": 0.000000,
+            "fan_sec_rpm": 29433.216797,
+            "helmet_pressure_co2": 0.005640,
+            "scrubber_a_co2_storage": 0.000000,
+            "scrubber_b_co2_storage": 0.497686,
+            "temperature": 76.830681,
+            "coolant_ml": 21.773628,
+            "coolant_gas_pressure": 0.000000,
+            "coolant_liquid_pressure": 128.683289,
+        },
+    }
+}
+
+
+@app.route("/get-tss", methods=["GET"])
+def get_tss():
+    global tss
+    return jsonify(tss), 200
 
 
 if __name__ == "__main__":

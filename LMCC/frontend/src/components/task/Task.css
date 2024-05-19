@@ -6,7 +6,7 @@
 
 .task-card {
     width: 100%;
-    min-height: 6rem;
+    height: auto;
     margin-bottom: 1rem;
     padding: 1rem;
 
