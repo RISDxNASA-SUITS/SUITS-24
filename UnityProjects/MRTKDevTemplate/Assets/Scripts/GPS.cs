@@ -10,7 +10,7 @@ public class GPS : MonoBehaviour
     public const float SatCenterLongitude = 3272383f;  // longitude at the center of the satellite image, in degree
     // hard coded scale
     const float SatLatitudeRange = 100f;  // the satellite image covers this much latitudes in degree
-    const float SatLongitudeRange = 108f;  // the satellite image covers this much longitudes in degree
+    const float SatLongitudeRange = 108f;  // EDIT should be 116, but doesn't work if changed. Therefore tweaked. the satellite image covers this much longitudes in degree
 
     /************* GameObject References **************/
     private Camera mainCamera;
@@ -41,6 +41,7 @@ public class GPS : MonoBehaviour
 
         float mapRotZDeg = mapRT.localEulerAngles.z;
         Vector3 mapPos = mapRT.localScale.x * canvasRT.rect.height * new Vector3(du, 0, dv);
+        Debug.Log("Map Local Scale: " + mapRT.localScale.x);
         mapPos = Quaternion.Euler(0.0f, -mapRotZDeg, 0.0f) * mapPos;
 
         return new Vector2(mapPos.x, mapPos.z);

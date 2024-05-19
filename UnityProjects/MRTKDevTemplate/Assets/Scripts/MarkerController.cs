@@ -122,22 +122,23 @@ public class MarkerController : MonoBehaviour
 
     private readonly Dictionary<string, Tuple<float, float>> stations = new Dictionary<string, Tuple<float, float>>
     {
-        // { "E", new Tuple<float, float>(298405f, 3272330f) }, // Bottom Right A28 -> top left : need 1 more block to the left
-        // { "B", new Tuple<float, float>(298405f, 3272438f) }, // Top Right AA28 -> top right  : need 1 more block to the right
+        // { "E", new Tuple<float, float>(298405f, 3272325f) }, // Bottom Right A28 -> top left : extra move by 5 left
+        // { "B", new Tuple<float, float>(298405f, 3272441f) }, // Top Right AA28 -> top right  : extra move by 4 right
         // { "C", new Tuple<float, float>(298355f, 3272383f) }, // Middle N14 -> middle
-        // { "D", new Tuple<float, float>(298305f, 3272330f) }, // Bottom Left A0 -> bottom left : need 1 more block to the left
-        // { "A", new Tuple<float, float>(298305f, 3272438f) }, // Top Left AA0 -> bottom right : need 1 more block to the right
+        // { "D", new Tuple<float, float>(298305f, 3272325f) }, // Bottom Left A0 -> bottom left : extra move by 5 left
+        // { "A", new Tuple<float, float>(298305f, 3272441f) }, // Top Left AA0 -> bottom right : extra move by 3 right
 
-        // all points need to go 1 block down + 1 block left
-        { "A", new Tuple<float, float>(298332.857f, 3272351.173f) }, // Point A
-        { "B", new Tuple<float, float>(298340.4826f, 3272367.85f) }, // Point B
-        { "C", new Tuple<float, float>(298347.6723f, 3272359.512f) }, // Point C
-        { "D", new Tuple<float, float>(298354.8621f, 3272367.977f) }, // Point D
-        { "E", new Tuple<float, float>(298351.1583f, 3272388.697f) }, // Point E
-        { "F", new Tuple<float, float>(298365.6468f, 3272409.796f) }, // Point F
-        { "G", new Tuple<float, float>(298365.6468f, 3272388.697f) }, // Point G
-        { "UIA", new Tuple<float, float>(298329.9158f, 3272392.866f) }, // Point UIA
-        { "COMM", new Tuple<float, float>(298358.2391f, 3272413.713f) } // Point COMM
+        // all points need to go around 1 block down + 1 block left 
+        // tweaked.
+        { "A", new Tuple<float, float>(298327.857f, 3272346.173f) }, // Point A
+        { "B", new Tuple<float, float>(298335.4826f, 3272362.85f) }, // Point B
+        { "C", new Tuple<float, float>(298343.6723f, 3272354.512f) }, // Point C
+        { "D", new Tuple<float, float>(298349.8621f, 3272362.977f) }, // Point D
+        { "E", new Tuple<float, float>(298346.1583f, 3272383.697f) }, // Point E
+        { "F", new Tuple<float, float>(298361.6468f, 3272404.796f) }, // Point F
+        { "G", new Tuple<float, float>(298361.6468f, 3272383.697f) }, // Point G
+        { "UIA", new Tuple<float, float>(298324.9158f, 3272387.866f) }, // Point UIA
+        { "COMM", new Tuple<float, float>(298353.2391f, 3272408.713f) } // Point COMM
     };
         
 
@@ -165,6 +166,7 @@ public class MarkerController : MonoBehaviour
         {
             { MarkerType.POI,  Resources.Load<GameObject>("CustomPrefabs/POI Marker") },
             { MarkerType.Rover, Resources.Load<GameObject>("CustomPrefabs/Rover") },
+            // { MarkerType.Rover, Resources.Load<GameObject>("Prefabs/red_dot") },
             { MarkerType.Obstacle, Resources.Load<GameObject>("CustomPrefabs/Obstacle Marker") },
         };
 
