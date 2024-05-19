@@ -108,8 +108,7 @@ namespace MixedReality.Toolkit.Suits.Map
             }
 
             // Scale and translate the coordinates
-            const float BASE_SPACING = 11.65f;
-            var spacing = mapRT.localScale.x * BASE_SPACING;
+            var spacing = ZoomLevel * BlockSize;
             xCoordsHGroup.spacing = spacing;
             yCoordsVGroup.spacing = spacing;
 
@@ -176,6 +175,11 @@ namespace MixedReality.Toolkit.Suits.Map
 
         }
 
+        public float BlockSize
+        {
+            get { return mapPanelRT.sizeDelta.x / 25; }
+        }
+
         /************* Scale ***************/
 
         private static Vector3 GetLocalScale(float scale)
@@ -194,6 +198,8 @@ namespace MixedReality.Toolkit.Suits.Map
             zoomIndex = zoomIndex <= 0 ? zoomIndex : zoomIndex - 1;
             mapRT.localScale = GetLocalScale(zoomSeries[zoomIndex]);
         }
+
+        public float ZoomLevel { get { return mapRT.localScale.x; } }
 
         /************* Map Focus **************/
         public void MapFocusCallback()

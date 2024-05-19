@@ -41,7 +41,6 @@ public class GPS : MonoBehaviour
 
         float mapRotZDeg = mapRT.localEulerAngles.z;
         Vector3 mapPos = mapRT.localScale.x * canvasRT.rect.height * new Vector3(du, 0, dv);
-        Debug.Log("Map Local Scale: " + mapRT.localScale.x);
         mapPos = Quaternion.Euler(0.0f, -mapRotZDeg, 0.0f) * mapPos;
 
         return new Vector2(mapPos.x, mapPos.z);
