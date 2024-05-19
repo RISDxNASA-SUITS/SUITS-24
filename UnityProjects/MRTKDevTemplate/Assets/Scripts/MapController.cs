@@ -87,8 +87,8 @@ namespace MixedReality.Toolkit.Suits.Map
             markerImageNote.SetActive(false);
             markerVoiceNote.SetActive(false);
 
-            var xCoords = GameObject.Find("X Coordinates");
-            var yCoords = GameObject.Find("Y Coordinates");
+            var xCoords = GameObject.Find("X Coordinates/Texts");
+            var yCoords = GameObject.Find("Y Coordinates/Texts");
             xCoordsRT = xCoords.GetComponent<RectTransform>();
             yCoordsRT = yCoords.GetComponent<RectTransform>();
             xCoordsHGroup = xCoords.GetComponent<HorizontalLayoutGroup>();
@@ -108,7 +108,7 @@ namespace MixedReality.Toolkit.Suits.Map
             }
 
             // Scale and translate the coordinates
-            const float BASE_SPACING = 11.7f;
+            const float BASE_SPACING = 11.65f;
             var spacing = mapRT.localScale.x * BASE_SPACING;
             xCoordsHGroup.spacing = spacing;
             yCoordsVGroup.spacing = spacing;
