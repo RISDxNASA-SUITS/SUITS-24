@@ -16,19 +16,25 @@ import GeoPinD from "../../assets/icons/GeoPinD.png";
 import GeoPinE from "../../assets/icons/GeoPinE.png";
 import GeoPinF from "../../assets/icons/GeoPinF.png";
 import GeoPinG from "../../assets/icons/GeoPinG.png";
+import UiaPin from "../../assets/icons/UiaPin.png";
+import CommPin from "../../assets/icons/CommPin.png";
 function Map() {
   const [poi,setPoi] = useState(false);
   const [poiList, setPoiList] = useState<JSX.Element[]>([]);
   const [hazard,setHazard] = useState<boolean>(false)
   const [hazardList,setHazardList] = useState<JSX.Element[]>([]);
   const geoMapMarkers:JSX.Element[] = [
-      <img src={GeoPinA} alt={"geo location pin"} className={'absolute h-20 w-12 bottom-[10.6rem] left-[7.93rem] hover:-translate-y-1 hover:scale-[1.15]'} />,
-      <img src={GeoPinB} alt={"geo location pin"} className={'absolute h-20 w-12 bottom-[13.8rem] left-[14.48rem] hover:-translate-y-1 hover:scale-[1.15]'} />,
-      <img src={GeoPinC} alt={"geo location pin"} className={'absolute h-20 w-12 bottom-[17.15rem] left-[11.26rem] hover:-translate-y-1 hover:scale-[1.15]'} />,
-      <img src={GeoPinD} alt={"geo location pin"} className={'absolute h-20 w-12 bottom-[20.43rem] left-[14.48rem] hover:-translate-y-1 hover:scale-[1.15]'} />,
-    <img src={GeoPinE} alt={"geo location pin"} className={'absolute h-20 w-12 bottom-[18.8rem] left-[21.06rem] hover:-translate-y-1 hover:scale-[1.15]'} />,
-    <img src={GeoPinF} alt={"geo location pin"} className={'absolute h-20 w-12 bottom-[25.35rem] left-[29.25rem] hover:-translate-y-1 hover:scale-[1.15]'} />,
-    <img src={GeoPinG} alt={"geo location pin"} className={'absolute h-20 w-12 bottom-[25.35rem] left-[21.06rem] hover:-translate-y-1 hover:scale-[1.15]'} />,
+      <img src={GeoPinA} alt={"get a location pin"} className={'absolute h-20 w-12 bottom-[10.6rem] left-[7.93rem] hover:-translate-y-1 hover:scale-[1.15]'} />,
+      <img src={GeoPinB} alt={"geo b location pin"} className={'absolute h-20 w-12 bottom-[13.8rem] left-[14.48rem] hover:-translate-y-1 hover:scale-[1.15]'} />,
+      <img src={GeoPinC} alt={"geo c location pin"} className={'absolute h-20 w-12 bottom-[17.15rem] left-[11.26rem] hover:-translate-y-1 hover:scale-[1.15]'} />,
+      <img src={GeoPinD} alt={"geo d location pin"} className={'absolute h-20 w-12 bottom-[20.43rem] left-[14.48rem] hover:-translate-y-1 hover:scale-[1.15]'} />,
+    <img src={GeoPinE} alt={"geo e location pin"} className={'absolute h-20 w-12 bottom-[18.8rem] left-[21.06rem] hover:-translate-y-1 hover:scale-[1.15]'} />,
+    <img src={GeoPinF} alt={"geo f location pin"} className={'absolute h-20 w-12 bottom-[25.35rem] left-[29.25rem] hover:-translate-y-1 hover:scale-[1.15]'} />,
+    <img src={GeoPinG} alt={"geo g location pin"} className={'absolute h-20 w-12 bottom-[25.35rem] left-[21.06rem] hover:-translate-y-1 hover:scale-[1.15]'} />,
+    <img src={UiaPin} alt={"Uia pin location"} className={'absolute h-20 w-16 bottom-[8.85rem] left-[22.25rem] hover:-translate-y-1 hover:scale-[1.15]'}/>,
+    <img src={CommPin} alt={"Comm pin location"} className={'absolute h-20 w-20 bottom-[23.7rem] left-[31.5rem] hover:-translate-y-1 hover:scale-[1.15]'}/>
+
+
 
   ]
   const placeIcon = (e:React.MouseEvent<HTMLImageElement, MouseEvent>)=>{
