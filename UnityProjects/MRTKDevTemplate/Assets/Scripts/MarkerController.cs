@@ -122,15 +122,22 @@ public class MarkerController : MonoBehaviour
 
     private readonly Dictionary<string, Tuple<float, float>> stations = new Dictionary<string, Tuple<float, float>>
     {
-        { "A", new Tuple<float, float>  (298323.2559f, 3272354.329f) },
-        { "B", new Tuple<float, float>  (298337.6355f, 3272363.173f) },
-        { "C", new Tuple<float, float>  (298330.4457f, 3272371.512f) },
-        { "D", new Tuple<float, float>  (298337.7444f, 3272379.85f) },
-        { "E", new Tuple<float, float>  (298355.6099f, 3272375.555f)},
-        { "G", new Tuple<float, float>  (298355.6099f, 3272392.358f) },
-        { "F", new Tuple<float, float>  (298373.8023f, 3272392.358f)},
-        { "UIA", new Tuple<float, float> (298359.2048f, 3272350.918f)}, 
-        { "COMM", new Tuple<float, float>(298377.1793f, 3272383.767f)},
+        // { "E", new Tuple<float, float>(298405f, 3272330f) }, // Bottom Right A28 -> top left : need 1 more block to the left
+        // { "B", new Tuple<float, float>(298405f, 3272438f) }, // Top Right AA28 -> top right  : need 1 more block to the right
+        // { "C", new Tuple<float, float>(298355f, 3272383f) }, // Middle N14 -> middle
+        // { "D", new Tuple<float, float>(298305f, 3272330f) }, // Bottom Left A0 -> bottom left : need 1 more block to the left
+        // { "A", new Tuple<float, float>(298305f, 3272438f) }, // Top Left AA0 -> bottom right : need 1 more block to the right
+
+        // all points need to go 1 block down + 1 block left
+        { "A", new Tuple<float, float>(298332.857f, 3272351.173f) }, // Point A
+        { "B", new Tuple<float, float>(298340.4826f, 3272367.85f) }, // Point B
+        { "C", new Tuple<float, float>(298347.6723f, 3272359.512f) }, // Point C
+        { "D", new Tuple<float, float>(298354.8621f, 3272367.977f) }, // Point D
+        { "E", new Tuple<float, float>(298351.1583f, 3272388.697f) }, // Point E
+        { "F", new Tuple<float, float>(298365.6468f, 3272409.796f) }, // Point F
+        { "G", new Tuple<float, float>(298365.6468f, 3272388.697f) }, // Point G
+        { "UIA", new Tuple<float, float>(298329.9158f, 3272392.866f) }, // Point UIA
+        { "COMM", new Tuple<float, float>(298358.2391f, 3272413.713f) } // Point COMM
     };
         
 
@@ -184,6 +191,7 @@ public class MarkerController : MonoBehaviour
         {
             Vector2 utmCoord = new Vector2(kvp.Value.Item1, kvp.Value.Item2);
             string path = "Prefabs/Markers/" + kvp.Key;
+            // string path = "Prefabs/red_dot";  // to check exact position
             var stationMarker = new Marker(MarkerType.Stations, Resources.Load<GameObject>(path), utmCoord);
             markers.Add(stationMarker.MapMarkerObj, stationMarker);
         }
