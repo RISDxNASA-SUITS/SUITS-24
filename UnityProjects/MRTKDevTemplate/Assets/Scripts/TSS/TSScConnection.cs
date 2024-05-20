@@ -41,8 +41,8 @@ public class TSScConnection : MonoBehaviour
     // Connect to TSSc with a specific team number
     public void ConnectToHost(string host, int team_number)
     {
-        this.host = "localhost";
-        this.port = "8080";
+        this.host = host;
+        this.port = "14141";
         this.team_number = team_number;
         this.url = "http://" + this.host + ":" + this.port;
         Debug.Log(this.url);
@@ -59,7 +59,7 @@ public class TSScConnection : MonoBehaviour
     // This Function is called when the program begins
     void Start()
     {
-        ConnectToHost("localhost", 10);
+        ConnectToHost("192.168.51.110", 9);
     }
 
     // This Function is called each render frame

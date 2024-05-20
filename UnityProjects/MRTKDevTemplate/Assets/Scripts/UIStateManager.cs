@@ -106,7 +106,7 @@ public class UIStateManager : MonoBehaviour
 
     public void transitionOutOfRepairUI()
     {
-        hideCurrentUI();
-        repairUI.SetActive(true);
+        repairUI.SetActive(false);
+        handMenuUI.SetActive(true);
     }
 }

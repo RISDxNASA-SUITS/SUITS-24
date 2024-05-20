@@ -119,10 +119,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/TemplateScenes/VanillaUGUIExample.unity
     guid: de559429d95050746be9456af0fa1e6f
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 683ce42c79cdd734fb298a26ce8c7441
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Scratch/GeoFixing.unity
     guid: ec5ce875b57c9814ca76a917651b0933
   m_configObjects:

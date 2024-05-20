@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class LMCCAgent : MonoBehaviour
 {
-    string url = "http://localhost:5000";
+    string url = "http://192.168.51.81:5000";
     // float time_since_last_update;
 
     // // Update is called once per frame

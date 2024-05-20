@@ -6,7 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 using MixedReality.Toolkit.Input;
 using RectTransform = UnityEngine.RectTransform;
 using UnityEngine.UI;
-using UnityEditor.PackageManager;
+// using UnityEditor.PackageManager;
 
 namespace MixedReality.Toolkit.Suits.Map
 {
