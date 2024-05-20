@@ -13,7 +13,7 @@ function Files() {
     const[openFile,setOpenFile] = useState<FileType | null>(null)
   return (
 
-      openFile !== null? <div className='flex-row w-full h-full justify-between'>  <RenderOpenFile fType={openFile}/> </div>:
+      openFile !== null? <div className='flex-row w-[30rem] h-80 justify-between'>  <RenderOpenFile fType={openFile}/> </div>:
           <div className='flex flex-col w-full h-full pt-7 justify-between'>
               <div className='flex w-full justify-around pb-5' onClick={() => {console.log(openFile);setOpenFile(FileType.Geo)}}>
                   <img

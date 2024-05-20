@@ -62,7 +62,7 @@ function Map() {
 
 
 
-  },[])
+  },[map])
 
   const placeIcon = (e:React.MouseEvent<HTMLImageElement, MouseEvent>)=>{
     if(hazard){
