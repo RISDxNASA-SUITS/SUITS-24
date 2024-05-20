@@ -184,7 +184,7 @@ public class EgressDescriptor : TaskDescriptor
                     case 5: // (BOTH DCU) PUMP – CLOSE
                         return dcu.eva1.pump && dcu.eva2.pump;
                     default:
-                    return false;
+                        return false;
                 }
 
             case 3: // END Depress, Check Switches and Disconnect
@@ -199,8 +199,10 @@ public class EgressDescriptor : TaskDescriptor
                     case 3: // (UIA and DCU) EV1 and EV2 disconnect UIA and DCU umbilical
                         return false;
                     default:
-                    return false;
+                        return false;
                 }
+            default:
+                return false;
         }
     }
 }
