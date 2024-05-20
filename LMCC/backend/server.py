@@ -188,24 +188,27 @@ def delete_file():
     os.remove(full_fpath)
     return jsonify({"message": "File deleted successfully"}), 200
 
-@app.route("post-sample/",methods=["POST"])
+@app.route("/post-sample",methods=["POST"])
 def post_sample():
     global geo_samples
-    data = request.get_json()
+    print(request)
+    data = request.get_data()
     try:
         print(data)
         geo_samples[data['sample_site']].append(data['rock_info'])
         # rock_info
     except Exception as e:
+        print(e)
         return jsonify({"message":"no"},400)
 
     return jsonify({"message":"yay"},200)
-@app.route("/num-samples/",methods=["GET"])
+
+@app.route("/num-samples",methods=["GET"])
 def num_samples():
     global geo_samples
     target_site = request.args.get("sample_site")
     return jsonify({"num_samples":len(geo_samples[target_site])})
-@app.route("/get-sample/",methods=["GET"])
+@app.route("/get-sample",methods=["GET"])
 def get_sample():
     global geo_samples
     station_num = request.args.get('sample_site')
@@ -213,7 +216,7 @@ def get_sample():
     return jsonify({"sample": geo_samples[station_num][int(rock_id)]}, 200)
 
 
-@app.route("/get-station/",methods=["GET"])
+@app.route("/get-station",methods=["GET"])
 def get_station_info():
     global geo_samples
     station_num = request.args.get('station_num')
