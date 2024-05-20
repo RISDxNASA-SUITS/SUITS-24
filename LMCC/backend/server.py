@@ -228,7 +228,7 @@ def get_station_info():
 def get_tss():
     # global tss
     # return jsonify(tss), 200
-    return jsonify({"x":"y"},200)
+
     res = requests.get(f"{TSS_URL}/json_data/teams/{TEAM_NUM}/TELEMETRY.json")
     return res.json(), 200
 
