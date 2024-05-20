@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {FileType} from "./FileTypes.ts";
+import backIcon from "../../assets/icons/back.png"
 
 const backend_url = "http://localhost:5000"
 
@@ -13,38 +14,68 @@ const geo_stations = ["A"]
 
 interface FileProps{
     name:string,
-    image:string,
+    image?:string,
     location:string,
+    parent?:string,
 
 }
 
-enum TypeFileShowing{
-    parent,
-    child,
-}
+
 
 const  ShowFile = ({name,image,location}:FileProps)=> {
-    console.log("image is",image)
-    return <div className={"h-full w-full"}> location{location} {name} <img src={backend_url +image} alt={"rock"}/></div>
+
+    return <div className={"h-full w-full flex-col"}><span className={"text-2xl"}>{name}</span> {image && <img src={backend_url +image} alt={"rock"}/>}</div>
 }
 
 
 export default function RenderOpenFile({fType}:RenderFileProps){
-    const [files,setFiles] = useState<JSX.Element[]>([])
-    const [curFile,setCurFile] = useState(0);
+    const [stationFiles,setStationFiles] = useState<FileProps[]>([])
+    const [stationFile,setStationFile] = useState(0);
+    const [geoFile, setGeoFile] = useState(0);
+    const [geoFiles,setGeoFiles] = useState<FileProps[]>([]);
+    const [childShowing,setChildShowing] = useState(false);
     useEffect( ()  =>{
         const getFiles = async()=>{
-           setFiles(await handleFetchData(fType))
+           setGeoFiles(await handleFetchGeoData(FileType.Geo));
+           setStationFiles(await handleFetchStationData());
         }
         getFiles().catch(()=>{console.log("something went horribly wrong :(")});
     },[])
-    return <div className={"h-full w-full"}><button className='tss-button tss-button-primary absolute left-2 bottom-2' onClick={()=>setCurFile(Math.min(0,curFile - 1))}>Prev File</button>{files[curFile]}<button className='tss-button tss-button-primary absolute right-2 bottom-2' onClick={()=>setCurFile(Math.max(curFile + 1,files.length - 1))}>Next File</button></div>;
+    const handleDecrement = () =>{
+        if(childShowing){
+            setGeoFile(Math.min(geoFile - 1,0));
+        } else {
+            setStationFile(Math.min(stationFile -1 ,0));
+        }
+    }
+    const handleIncrement = () =>{
+        if(childShowing){
+            setGeoFile(Math.max(geoFile + 1,geoFiles.length - 1));
+        } else {
+            setStationFile(Math.max(stationFile + 1,stationFiles.length - 1));
+        }
+    }
+    return (
+        <div className={"flex flex-row h-full w-full gap-10"}>
+            <div className={"min-h-max h-[40vh] w-1/2"}>
+                <div className={"flex flex-row  w-full items-center mt-2"}>
+                    <img className={"ml-5 h-full w-3"} src={backIcon} alt={"back button"} onClick={()=>{childShowing?setChildShowing(false):setChildShowing(false)}}/>
+                    <span className={"ml-5 text-lg"}>Back to files</span>
+                </div>
+            <div className={"mt-5 ml-5"}>
+                {childShowing?<ShowFile {...geoFiles[geoFile]}/>:<ShowFile{...stationFiles[stationFile]}/>}
+            </div>
+        <button className='tss-button tss-button-primary absolute h-10 w-20 left-2 bottom-2' onClick={handleDecrement}>Prev</button>
+        <button className={'tss-button tss-button-primary absolute right-2 bottom-2 h-5 w-14'} onClick={handleIncrement}>Next</button>
+        </div>
+            <div className={"min-h-max min-w-1/2 w-1/2 bg-black"}> lkjhkhjgkhv</div>
+    </div>)
 }
 
 
 
-const handleFetchData = async (fType:FileType):Promise<JSX.Element[]>=>{
-    const files_to_fetch:string[] = []
+const handleFetchGeoData = async (fType:FileType):Promise<FileProps[]>=>{
+    let geo_files_to_fetch:string[] = []
     switch(fType){
         case FileType.Geo:
             for (const x of geo_stations) {
@@ -62,27 +93,46 @@ const handleFetchData = async (fType:FileType):Promise<JSX.Element[]>=>{
                 })
 
                 new_files.forEach((y)=>{
-                    files_to_fetch.push(`${x}/${y}`);
+                    if(y!= "info"){
+                        console.log(y);
+                        geo_files_to_fetch.push(`${x}/${y}`);
+                    }
+
                 })
+                geo_files_to_fetch = geo_files_to_fetch.filter((x)=>{console.log(x);return x != "info"})
 
             }
 
 
     }
-    const tmp_files:JSX.Element[] = []
-    for (const file of files_to_fetch) {
+    const tmp_files:FileProps[] = []
+    for (const file of geo_files_to_fetch) {
 
         const fetchFile = async ():Promise<FileProps> =>{
             const data = await fetch(backend_url + `/get-samples/?station_num=${file.split("/")[0]}&rock_id=${file.split("/")[1]}`)
-            const fetchedFile:FileProps = await data.json()
-            return fetchedFile
+            return await data.json()
+
         }
         const fetchedFile:FileProps = await fetchFile()
-        tmp_files.push(<ShowFile name={fetchedFile.name} location={fetchedFile.location} image={fetchedFile.image}/>)
+        fetchedFile.parent = file.split("/")[0];
+        tmp_files.push(fetchedFile);
         //}
     }
     return tmp_files
 
+
+}
+
+
+const handleFetchStationData = async():Promise<FileProps[]> =>{
+    const tmp_files:FileProps[] = []
+    for (const x of geo_stations) {
+        const data = await fetch(backend_url + `/get-station/?station_num=${x}`);
+        const stationInfo:FileProps = await data.json();
+        tmp_files.push(stationInfo)
+
+    }
+    return tmp_files;
 
 }
 
