@@ -142,6 +142,31 @@ public class EgressDescriptor : TaskDescriptor
                         return false;
                 }
 
+            case 1: //Prep O2 Tanks
+                switch (currStep)
+                {
+                    case 0: //(UIA) OXYGEN O2 VENT - OPEN 
+                        return uia.oxy_vent;
+                    case 1: //(UIA) OXYGEN O2 VENT - CLOSE
+                        return uia.oxy_vent;
+                    case 2: //(BOTH DCU) OXY – PRI
+                        return dcu.eva1.oxy && dcu.eva2.oxy;
+                    case 3: //(UIA) OXYGEN EMU-1, EMU-2 – OPEN
+                        return uia.eva1_oxy && uia.eva2_oxy;
+                    case 4: //(UIA) OXYGEN EMU-1, EMU-2 – CLOSE
+                        return uia.eva1_oxy && uia.eva2_oxy;
+                    case 5:  //(BOTH DCU) OXY – SEC
+                        return dcu.eva1.oxy && dcu.eva2.oxy;
+                    case 6: //(UIA) OXYGEN EMU-1, EMU-2 – OPEN
+                        return uia.eva1_oxy && uia.eva2_oxy;
+                    case 7: //(UIA) OXYGEN EMU-1, EMU-2 – CLOSE
+                        return uia.eva1_oxy && uia.eva2_oxy;
+                    case 8: //(BOTH DCU) OXY – PRI
+                        return dcu.eva1.oxy && dcu.eva2.oxy;
+                    default:
+                        return false;
+                }
+            
             default:
                 return false;
         }
