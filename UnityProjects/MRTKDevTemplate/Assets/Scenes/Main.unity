@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -23984,9 +23984,9 @@ MonoBehaviour:
   faceUserDefinedTargetTransform: 0
   targetToFace: {fileID: 0}
   pivotAxis: 7
-  minDistance: 0.55
-  maxDistance: 0.7
-  defaultDistance: 0.6
+  minDistance: 0.25
+  maxDistance: 0.4
+  defaultDistance: 0.3
   maxViewHorizontalDegrees: 0
   maxViewVerticalDegrees: 10
   reorientWhenOutsideParameters: 1
