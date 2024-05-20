@@ -9,7 +9,7 @@ function Monitor2() {
       <div className='flex w-full h-full m-0'>
         <div className='flex-col w-[36%] pl-12 pr-6 my-20'>
           <Window title='Camera'>
-            <img src={RoverImage} alt='Rover video feed' draggable='false' />
+            <img src={"http://192.168.51.195:5000/native_feed"} alt='Rover video feed' draggable='false' />
             <img src={RoverImage} alt='Rover video feed' draggable='false' />
           </Window>
           <Window title='Notifications'>
