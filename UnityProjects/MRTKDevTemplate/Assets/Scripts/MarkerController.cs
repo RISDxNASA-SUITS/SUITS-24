@@ -28,7 +28,7 @@ public enum MarkerActionMode
 
 public class MarkerController : MonoBehaviour
 {
-    private class Marker
+    public class Marker
     {
         public readonly MarkerType Type;
         public Vector2 GpsCoord;
@@ -107,7 +107,7 @@ public class MarkerController : MonoBehaviour
     private Dictionary<MarkerType, GameObject> markerImages;
     private Dictionary<MarkerType, GameObject> glowingMarkerImages;
     private RectTransform currLocRT;
-    private Marker currMarker;
+    [HideInInspector] public Marker currMarker;
 
     private GameObject actionButtons;
 
