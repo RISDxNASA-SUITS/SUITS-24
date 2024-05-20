@@ -100,6 +100,12 @@ public class EgressDescriptor : TaskDescriptor
         }
     };
 
+    private UIStateManager uiStateManager;
+    void Start()
+    {
+        uiStateManager = GameObject.Find("UI Controller").GetComponent<UIStateManager>();
+    }
+
     public override string[] TaskHeadings
     {
         get { return myTaskHeadings; }
@@ -204,5 +210,11 @@ public class EgressDescriptor : TaskDescriptor
             default:
                 return false;
         }
+    }
+
+        public override void TaskCompleted()
+    {
+        Debug.Log("Complete Ingress");
+        uiStateManager.transitionOutOfEgressUI();
     }
 }

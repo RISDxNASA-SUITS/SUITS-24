@@ -15,7 +15,6 @@ public class TaskbarController : MonoBehaviour
     private GameObject connectorPrefab;
     private GameObject[] taskListItems;
     private GameObject[] taskProgressDots;
-    private UIStateManager uiStateManager;
 
     [SerializeField]
     private TaskDescriptor taskDescriptor;
@@ -34,7 +33,6 @@ public class TaskbarController : MonoBehaviour
         connectorPrefab = Resources.Load<GameObject>("Prefabs/Taskbar/Connector");
         taskListParentT = transform.Find("Taskbar Panel").Find("Task List");
         progressBarT = transform.Find("Taskbar Panel").Find("Top").Find("Progress Bar");
-        uiStateManager = GameObject.Find("UI Controller").GetComponent<UIStateManager>();
         tssConn = GameObject.Find("TSS Agent").GetComponent<TSScConnection>();
     
         taskProgressDots = new GameObject[taskHeadings.Length];
@@ -125,8 +123,7 @@ public class TaskbarController : MonoBehaviour
             }
             else {
                 // All tasks are complete
-                Debug.Log("Finished tasks");
-                uiStateManager.transitionOutOfEgressUI();
+                taskDescriptor.TaskCompleted();
             }
         }
     }
