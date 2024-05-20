@@ -204,13 +204,13 @@ def post_sample():
 def num_samples():
     global geo_samples
     target_site = request.args.get("sample_site")
-    return jsonify({"number of samples":len(geo_samples[target_site])})
-@app.route("/get-samples/",methods=["GET"])
+    return jsonify({"num_samples":len(geo_samples[target_site])})
+@app.route("/get-sample/",methods=["GET"])
 def get_sample():
     global geo_samples
     station_num = request.args.get('sample_site')
     rock_id = request.args.get('rock_info')
-    return jsonify({"samples": geo_samples[station_num][int(rock_id)]}, 200)
+    return jsonify({"sample": geo_samples[station_num][int(rock_id)]}, 200)
 
 
 @app.route("/get-station/",methods=["GET"])
