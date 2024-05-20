@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import BatterySymbol from '../../assets/symbols/battery_symbol.png';
 import { TSS } from './TSSTypes';
 import './TSS.css';
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class TaskbarController : MonoBehaviour
 {
     private int currTask, currStep;
+    private int totalStep = 0;
 
     private TMPro.TMP_Text taskTitle;
     private Transform progressBarT;
@@ -19,6 +20,7 @@ public class TaskbarController : MonoBehaviour
     [SerializeField]
     private TaskDescriptor taskDescriptor;
     private TSScConnection tssConn;
+    private LMCCAgent lMCCAgent;
 
     // Start is called before the first frame update
     void Start()
@@ -34,9 +36,11 @@ public class TaskbarController : MonoBehaviour
         taskListParentT = transform.Find("Taskbar Panel").Find("Task List");
         progressBarT = transform.Find("Taskbar Panel").Find("Top").Find("Progress Bar");
         tssConn = GameObject.Find("TSS Agent").GetComponent<TSScConnection>();
-    
+        lMCCAgent = GameObject.Find("LMCCAgent").GetComponent<LMCCAgent>();
+
         taskProgressDots = new GameObject[taskHeadings.Length];
-        for (int i = 0; i < taskHeadings.Length; i++) {
+        for (int i = 0; i < taskHeadings.Length; i++)
+        {
             if (taskTitles[i] != "") // Use big dots to display tasks with titles
             {
                 taskProgressDots[i] = Instantiate(bigProgressDotPrefab, progressBarT);
@@ -62,16 +66,19 @@ public class TaskbarController : MonoBehaviour
     {
         if (taskDescriptor.StepCompleted(currTask, currStep, tssConn)) NextStep();
     }
-    
+
     void SetupTask()
     {
         string[] taskHeadings = taskDescriptor.TaskHeadings;
         string[][] taskSteps = taskDescriptor.TaskSteps;
 
         // Empty the previous task list
-        if (taskListItems != null) {
-            foreach (GameObject obj in taskListItems) {
-                if (obj != null) {
+        if (taskListItems != null)
+        {
+            foreach (GameObject obj in taskListItems)
+            {
+                if (obj != null)
+                {
                     Destroy(obj);
                 }
             }
@@ -101,11 +108,15 @@ public class TaskbarController : MonoBehaviour
         string[] taskHeadings = taskDescriptor.TaskHeadings;
         string[][] taskSteps = taskDescriptor.TaskSteps;
 
+        lMCCAgent.PostUpdateState(taskDescriptor.TaskName, totalStep);
+
         currStep++;
+        totalStep++;
         taskListItems[currStep - 1].transform.Find("Task Status").Find("Inprogress").gameObject.SetActive(false);
         taskListItems[currStep - 1].transform.Find("Task Status").Find("Complete").gameObject.SetActive(true);
 
-        if (currStep < taskSteps[currTask].Length) {
+        if (currStep < taskSteps[currTask].Length)
+        {
             // Perform the next step
             Debug.Log($"Current Step: {currStep}");
             taskListItems[currStep].transform.Find("Task Status").Find("Inprogress").gameObject.SetActive(true);
@@ -116,12 +127,14 @@ public class TaskbarController : MonoBehaviour
             taskProgressDots[currTask].transform.Find("Finished Dot").gameObject.SetActive(true);
             currTask++;
 
-            if (currTask < taskHeadings.Length) {
+            if (currTask < taskHeadings.Length)
+            {
                 // Transition to next task
                 Debug.Log($"Next Task: {currTask}");
                 SetupTask();
             }
-            else {
+            else
+            {
                 // All tasks are complete
                 taskDescriptor.TaskCompleted();
             }
