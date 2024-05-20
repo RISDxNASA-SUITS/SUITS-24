@@ -58,7 +58,7 @@ public class MarkerController : MonoBehaviour
             Vector2 mapMarkerOffset = gps.GpsToMapPos(GpsCoord.x, GpsCoord.y);
             MapMarkerRT.offsetMin = mapRT.offsetMin + mapMarkerOffset;
             MapMarkerRT.offsetMax = MapMarkerRT.offsetMin;
-
+            
             // Adjust marker position on compass
             // Given userGPS and markerGPS, get markerDir that points from user to marker
             Vector2 markerRelGps = GpsCoord - userGps;  // delta (latitude, longitude)

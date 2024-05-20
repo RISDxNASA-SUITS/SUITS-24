@@ -24,5 +24,5 @@ public abstract class TaskDescriptor : MonoBehaviour
     }
 
     public abstract bool StepCompleted(int currTask, int currStep, TSScConnection tss);
-    public abstract void TaskCompleted();
+    public virtual void TaskCompleted() { return; }
 }

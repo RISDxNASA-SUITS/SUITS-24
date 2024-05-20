@@ -142,6 +142,6 @@ public class IngressDescriptor : TaskDescriptor
     public override void TaskCompleted()
     {
         Debug.Log("Complete Ingress");
-        uiStateManager.transitionOutOfIngressUI();
+        uiStateManager.hideCurrentUI();
     }
 }
