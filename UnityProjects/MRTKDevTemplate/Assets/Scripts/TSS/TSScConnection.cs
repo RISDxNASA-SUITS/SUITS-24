@@ -12,9 +12,9 @@ public class TSScConnection : MonoBehaviour
     string host;
     string port;
     string url;
-    int    team_number;
-    bool   connected;
-    float  time_since_last_update;
+    int team_number;
+    bool connected;
+    float time_since_last_update;
 
     // Database Jsons
     bool UIAUpdated;
@@ -40,7 +40,7 @@ public class TSScConnection : MonoBehaviour
     public void ConnectToHost(string host, int team_number)
     {
         this.host = "localhost";
-        this.port = "14145";
+        this.port = "8080";
         this.team_number = team_number;
         this.url = "http://" + this.host + ":" + this.port;
         Debug.Log(this.url);
