@@ -31,7 +31,7 @@ function Notifications() {
   }, []);
 
   return (
-    <div className='flex flex-col w-full h-[16.5rem] p-5'>
+    <div className='flex flex-col w-full p-5 h-[5rem]'>
       {notifications.map((notification: Notification, index) => (
         <div className='notification' key={`notification-${index}`}>
           <span className='notification-msg'>{notification.message}</span>

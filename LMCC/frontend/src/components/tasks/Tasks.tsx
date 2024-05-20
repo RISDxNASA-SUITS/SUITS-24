@@ -20,7 +20,7 @@ function Tasks() {
   }, []);
 
   return (
-    <div className='flex flex-col w-full h-[59.5rem] p-5'>
+    <div className='flex flex-col w-full h-[60.5rem] p-5'>
       {currTask != 0 ? (
         <>
           <h1 className='section-title'>EV1 Past Tasks</h1>
