@@ -1,6 +1,8 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {FileType} from "./FileTypes.ts";
 import backIcon from "../../assets/icons/back.png"
+import map from "../map/Map.tsx";
+import { v4 as uuidv4 } from 'uuid';
 
 const backend_url = "http://localhost:5000"
 
@@ -17,15 +19,13 @@ interface FileProps{
     image?:string,
     location:string,
     parent?:string,
+    id:string,
 
 }
 
 
 
-const  ShowFile = ({name,image,location}:FileProps)=> {
 
-    return <div className={"h-full w-full flex-col"}><span className={"text-2xl"}>{name}</span> {image && <img src={backend_url +image} alt={"rock"}/>}</div>
-}
 
 
 export default function RenderOpenFile({fType}:RenderFileProps){
@@ -34,10 +34,27 @@ export default function RenderOpenFile({fType}:RenderFileProps){
     const [geoFile, setGeoFile] = useState(0);
     const [geoFiles,setGeoFiles] = useState<FileProps[]>([]);
     const [childShowing,setChildShowing] = useState(false);
+    const [parentCounts,setParentCounts] = useState<Number[]>([]);
+    const  ShowFile = ({name,image,location,parent}:FileProps)=> {
+        console.log(backend_url + image);
+        return <div className={"h-full w-full flex flex-col"}><span className={"text-2xl"}>{name}</span>{!parent && <span className={" mt-5 text-1xl"}> Num Samples Scanned: {`${parentCounts[stationFile]}`} </span>} {image && <img src={backend_url + image} alt={"rock"}/>} </div>
+    }
+    useEffect(()=>{
+        const tmp_parent_counts = Array(6).fill(0);
+        geoFiles.forEach((file:FileProps)=>{
+            if(file.parent){
+                tmp_parent_counts[geo_stations.indexOf("A")]++;
+            }
+
+        })
+        setParentCounts(tmp_parent_counts)
+    },[geoFiles])
     useEffect( ()  =>{
         const getFiles = async()=>{
            setGeoFiles(await handleFetchGeoData(FileType.Geo));
            setStationFiles(await handleFetchStationData());
+
+
         }
         getFiles().catch(()=>{console.log("something went horribly wrong :(")});
     },[])
@@ -63,7 +80,7 @@ export default function RenderOpenFile({fType}:RenderFileProps){
                     <span className={"ml-5 text-lg"}>Back to files</span>
                 </div>
             <div className={"mt-5 ml-5"}>
-                {childShowing?<ShowFile {...geoFiles[geoFile]}/>:<ShowFile{...stationFiles[stationFile]}/>}
+                {childShowing?<ShowFile {...geoFiles[geoFile]} />:<ShowFile {...stationFiles[stationFile]}/>}
             </div>
         <button className='tss-button tss-button-primary absolute h-10 w-20 left-2 bottom-2' onClick={handleDecrement}>Prev</button>
         <button className={'tss-button tss-button-primary absolute right-2 bottom-2 h-5 w-14'} onClick={handleIncrement}>Next</button>
@@ -82,9 +99,9 @@ const handleFetchGeoData = async (fType:FileType):Promise<FileProps[]>=>{
                 let data:BackendFileList|null = null
                 const fetchBackend = async()=>{
                     const res = await fetch(backend_url + `/files?directory=geosample/${x}`);
-                    console.log(res);
+
                     data = await res.json()
-                    console.log("data is",data)
+
                 }
 
                 await fetchBackend();
@@ -94,12 +111,12 @@ const handleFetchGeoData = async (fType:FileType):Promise<FileProps[]>=>{
 
                 new_files.forEach((y)=>{
                     if(y!= "info"){
-                        console.log(y);
+
                         geo_files_to_fetch.push(`${x}/${y}`);
                     }
 
                 })
-                geo_files_to_fetch = geo_files_to_fetch.filter((x)=>{console.log(x);return x != "info"})
+                geo_files_to_fetch = geo_files_to_fetch.filter((x)=>{return x != "info"})
 
             }
 
@@ -114,7 +131,10 @@ const handleFetchGeoData = async (fType:FileType):Promise<FileProps[]>=>{
 
         }
         const fetchedFile:FileProps = await fetchFile()
+
         fetchedFile.parent = file.split("/")[0];
+        console.log(fetchedFile);
+        fetchedFile.id = uuidv4();
         tmp_files.push(fetchedFile);
         //}
     }
@@ -129,6 +149,7 @@ const handleFetchStationData = async():Promise<FileProps[]> =>{
     for (const x of geo_stations) {
         const data = await fetch(backend_url + `/get-station/?station_num=${x}`);
         const stationInfo:FileProps = await data.json();
+        stationInfo.id = uuidv4()
         tmp_files.push(stationInfo)
 
     }
