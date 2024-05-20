@@ -32,10 +32,6 @@ public class UIStateManager : MonoBehaviour
     [SerializeField]
     private GameObject handMenuUI;
 
-    [Tooltip("The repair game object")]
-    [SerializeField]
-    private GameObject repairUI;
-
 
     // UI object currently in display
     private GameObject currentUI;
@@ -48,7 +44,6 @@ public class UIStateManager : MonoBehaviour
         navUI.SetActive(false);
         egressUI.SetActive(false);
         geoSamplingUI.SetActive(false);
-        repairUI.SetActive(false);
 
         transitionToEgressUI();
 
@@ -97,8 +92,4 @@ public class UIStateManager : MonoBehaviour
         transitionToUI(geoSamplingUI);
     }
 
-    // public void transitionToRepairUI()
-    // {
-    //     transitionToUI(repairUI);
-    // }
 }
