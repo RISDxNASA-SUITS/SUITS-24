@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file, jsonify
+from flask import Flask, request, send_file, jsonify,url_for
 from flask_cors import CORS
 import json
 import os
@@ -6,11 +6,15 @@ import os
 app = Flask(__name__)
 CORS(app)
 
+api_path = "http://localhost:5000"
 # LMCC -> HMD
 actions = []
 
 # HMD -> LMCC
 notifications = []
+
+# GeoSample dict
+geo_samples = {}
 
 # Mission Progress
 state = {}
@@ -105,7 +109,9 @@ def upload_file():
 def list_files():
     # Get the directory from the request parameters
     dir = request.args.get("directory", "")
+    print(dir)
     dir_path = os.path.join(FS_ROOT, dir)
+    print(dir_path)
     if not os.path.exists(dir_path):
         return jsonify({"message": "Directory not found"}), 404
 
@@ -133,6 +139,41 @@ def delete_file():
 
     os.remove(full_fpath)
     return jsonify({"message": "File deleted successfully"}), 200
+
+
+
+
+
+
+@app.route("/get-samples/",methods=["GET"])
+def get_sample():
+
+    station_num = request.args.get('station_num')
+    rock_id = request.args.get('rock_id')
+    with open(f"root/geosample/{station_num}/{rock_id}.txt") as rock_file:
+        to_send = rock_file.readlines()
+        name = to_send[0].strip()
+        location = to_send[1].split(":")[1].strip()
+        img_path = url_for("static", filename=to_send[2])
+        return jsonify({"name":name,"location":location,"image":img_path})
+
+
+@app.route("/get-station/",methods=["GET"])
+def get_station_info():
+
+    station_num = request.args.get('station_num')
+    with open(f"root/geosample/{station_num}/info.txt") as rock_file:
+
+        to_send = rock_file.readlines()
+        print(to_send)
+        name = to_send[0].strip()
+        location = to_send[1].split(":")[1].strip()
+        return jsonify({"name":name,"location":location})
+
+
+
+
+
 
 
 if __name__ == "__main__":
