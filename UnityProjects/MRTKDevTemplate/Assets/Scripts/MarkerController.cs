@@ -313,6 +313,15 @@ public class MarkerController : MonoBehaviour
         {
             actionButtons.SetActive(true);
             mode = MarkerActionMode.Select;
+
+            if (currMarker.Type == MarkerType.Stations)
+            {
+                actionButtons.transform.Find("Delete Button").gameObject.SetActive(false);
+            }
+            else
+            {
+                actionButtons.transform.Find("Delete Button").gameObject.SetActive(true);
+            }
         }
         else
         {
@@ -349,6 +358,10 @@ public class MarkerController : MonoBehaviour
 
     public void OnMarkerDeletePressed()
     {
+        if (currMarker.Type == MarkerType.Stations)
+        {
+        return;
+        }
         if (navigation.destMarkerRT == currMarker.MapMarkerRT)
         {
             navigation.StopMarkerNavigate();
