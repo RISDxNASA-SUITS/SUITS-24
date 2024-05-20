@@ -1,16 +1,12 @@
 using MixedReality.Toolkit.Suits.Map;
 using Newtonsoft.Json;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
 public class UpdateGeoFields : MonoBehaviour
 {
 
-    public TSScConnection tss;
+    public TSScConnection tssConn;
 
 
     public TextMeshProUGUI Title;
@@ -44,8 +40,7 @@ public class UpdateGeoFields : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
+        tssConn = GameObject.Find("SceneContent/TSS Agent").GetComponent<TSScConnection>();
     }
 
     // Update is called once per frame
@@ -53,12 +48,12 @@ public class UpdateGeoFields : MonoBehaviour
     {
 
 
-        if (tss.isSPECUpdated())
+        if (tssConn.isSPECUpdated())
         {
 
 
 
-            RockInfo rockInfo = JsonConvert.DeserializeObject<DeserializeRock>(tss.GetSPECJsonString()).spec;
+            RockInfo rockInfo = JsonConvert.DeserializeObject<DeserializeRock>(tssConn.GetSPECJsonString()).spec;
             Rock toShow = eva1?rockInfo.eva1:rockInfo.eva2;
 
             if (Title is not null)
