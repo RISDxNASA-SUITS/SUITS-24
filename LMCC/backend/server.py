@@ -1,13 +1,20 @@
-from flask import Flask, request, send_file, jsonify
+from flask import Flask, request, send_file, jsonify,url_for
 from flask_cors import CORS
 import json
 import os
+from collections import defaultdict
 
 app = Flask(__name__)
 CORS(app)
+api_path = "http://localhost:5000"
 
 # LMCC -> HMD
 actions = []
+
+geo_samples = {"A":[{"name":"Geo Site A","location":"(G,5)"}],"B":[{"name":"Geo Site B","location":"(I,9)"}],"C":[{"name":"Geo Site C","location":"(K,7)"}],"D":[{"name":"Geo Site D","location":"(M,9)"}],"E":[{"name":"Geo Site E","location":"(L,14)"}],"F":[{"name":"Geo Site F","location":"(P,19)"}],"G":[{"name":"Geo Site G","location":"(P,14)"}]}
+
+
+
 
 # HMD -> LMCC
 notifications = [
@@ -143,6 +150,38 @@ def delete_file():
 
     os.remove(full_fpath)
     return jsonify({"message": "File deleted successfully"}), 200
+
+@app.route("post-sample/",methods=["POST"])
+def post_sample():
+    global geo_samples
+    data = request.get_json()
+    try:
+        print(data)
+        geo_samples[data['sample_site']].append(data['rock_info'])
+        # rock_info
+    except Exception as e:
+        return jsonify({"message":"no"},400)
+
+    return jsonify({"message":"yay"},200)
+@app.route("/num-samples/",methods=["GET"])
+def num_samples():
+    global geo_samples
+    target_site = request.args.get("sample_site")
+    return jsonify({"number of samples":len(geo_samples[target_site])})
+@app.route("/get-samples/",methods=["GET"])
+def get_sample():
+    global geo_samples
+    station_num = request.args.get('sample_site')
+    rock_id = request.args.get('rock_info')
+    return jsonify({"samples": geo_samples[station_num][int(rock_id)]}, 200)
+
+
+@app.route("/get-station/",methods=["GET"])
+def get_station_info():
+    global geo_samples
+    station_num = request.args.get('station_num')
+    return jsonify({"station_info":geo_samples[station_num]},200)
+
 
 
 # Mock TSS
