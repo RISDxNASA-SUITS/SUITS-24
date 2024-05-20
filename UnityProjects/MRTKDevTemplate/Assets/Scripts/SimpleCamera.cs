@@ -133,6 +133,7 @@ public class SimpleCamera : MonoBehaviour
     {
         // We have the last captured image stored as a texture.
         // TODO: POST it here to the LMCC server.
+        uploadVideoImageToServer();
 
         systemMsg.text = "Image Saved!";
         StartCoroutine(DisplaySystemMsgForSeconds(systemMsgDurationSecs));
@@ -141,6 +142,28 @@ public class SimpleCamera : MonoBehaviour
         shutterButton.SetActive(true);
         _updateViewFinder = true;
     }
+
+    private void uploadVideoImageToServer()
+    {
+        try
+        {
+            // Convert Texture2D to PNG
+            var pngBytes = ImageConversion.EncodeToPNG(_videoTextureRgb);
+
+            // var length = pngBytes.GetLength(0);
+            // systemMsg.text = $"Image data length: {length}";
+            // StartCoroutine(DisplaySystemMsgForSeconds(systemMsgDurationSecs));
+
+            // TODO: Post to server
+
+        }
+        catch (Exception e)
+        {
+            systemMsg.text = $"Failed to save image: {e.ToString()}";
+            StartCoroutine(DisplaySystemMsgForSeconds(systemMsgDurationSecs));
+        }
+    }
+
 
     private IEnumerator DisplaySystemMsgForSeconds(float seconds)
     {

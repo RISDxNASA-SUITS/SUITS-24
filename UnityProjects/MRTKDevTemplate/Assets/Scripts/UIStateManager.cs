@@ -32,6 +32,9 @@ public class UIStateManager : MonoBehaviour
     [SerializeField]
     private GameObject handMenuUI;
 
+    [Tooltip("The repair game object")]
+    [SerializeField]
+    private GameObject repairUI;
 
 
     // UI object currently in display
@@ -45,6 +48,7 @@ public class UIStateManager : MonoBehaviour
         navUI.SetActive(false);
         egressUI.SetActive(false);
         geoSamplingUI.SetActive(false);
+        repairUI.SetActive(false);
 
         transitionToEgressUI();
 
@@ -60,22 +64,14 @@ public class UIStateManager : MonoBehaviour
         }
     }
 
-    public void hideCurrentUI(GameObject hideUI)
+    public void hideCurrentUI()
     {
-        // transitionToUI(hideUI);
-        hideUI.SetActive(false);
+        transitionToUI(null);
     }
 
     public void transitionToNavUI()
     {
-        handMenuUI.SetActive(false);
         transitionToUI(navUI);
-    }
-
-    public void transitionOutofNavUI()
-    {
-        hideCurrentUI(navUI);
-        handMenuUI.SetActive(true);
     }
 
     public void transitionToEgressUI()
@@ -86,7 +82,7 @@ public class UIStateManager : MonoBehaviour
 
     public void transitionOutOfEgressUI()
     {
-        hideCurrentUI(egressUI);
+        hideCurrentUI();
         handMenuUI.SetActive(true);
     }
 
@@ -96,21 +92,13 @@ public class UIStateManager : MonoBehaviour
         transitionToUI(egressUI);
     }
 
-    public void transitionOutOfIngressUI()
-    {
-        // Do something here?
-    }
-
     public void transitionToGeoSamplingUI()
     {
-        handMenuUI.SetActive(false);
         transitionToUI(geoSamplingUI);
     }
 
-    public void transitionOutofGeoSamplingUI()
-    {
-        hideCurrentUI(geoSamplingUI);
-        handMenuUI.SetActive(true);
-    }
-
+    // public void transitionToRepairUI()
+    // {
+    //     transitionToUI(repairUI);
+    // }
 }
