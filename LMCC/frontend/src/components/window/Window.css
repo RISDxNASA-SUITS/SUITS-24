@@ -14,7 +14,13 @@
     z-index: 1;
 
     user-select: none;
+    overflow: auto;
 }
+
+.window::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
 
 .window-cover {
     background-image: url('/bg.svg');

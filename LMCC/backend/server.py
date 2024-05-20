@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file, jsonify,url_for
+from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
 import json
 import os
@@ -6,15 +6,21 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-api_path = "http://localhost:5000"
 # LMCC -> HMD
 actions = []
 
 # HMD -> LMCC
-notifications = []
-
-# GeoSample dict
-geo_samples = {}
+notifications = [
+    # Mock
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+    {"message": "Begin EVA", "timestamp": "00:00:00"},
+]
 
 # Mission Progress
 state = {}
@@ -109,9 +115,7 @@ def upload_file():
 def list_files():
     # Get the directory from the request parameters
     dir = request.args.get("directory", "")
-    print(dir)
     dir_path = os.path.join(FS_ROOT, dir)
-    print(dir_path)
     if not os.path.exists(dir_path):
         return jsonify({"message": "Directory not found"}), 404
 
@@ -141,39 +145,66 @@ def delete_file():
     return jsonify({"message": "File deleted successfully"}), 200
 
 
+# Mock TSS
+tss = {
+    "telemetry": {
+        "eva_time": 4,
+        "eva1": {
+            "batt_time_left": 4184.880859,
+            "oxy_pri_storage": 15.204723,
+            "oxy_sec_storage": 24.481083,
+            "oxy_pri_pressure": 0.000000,
+            "oxy_sec_pressure": 734.434692,
+            "oxy_time_left": 4286,
+            "heart_rate": 90.000000,
+            "oxy_consumption": 0.103577,
+            "co2_production": 0.104614,
+            "suit_pressure_oxy": 3.072349,
+            "suit_pressure_co2": 0.001071,
+            "suit_pressure_other": 11.554200,
+            "suit_pressure_total": 14.627621,
+            "fan_pri_rpm": 0.000000,
+            "fan_sec_rpm": 29855.638672,
+            "helmet_pressure_co2": 0.005966,
+            "scrubber_a_co2_storage": 0.000000,
+            "scrubber_b_co2_storage": 0.497545,
+            "temperature": 72.085022,
+            "coolant_ml": 21.814507,
+            "coolant_gas_pressure": 0.000000,
+            "coolant_liquid_pressure": 120.961479,
+        },
+        "eva2": {
+            "batt_time_left": 5393.291016,
+            "oxy_pri_storage": 16.324224,
+            "oxy_sec_storage": 17.517467,
+            "oxy_pri_pressure": 0.002680,
+            "oxy_sec_pressure": 525.527954,
+            "oxy_time_left": 3654,
+            "heart_rate": 90.000000,
+            "oxy_consumption": 0.098664,
+            "co2_production": 0.095775,
+            "suit_pressure_oxy": 3.072346,
+            "suit_pressure_cO2": 0.001163,
+            "suit_pressure_other": 11.554200,
+            "suit_pressure_total": 14.627710,
+            "fan_pri_rpm": 0.000000,
+            "fan_sec_rpm": 29433.216797,
+            "helmet_pressure_co2": 0.005640,
+            "scrubber_a_co2_storage": 0.000000,
+            "scrubber_b_co2_storage": 0.497686,
+            "temperature": 76.830681,
+            "coolant_ml": 21.773628,
+            "coolant_gas_pressure": 0.000000,
+            "coolant_liquid_pressure": 128.683289,
+        },
+    }
+}
 
 
-
-
-@app.route("/get-samples/",methods=["GET"])
-def get_sample():
-
-    station_num = request.args.get('station_num')
-    rock_id = request.args.get('rock_id')
-    with open(f"root/geosample/{station_num}/{rock_id}.txt") as rock_file:
-        to_send = rock_file.readlines()
-        name = to_send[0].strip()
-        location = to_send[1].split(":")[1].strip()
-        img_path = url_for("static", filename=to_send[2])
-        return jsonify({"name":name,"location":location,"image":img_path})
-
-
-@app.route("/get-station/",methods=["GET"])
-def get_station_info():
-
-    station_num = request.args.get('station_num')
-    with open(f"root/geosample/{station_num}/info.txt") as rock_file:
-
-        to_send = rock_file.readlines()
-        print(to_send)
-        name = to_send[0].strip()
-        location = to_send[1].split(":")[1].strip()
-        return jsonify({"name":name,"location":location})
-
-
-
-
-
+@app.route("/get-tss", methods=["GET"])
+def get_tss():
+    global tss
+    return jsonify(tss), 200
 
 
 if __name__ == "__main__":
