@@ -2,70 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RepairDescriptor : TaskDescriptor
+public class TransceiverReplacementDescriptor : TaskDescriptor
 {
     private string[] myTaskHeadings = {
         // step 1
         "EV1",
-        // step 2
-        "EV2"
-        // step 3
-       
-        // step 4
-       
+        "EV1",
+        "EV1",
+        "EV1",
+        "EV1"
     };
 
     private string[] myTaskTitles = {
         // step 1
         "INSP",
+        // step 2
+        "COMM",
         "",
         "",
-        "",
-        // // step 2
-        // "COMM",
-        // "",
-        // //step3
-        // "Confirm"
+        // step3
+        "Confirm"
     };
 
     private string[][] myTaskSteps = {
         new string[] {
-            // step 1 checklist 1
-            "1.  Collect structural repair materials including metal patches, welding tools, and adhesives."
+            "",
         },
         new string[] {
-            // step 1 checklist 2
-            "1. Assess tower for visible structural damage",
-            "2. If issue is found, click NEXT to relay to LMCC and standby for procedure"
+            // step 2 
+            "1. Collect replacement transceiver module and non-conductive tools"
         },
         new string[] {
-            // step 1 move on to next
-            "1. Procedure steps will be displayed here, click NEXT to proceed"
+            // step 2 part 1
+            "1. Remove the faulty module"
         },
         new string[] {
-            // step 2 checklist 1
-           "1. Apply metal patches over holes or tears using welding tools"
+            // step 2 part 2
+            "1. Install the new module ensuring all connections are secure"
         },
-        // new string[] {
-        //     // step 3 part 1
-          
-        // },
-        // new string[] {
-        //     // step 3 part 2
-          
-        // },
-        // new string[] {
-        //     // step 4 part 1
-          
-        // },
-        // new string[] {
-        //     // step 4 part 2
-          
-        // },
-        // new string[] {
-        //     // step 4 part 3
-           
-        // }
+        new string[] {
+            // step 3 
+            "1.  Click NEXT when verification on all ends are complete"
+        },
     };
 
     public override string[] TaskHeadings
