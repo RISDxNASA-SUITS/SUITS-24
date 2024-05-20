@@ -1,8 +1,6 @@
-// import Temp from '../../assets/symbols/temperature_symbol.png';
-// import Battery from '../../assets/symbols/battery_symbol.png';
-// import Suit from '../../assets/symbols/suit_symbol.png';
-// import Rover from '../../assets/symbols/rover_symbol.svg';
 import { useEffect, useState } from 'react';
+import BatterySymbol from '../../assets/symbols/battery_symbol.png';
+import { TSS } from './TSSTypes';
 import './TSS.css';
 
 enum CATEGORY {
@@ -21,21 +19,50 @@ const categories = [
   CATEGORY.T,
 ];
 
+const categoryFields = {
+  [CATEGORY.O2]: [
+    { name: 'oxy_pri_storage', label: 'Pri O2 Storage' },
+    { name: 'oxy_pri_pressure', label: 'Pri O2 Pressure' },
+    { name: 'oxy_sec_storage', label: 'Sec O2 Storage' },
+    { name: 'oxy_sec_pressure', label: 'Sec O2 Pressure' },
+  ],
+  [CATEGORY.CO2]: [
+    { name: 'co2_production', label: 'CO2 Production' },
+    { name: 'helmet_pressure_co2', label: 'Helmet Pressure' },
+    { name: 'scrubber_a_co2_storage', label: 'Scrubber A Storage' },
+    { name: 'scrubber_b_co2_storage', label: 'Scrubber B Storage' },
+  ],
+  [CATEGORY.SP]: [
+    { name: 'suit_pressure_oxy', label: 'O2' },
+    { name: 'suit_pressure_co2', label: 'CO2' },
+    { name: 'suit_pressure_other', label: 'Other' },
+    { name: 'suit_pressure_total', label: 'Total' },
+  ],
+  [CATEGORY.LS]: [
+    { name: 'heart_rate', label: 'Heart Rate' },
+    { name: 'oxy_consumption', label: 'O2 Consumption' },
+    { name: 'fan_pri_rpm', label: 'Pri Fan RPM' },
+    { name: 'fan_sec_rpm', label: 'Sec Fan RPM' },
+  ],
+  [CATEGORY.T]: [
+    { name: 'temperature', label: 'Temperature' },
+    { name: 'coolant_ml', label: 'Coolant Tank' },
+    { name: 'coolant_gas_pressure', label: 'Gas Pressure' },
+    { name: 'coolant_liquid_pressure', label: 'Liquid Pressure' },
+  ],
+};
+
 function Telemetry() {
-  const [tss, setTss] = useState({});
+  const [tss, setTss] = useState<TSS | null>(null);
   const [currCategory, setCurrCategory] = useState('Oxygen');
 
   const fetchTss = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/get-tss`);
-      // const res = await fetch(
-      //   `${import.meta.env.VITE_TSS_URL}/json_data/teams/${
-      //     import.meta.env.VITE_TEAM
-      //   }/TELEMETRY.json`
-      // );
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/get-tss`, {
+        method: 'GET',
+      });
       const data = await res.json();
-      console.log(data);
-      setTss(data);
+      setTss(data.telemetry[`eva${import.meta.env.VITE_EVA_NUM}`]);
     } catch (err) {
       console.log('Failed to fetch TSS:', err);
     }
@@ -43,20 +70,22 @@ function Telemetry() {
 
   useEffect(() => {
     fetchTss();
+    const interval = setInterval(fetchTss, 1000);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
-
-  const displayTss = (category: string) => {
-    switch (category) {
-      case 'Oxygen':
-        break;
-    }
-  };
 
   return (
     <div className='w-full h-full p-5 flex flex-col'>
-      <div className='w-full h-5 flex justify-between items-center'>
-        <span className='block'>Comm Channel: A</span>
-        <span className='block'>Battery: 100</span>
+      <div className='w-full h-5 flex justify-between items-center pt-3'>
+        <span className='block flex items-center'>
+          {/* <img src={BatterySymbol} className='inline h-4 pr-2' /> */}{' '}
+          Battery Time: {tss == null ? '---' : tss['batt_time_left'].toFixed(2)}
+        </span>
+        <button className='tss-category-button tss-category-button-primary ml-5'>
+          Abort
+        </button>
       </div>
       <div className='w-full flex pt-3'>
         <div className='w-1/3'>
@@ -72,7 +101,24 @@ function Telemetry() {
             </button>
           ))}
         </div>
-        <div className='w-2/3'>{displayTss(currCategory)}</div>
+        <div className='w-2/3'>
+          <div className='table-container'>
+            <table>
+              <tbody>
+                {categoryFields[currCategory].map((item, index: number) => (
+                  <tr key={`tss-table-tr-${index}`}>
+                    <td>{item.label}</td>
+                    {tss == null ? (
+                      <td />
+                    ) : (
+                      <td className='text-right'>{tss[item.name]}</td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
       {/* <div className='flex justify-between'>
         <button className='tss-button'>

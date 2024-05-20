@@ -33,7 +33,6 @@ public class UIStateManager : MonoBehaviour
     private GameObject handMenuUI;
 
 
-
     // UI object currently in display
     private GameObject currentUI;
     // private UIState state;
@@ -60,22 +59,14 @@ public class UIStateManager : MonoBehaviour
         }
     }
 
-    public void hideCurrentUI(GameObject hideUI)
+    public void hideCurrentUI()
     {
-        // transitionToUI(hideUI);
-        hideUI.SetActive(false);
+        transitionToUI(null);
     }
 
     public void transitionToNavUI()
     {
-        handMenuUI.SetActive(false);
         transitionToUI(navUI);
-    }
-
-    public void transitionOutofNavUI()
-    {
-        hideCurrentUI(navUI);
-        handMenuUI.SetActive(true);
     }
 
     public void transitionToEgressUI()
@@ -86,7 +77,7 @@ public class UIStateManager : MonoBehaviour
 
     public void transitionOutOfEgressUI()
     {
-        hideCurrentUI(egressUI);
+        hideCurrentUI();
         handMenuUI.SetActive(true);
     }
 
@@ -96,21 +87,9 @@ public class UIStateManager : MonoBehaviour
         transitionToUI(egressUI);
     }
 
-    public void transitionOutOfIngressUI()
-    {
-        // Do something here?
-    }
-
     public void transitionToGeoSamplingUI()
     {
-        handMenuUI.SetActive(false);
         transitionToUI(geoSamplingUI);
-    }
-
-    public void transitionOutofGeoSamplingUI()
-    {
-        hideCurrentUI(geoSamplingUI);
-        handMenuUI.SetActive(true);
     }
 
 }
