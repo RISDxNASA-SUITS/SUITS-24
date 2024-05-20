@@ -16,7 +16,7 @@ api_path = "http://localhost:5000"
 # LMCC -> HMD
 # actions = []
 
-geo_samples = {"A":[{"name":"Geo Site A","location":"(G,5)"},{"name":"1", "location":"50,50"}],"B":[{"name":"Geo Site B","location":"(I,9)"}],"C":[{"name":"Geo Site C","location":"(K,7)"}],"D":[{"name":"Geo Site D","location":"(M,9)"}],"E":[{"name":"Geo Site E","location":"(L,14)"}],"F":[{"name":"Geo Site F","location":"(P,19)"}],"G":[{"name":"Geo Site G","location":"(P,14)"}]}
+geo_samples = {"A":[{"name":"Geo Site A","location":"(G,5)"},{"name":"1", "location":"50,50"}],"B":[{"name":"Geo Site B","location":"(I,9)"}],"C":[{"name":"Geo Site C","location":"(J,7)"}],"D":[{"name":"Geo Site D","location":"(L,9)"}],"E":[{"name":"Geo Site E","location":"(K,14)"}],"F":[{"name":"Geo Site F","location":"(O,18)"}],"G":[{"name":"Geo Site G","location":"(O,14)"}]}
 
 
 
