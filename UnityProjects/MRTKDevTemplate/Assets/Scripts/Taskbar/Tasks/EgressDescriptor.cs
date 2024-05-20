@@ -167,6 +167,40 @@ public class EgressDescriptor : TaskDescriptor
                         return false;
                 }
             
+
+            case 2: // Prep Water Tanks
+                switch (currStep)
+                {
+                    case 0: // (BOTH DCU) PUMP – OPEN
+                        return dcu.eva1.pump && dcu.eva2.pump;
+                    case 1: // (UIA) EV-1, EV-2 WASTE WATER – OPEN
+                        return uia.eva1_water_waste && uia.eva2_water_waste;
+                    case 2: // (UIA) EV-1, EV-2 WASTE WATER – CLOSE
+                        return uia.eva1_water_waste && uia.eva1_water_waste;
+                    case 3: // (UIA) EV-1, EV-2 SUPPLY WATER – OPEN
+                        return uia.eva1_water_supply && uia.eva2_water_supply;
+                    case 4: // (UIA) EV-1, EV-2 SUPPLY WATER – CLOSE
+                        return uia.eva1_water_supply && uia.eva2_water_supply;
+                    case 5: // (BOTH DCU) PUMP – CLOSE
+                        return dcu.eva1.pump && dcu.eva2.pump;
+                    default:
+                        return false;
+                }
+
+            case 3: // END Depress, Check Switches and Disconnect
+                switch (currStep)
+                {
+                    case 0: // (UIA) DEPRESS PUMP PWR – OFF
+                        return uia.depress;
+                    case 1: // (BOTH DCU) BATT – LOCAL
+                        return dcu.eva1.batt && dcu.eva2.batt;
+                    case 2: // (UIA) EV-1, EV-2 PWR - OFF
+                        return uia.eva1_power && uia.eva2_power;
+                    case 3: // (UIA and DCU) EV1 and EV2 disconnect UIA and DCU umbilical
+                        return false;
+                    default:
+                        return false;
+                }
             default:
                 return false;
         }
