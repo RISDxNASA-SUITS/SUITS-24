@@ -4,7 +4,7 @@
 
 .tss-button {
     font-size: 1.5rem;
-    height: 4rem;
+    height: 3rem;
     width: 4rem;
     padding: 0.5rem 1rem;
 
@@ -47,6 +47,7 @@
 
     width: 6rem;
 }
+
 
 .tss-button-primary:hover {
     border-color: yellow;
