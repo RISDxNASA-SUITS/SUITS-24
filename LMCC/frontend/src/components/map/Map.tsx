@@ -51,9 +51,9 @@ function Map() {
         wLineWidth.current = (tbDist / 25.87) * .925;
 
         setGeoMapMarkers([
-          <img key={uuidv4()} src={GeoPinA} alt={"get a location pin"} className={`absolute h-20 w-12] hover:-translate-y-1 hover:scale-[1.15]`} style={{left:5.85*vLineWidth.current, bottom:7.5*wLineWidth.current}} />,
+          <img key={uuidv4()} src={GeoPinA} alt={"get a location pin"} className={`absolute h-20 w-12] hover:-translate-y-1 hover:scale-[1.15]`} style={{left:5.85*vLineWidth.current, bottom:7.5*wLineWidth.current}}/>,
           <img key={uuidv4()} src={GeoPinB} alt={"geo b location pin"} className={'absolute h-20 w-12 hover:-translate-y-1 hover:scale-[1.15]'} style={{left:9.9*vLineWidth.current, bottom:9.5*wLineWidth.current}}/>,
-          <img key={uuidv4()} src={GeoPinC} alt={"geo c location pin"} className={'absolute h-20 w-12 bottom-[17.15rem] left-[11.26rem] hover:-translate-y-1 hover:scale-[1.15]'} style={{left:7.9*vLineWidth.current, bottom:10.65*wLineWidth.current}} />,
+          <img key={uuidv4()} src={GeoPinC} alt={"geo c location pin"} className={'absolute h-20 w-12 bottom-[17.15rem] left-[11.26rem] hover:-translate-y-1 hover:scale-[1.15]'} style={{left:7.9*vLineWidth.current, bottom:10.65*wLineWidth.current}}/>,
           <img key={uuidv4()} src={GeoPinD} alt={"geo d location pin"} className={'absolute h-20 w-12 bottom-[20.43rem] left-[14.48rem] hover:-translate-y-1 hover:scale-[1.15]'} style={{left:9.9*vLineWidth.current, bottom:12.6*wLineWidth.current}}/>,
           <img key={uuidv4()} src={GeoPinE} alt={"geo e location pin"} className={'absolute h-20 w-12 bottom-[18.8rem] left-[21.06rem] hover:-translate-y-1 hover:scale-[1.15]'} style={{left:14.9*vLineWidth.current, bottom:11.6*wLineWidth.current}}/>,
           <img key={uuidv4()} src={GeoPinF} alt={"geo f location pin"} className={'absolute h-20 w-12 bottom-[25.35rem] left-[29.25rem] hover:-translate-y-1 hover:scale-[1.15]'} style={{left:18.9*vLineWidth.current, bottom:15.6*wLineWidth.current}}/>,
