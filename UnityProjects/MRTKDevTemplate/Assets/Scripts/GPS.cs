@@ -6,11 +6,11 @@ public class GPS : MonoBehaviour
 {
     /************* Satellite **************/
     // hard coded center
-    public const float SatCenterLatitude = 298355f;   // latitude at the center of the satellite image, in degree
-    public const float SatCenterLongitude = 3272383f;  // longitude at the center of the satellite image, in degree
+    public const float SatCenterLatitude = 298353.077f;   // latitude at the center of the satellite image, in degree
+    public const float SatCenterLongitude = 3272376.895f;  // longitude at the center of the satellite image, in degree
     // hard coded scale
-    const float SatLatitudeRange = 100f;  // the satellite image covers this much latitudes in degree
-    const float SatLongitudeRange = 108f;  // EDIT should be 116, but doesn't work if changed. Therefore tweaked. the satellite image covers this much longitudes in degree
+    const float SatLatitudeRange = 93.79f;  // the satellite image covers this much latitudes in degree
+    const float SatLongitudeRange = 96.154f;  // EDIT should be 116, but doesn't work if changed. Therefore tweaked. the satellite image covers this much longitudes in degree
 
     /************* GameObject References **************/
     private Camera mainCamera;

@@ -122,23 +122,26 @@ public class MarkerController : MonoBehaviour
 
     private readonly Dictionary<string, Tuple<float, float>> stations = new Dictionary<string, Tuple<float, float>>
     {
-        // { "E", new Tuple<float, float>(298405f, 3272325f) }, // Bottom Right A28 -> top left : extra move by 5 left
-        // { "B", new Tuple<float, float>(298405f, 3272441f) }, // Top Right AA28 -> top right  : extra move by 4 right
-        // { "C", new Tuple<float, float>(298355f, 3272383f) }, // Middle N14 -> middle
-        // { "D", new Tuple<float, float>(298305f, 3272325f) }, // Bottom Left A0 -> bottom left : extra move by 5 left
-        // { "A", new Tuple<float, float>(298305f, 3272441f) }, // Top Left AA0 -> bottom right : extra move by 3 right
+        // For TEST on four corners + middle center
+        // => width: 3272383 - 3272330 = 53	BUT, 13 blocks  ==> 4.07 UTM per block width  ==> 1andhalf left
+        // => height: 298355 - 298305 = 50	BUT, 13 blocks  ==> 3.846 UTM per block height  ==> half down
+        // (height, width)
+        // { "B", new Tuple<float, float>(298353.077f + 93.79f / 2f, 3272376.895f - 96.154f / 2f) }, // top left
+        // { "E", new Tuple<float, float>(298353.077f + 93.79f / 2f, 3272376.895f + 96.154f / 2f) }, // top right
+        // // { "C", new Tuple<float, float>(298353.077f, 3272376.895f) }, // OUR calculated middle
+        // { "D", new Tuple<float, float>(298353.077f - 93.79f / 2f, 3272376.895f - 96.154f / 2f) }, // Bottom Left
+        // { "A", new Tuple<float, float>(298353.077f - 93.79f / 2f, 3272376.895f + 96.154f / 2f) }, //  Bottom Right
 
-        // all points need to go around 1 block down + 1 block left 
-        // tweaked.
-        { "A", new Tuple<float, float>(298327.857f, 3272346.173f) }, // Point A
-        { "B", new Tuple<float, float>(298335.4826f, 3272362.85f) }, // Point B
-        { "C", new Tuple<float, float>(298343.6723f, 3272354.512f) }, // Point C
-        { "D", new Tuple<float, float>(298349.8621f, 3272362.977f) }, // Point D
-        { "E", new Tuple<float, float>(298346.1583f, 3272383.697f) }, // Point E
-        { "F", new Tuple<float, float>(298361.6468f, 3272404.796f) }, // Point F
-        { "G", new Tuple<float, float>(298361.6468f, 3272383.697f) }, // Point G
-        { "UIA", new Tuple<float, float>(298324.9158f, 3272387.866f) }, // Point UIA
-        { "COMM", new Tuple<float, float>(298353.2391f, 3272408.713f) } // Point COMM
+        { "A", new Tuple<float, float>(298353.077f-(3.846f * 6.5f), 3272376.895f-(4.07f * 7.5f)) }, // Point A
+        { "B", new Tuple<float, float>(298353.077f-(3.846f * 4.5f), 3272376.895f-(4.07f * 3.5f)) }, // Point B
+        { "C", new Tuple<float, float>(298353.077f-(3.846f * 2.5f), 3272376.895f-(4.07f * 5.5f)) }, // Point C
+        { "D", new Tuple<float, float>(298353.077f-(3.846f * 0.5f), 3272376.895f-(4.07f * 3.5f)) }, // Point D
+        { "E", new Tuple<float, float>(298353.077f-(3.846f * 1.5f), 3272376.895f+(4.07f * 1.5f)) }, // Point E
+        { "F", new Tuple<float, float>(298353.077f+(3.846f * 2.5f), 3272376.895f+(4.07f * 6.5f)) }, // Point F
+        { "G", new Tuple<float, float>(298353.077f+(3.846f * 2.5f), 3272376.895f+(4.07f * 1.5f)) }, // Point G
+        { "UIA", new Tuple<float, float>(298353.077f-(3.846f * 7.5f), 3272376.895f+(4.07f * 3f)) }, // Point UIA
+        { "COMM", new Tuple<float, float>(298353.077f+(3.846f * 0.5f), 3272376.895f+(4.07f * 7.5f)) }, // Point COMM
+
     };
         
 
@@ -166,7 +169,7 @@ public class MarkerController : MonoBehaviour
         {
             { MarkerType.POI,  Resources.Load<GameObject>("CustomPrefabs/POI Marker") },
             { MarkerType.Rover, Resources.Load<GameObject>("CustomPrefabs/Rover") },
-            // { MarkerType.Rover, Resources.Load<GameObject>("Prefabs/red_dot") },
+            // { MarkerType.Rover, Resources.Load<Ga/meObject>("Prefabs/red_dot") },
             { MarkerType.Obstacle, Resources.Load<GameObject>("CustomPrefabs/Obstacle Marker") },
         };
 
@@ -194,6 +197,7 @@ public class MarkerController : MonoBehaviour
             Vector2 utmCoord = new Vector2(kvp.Value.Item1, kvp.Value.Item2);
             string path = "Prefabs/Markers/" + kvp.Key;
             // string path = "Prefabs/red_dot";  // to check exact position
+            // string path = "Prefabs/Markers/new";  // to check exact position
             var stationMarker = new Marker(MarkerType.Stations, Resources.Load<GameObject>(path), utmCoord);
             markers.Add(stationMarker.MapMarkerObj, stationMarker);
         }
@@ -301,7 +305,7 @@ public class MarkerController : MonoBehaviour
             }
         }
 
-        // Debug.Log(minDist);
+        Debug.Log(minDist);
         if (minDist < markerEditSensitivity)
         {
             actionButtons.SetActive(true);
