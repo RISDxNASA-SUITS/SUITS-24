@@ -146,14 +146,23 @@ public class SimpleCamera : MonoBehaviour
     private void uploadVideoImageToServer()
     {
         // Convert Texture2D to PNG
-        var pngBytes = ImageConversion.EncodeToPNG(_videoTextureRgb);
+        try
+        {
+            var pngBytes = ImageConversion.EncodeToPNG(_videoTextureRgb);
 
-        var w = pngBytes.GetLength(0);
-        var h = pngBytes.GetLength(1);
-        systemMsg.text = $"Image w: {w}, h: {h}";
-        StartCoroutine(DisplaySystemMsgForSeconds(1000));
+            var w = pngBytes.GetLength(0);
+            var h = pngBytes.GetLength(1);
+            /*            systemMsg.text = $"Image w: {w}, h: {h}";
+                        StartCoroutine(DisplaySystemMsgForSeconds(10));
 
-        Debug.Log(systemMsg.text);
+                        Debug.Log(systemMsg.text);
+            */
+        }
+        catch (Exception e)
+        {
+            systemMsg.text = e.ToString();
+            StartCoroutine(DisplaySystemMsgForSeconds(10));
+        }
     }
 
     private IEnumerator DisplaySystemMsgForSeconds(float seconds)
