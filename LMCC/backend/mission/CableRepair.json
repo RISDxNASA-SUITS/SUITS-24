@@ -1,0 +1,79 @@
+{
+    "name": "Repair",
+    "location": "COMM Tower Screen",
+    "instructions": [
+        {
+            "name": "Cable Repair",
+            "steps": [
+                {
+                    "name": "1. EV1 Select Gear icon",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "2. EV1 Select Shutdown",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "3. EV1 Verify shutdown complete and notify EV2 and LMCC1",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "4. EV2 Move POWER – OFF, notify EV1 and LMCC1",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "5. EV2 Navigate to Comm Tower to retrieve one end of power cable",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "6. EV1 Retrieve spare cable",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "7. take appropriate end of cable to MMRTG, notify EV1 and LMCC1 when at MMRTG",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "8. EV1 Disconnect damaged cable from Comm Tower, notify EV2 and LMCC1",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "9. EV2 Disconnect damaged cable from MMRTG, notify EV1 and LMCC1",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "10. EV1 Connect new cable from Comm Tower, notify EV2 and LMCC1",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "11. EV2 Connect new cable from MMRTG, notify EV1 and LMCC1",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "12. EV2 Move POWER – ON, notify EV1 and LMCC1",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "13. EV1 POWER – ON, notify EV2 and LMCC1",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "14. EV1 when start up complete, notify EV2 and LMCC1",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "15. EV1 Verify channel “B” is operational, notify EV2 and LMCC1",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "16. Perform comm check",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "17. If Comm good, EV1/LMCC1 switch back to COM-A, EV2/LMCC2 continue COM-B, Else all to COM – A",
+                    "status": "incomplete"
+                }
+            ]
+        }
+    ]
+}

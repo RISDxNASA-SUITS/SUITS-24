@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.XR.MagicLeap;
 using UnityEngine.UI;
 using TMPro;
+using Newtonsoft.Json;
 
 static class GraphicExtension
 {
@@ -143,17 +144,25 @@ public class SimpleCamera : MonoBehaviour
         _updateViewFinder = true;
     }
 
-    private void uploadVideoImageToServer()
+    // Get metadata ready for a new ImageNote
+    public virtual Note newImageNote()
+    {
+        var note = new Note();
+        note.note_type = "image";
+        return note;
+    }
+
+    public virtual void uploadVideoImageToServer()
     {
         try
         {
+            Note note = newImageNote();
+            note.file_ext = "png";
             // Convert Texture2D to PNG
-            var pngBytes = ImageConversion.EncodeToPNG(_videoTextureRgb);
+            // note.data = ImageConversion.EncodeToPNG(_videoTextureRgb); 
 
-            // var length = pngBytes.GetLength(0);
-            // systemMsg.text = $"Image data length: {length}";
-            // StartCoroutine(DisplaySystemMsgForSeconds(systemMsgDurationSecs));
-
+            var json = JsonConvert.SerializeObject(note);
+            Debug.Log(json);
             // TODO: Post to server
 
         }

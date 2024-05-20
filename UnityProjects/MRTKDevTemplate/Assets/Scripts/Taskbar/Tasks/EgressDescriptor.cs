@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EgressDescriptor : TaskDescriptor
 {
+    private string myTaskName = "egress";
     private string[] myTaskHeadings = {
         // step 1
         "Connect UIA to DCU and start Depress",
@@ -100,6 +101,17 @@ public class EgressDescriptor : TaskDescriptor
         }
     };
 
+    private UIStateManager uiStateManager;
+    void Start()
+    {
+        uiStateManager = GameObject.Find("UI Controller").GetComponent<UIStateManager>();
+    }
+
+    public override string TaskName
+    {
+        get { return myTaskName; }
+    }
+
     public override string[] TaskHeadings
     {
         get { return myTaskHeadings; }
@@ -122,7 +134,7 @@ public class EgressDescriptor : TaskDescriptor
 
         UIA uia = tss.GetUIA();
         DCU dcu = tss.GetDCU();
-        
+
         if (uia == null || dcu == null) return false;
 
         switch (currTask)
@@ -166,7 +178,7 @@ public class EgressDescriptor : TaskDescriptor
                     default:
                         return false;
                 }
-            
+
 
             case 2: // Prep Water Tanks
                 switch (currStep)
@@ -204,5 +216,11 @@ public class EgressDescriptor : TaskDescriptor
             default:
                 return false;
         }
+    }
+
+    public override void TaskCompleted()
+    {
+        Debug.Log("Complete Ingress");
+        uiStateManager.transitionOutOfEgressUI();
     }
 }

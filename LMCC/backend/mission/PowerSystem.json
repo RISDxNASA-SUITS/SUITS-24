@@ -1,0 +1,39 @@
+{
+    "name": "Repair",
+    "location": "Tower Base PSU",
+    "instructions": [
+        {
+            "name": "Power System Troubleshooting and Repair",
+            "steps": [
+                {
+                    "name": "1. EV1: Assemble diagnostic kit, spare batteries, solar cells, and electrical repair tools.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "2. EV2: Carry additional spare parts and protective equipment.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "3. EV1: Perform diagnostics to identify power supply",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "4. EV2: Assist in identifying damaged components.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "5. EV1: Replace faulty batteries or solar cells.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "6. EV2: Help in repairing or replacing wiring, ensuring secure connections.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "7. EV1: Verify power system functionality post-repair.",
+                    "status": "incomplete"
+                }
+            ]
+        }
+    ]
+}

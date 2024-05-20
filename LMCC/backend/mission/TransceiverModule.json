@@ -1,0 +1,35 @@
+{
+    "name": "Repair",
+    "location": "Comm Tower Transceiver",
+    "instruction": [
+        {
+            "name": "Transceiver Module Replacement",
+            "steps": [
+                {
+                    "name": "1. EV1: Collect replacement transceiver module and non-conductive tools",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "2. EV2: Prepare electrostatic discharge safety equipment",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "3. EV1: Remove the faulty module.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "4. EV2: Assist in isolating power supply",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "5. EV1: Install the new module ensuring all connections are secure",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "6. EV2: Ensure module installation is correctly performed; conduct systems check to verify functionality.",
+                    "status": "incomplete"
+                }
+            ]
+        }
+    ]
+}
