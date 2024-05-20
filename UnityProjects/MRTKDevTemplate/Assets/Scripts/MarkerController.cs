@@ -34,6 +34,7 @@ public class MarkerController : MonoBehaviour
         public Vector2 GpsCoord;
         public readonly GameObject MapMarkerObj;
         public readonly RectTransform MapMarkerRT;
+        public readonly int ID;
 
         public Marker(MarkerType type, GameObject prefab, Vector2 gpsCoord)
         {
@@ -41,6 +42,7 @@ public class MarkerController : MonoBehaviour
             GpsCoord = gpsCoord;
             MapMarkerObj = Instantiate(prefab, markersTf);
             MapMarkerRT = MapMarkerObj.GetComponent<RectTransform>();
+            ID = nextID++;
         }
 
         public void CleanUp()
@@ -96,6 +98,7 @@ public class MarkerController : MonoBehaviour
     private Camera mainCamera;
     private static GPS gps;
 
+    private static int nextID = 0;
     private static Dictionary<MarkerType, GameObject> prefabDict;
     private Dictionary<MarkerType, bool> showMarker;
     private Dictionary<GameObject, Marker> markers;
