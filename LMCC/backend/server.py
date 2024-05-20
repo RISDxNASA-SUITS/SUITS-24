@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)
 
 # LMCC -> HMD
-actions = []
+# actions = []
 
 # HMD -> LMCC
 notifications = [
@@ -27,14 +27,11 @@ notifications = [
     {"message": "Begin EVA", "timestamp": "00:00:00"},
 ]
 
-# Mission Progress
-state = {}
-new_state = False
-
 # Backend configuration
 EVA_NUM = 1
 FS_ROOT = "root"
 MISSION_FOLDER = "mission"
+TASK_TITLES = ["egress", "repair", "geo", "ingress"]
 
 TSS_URL = os.environ.get("TSS_URL")
 TEAM_NUM = os.environ.get("TEAM_NUM")
@@ -45,42 +42,73 @@ if not os.path.exists(FS_ROOT):
 
 @app.route("/get-tasks", methods=["GET"])
 def get_tasks():
-    task_titles = ["egress"]
     tasks = []
 
-    for title in task_titles:
+    for title in TASK_TITLES:
         with open(f"{MISSION_FOLDER}/{title}.json", "r") as f:
             tasks.append(json.load(f))
 
     return jsonify(tasks), 200
 
 
-@app.route("/post-action", methods=["POST"])
-def post_action():
-    global actions
+@app.route("/update-state", methods=["POST"])
+def update_state():
     data = request.get_json()
-    actions.append(data)
-    return jsonify({"message": "Received action"}), 200
+    fpath = os.path.join(MISSION_FOLDER, data["taskName"] + ".json")
 
+    with open(fpath, "r") as f:
+        state = json.load(f)
 
-@app.route("/get-actions", methods=["GET"])
-def get_actions():
-    global actions
-    data = jsonify(actions)
-    actions.clear()
-    return data
+    with open(fpath, "w") as f:
+        curr_step = 0
+        complete = False
+        for ins in state["instructions"]:
+            for step in ins["steps"]:
+                if curr_step == data["step"]:
+                    if complete:
+                        step["status"] = "inprogress"
+                        f.write(json.dumps(state))
+                        return jsonify({"message": "Updated app state"}), 200
+                    else:
+                        complete = True
+                        step["status"] = "complete"
+                else:
+                    curr_step += 1
 
+        f.write(json.dumps(state))
 
-@app.route("/get-state", methods=["GET"])
-def get_state():
-    global state
-    global new_state
-
-    if new_state:
-        new_state = False
-        return jsonify(state)
+    if complete:
+        return jsonify({"message": "Updated app state"}), 200
     else:
-        return jsonify({})
+        return jsonify({"message": "Failed to update app state"}), 500
+
+
+# @app.route("/post-action", methods=["POST"])
+# def post_action():
+#     global actions
+#     data = request.get_json()
+#     actions.append(data)
+#     return jsonify({"message": "Received action"}), 200
+
+
+# @app.route("/get-actions", methods=["GET"])
+# def get_actions():
+#     global actions
+#     data = jsonify(actions)
+#     actions.clear()
+#     return data
+
+
+# @app.route("/get-state", methods=["GET"])
+# def get_state():
+#     global state
+#     global new_state
+
+#     if new_state:
+#         new_state = False
+#         return jsonify(state)
+#     else:
+#         return jsonify({})
 
 
 @app.route("/post-notification", methods=["POST"])
@@ -154,68 +182,11 @@ def delete_file():
     return jsonify({"message": "File deleted successfully"}), 200
 
 
-# Mock TSS
-tss = {
-    "telemetry": {
-        "eva_time": 4,
-        "eva1": {
-            "batt_time_left": 4184.880859,
-            "oxy_pri_storage": 15.204723,
-            "oxy_sec_storage": 24.481083,
-            "oxy_pri_pressure": 0.000000,
-            "oxy_sec_pressure": 734.434692,
-            "oxy_time_left": 4286,
-            "heart_rate": 90.000000,
-            "oxy_consumption": 0.103577,
-            "co2_production": 0.104614,
-            "suit_pressure_oxy": 3.072349,
-            "suit_pressure_co2": 0.001071,
-            "suit_pressure_other": 11.554200,
-            "suit_pressure_total": 14.627621,
-            "fan_pri_rpm": 0.000000,
-            "fan_sec_rpm": 29855.638672,
-            "helmet_pressure_co2": 0.005966,
-            "scrubber_a_co2_storage": 0.000000,
-            "scrubber_b_co2_storage": 0.497545,
-            "temperature": 72.085022,
-            "coolant_ml": 21.814507,
-            "coolant_gas_pressure": 0.000000,
-            "coolant_liquid_pressure": 120.961479,
-        },
-        "eva2": {
-            "batt_time_left": 5393.291016,
-            "oxy_pri_storage": 16.324224,
-            "oxy_sec_storage": 17.517467,
-            "oxy_pri_pressure": 0.002680,
-            "oxy_sec_pressure": 525.527954,
-            "oxy_time_left": 3654,
-            "heart_rate": 90.000000,
-            "oxy_consumption": 0.098664,
-            "co2_production": 0.095775,
-            "suit_pressure_oxy": 3.072346,
-            "suit_pressure_cO2": 0.001163,
-            "suit_pressure_other": 11.554200,
-            "suit_pressure_total": 14.627710,
-            "fan_pri_rpm": 0.000000,
-            "fan_sec_rpm": 29433.216797,
-            "helmet_pressure_co2": 0.005640,
-            "scrubber_a_co2_storage": 0.000000,
-            "scrubber_b_co2_storage": 0.497686,
-            "temperature": 76.830681,
-            "coolant_ml": 21.773628,
-            "coolant_gas_pressure": 0.000000,
-            "coolant_liquid_pressure": 128.683289,
-        },
-    }
-}
-
-
 @app.route("/get-tss", methods=["GET"])
 def get_tss():
     # global tss
     # return jsonify(tss), 200
     res = requests.get(f"{TSS_URL}/json_data/teams/{TEAM_NUM}/TELEMETRY.json")
-    print(res.json())
     return res.json(), 200
 
 

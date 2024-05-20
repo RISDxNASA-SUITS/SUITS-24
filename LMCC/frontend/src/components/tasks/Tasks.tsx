@@ -3,7 +3,7 @@ import Task from '../task/Task';
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
-  const [currTask, setCurrTask] = useState(0);
+  const [currTask, setCurrTask] = useState(1);
   const fetchTasks = async () => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/get-tasks`);
@@ -17,17 +17,14 @@ function Tasks() {
 
   useEffect(() => {
     fetchTasks();
+    const interval = setInterval(fetchTasks, 1000);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   return (
     <div className='flex flex-col w-full h-[60.5rem] p-5'>
-      {currTask != 0 ? (
-        <>
-          <h1 className='section-title'>EV1 Past Tasks</h1>
-        </>
-      ) : (
-        <></>
-      )}
       {currTask <= tasks.length - 1 ? (
         <>
           <h1 className='section-title'>EV1 Current Task</h1>
@@ -39,6 +36,19 @@ function Tasks() {
       {currTask < tasks.length - 1 ? (
         <>
           <h1 className='section-title'>EV1 Next Tasks</h1>
+          {tasks.slice(currTask + 1, tasks.length).map((task, index) => (
+            <Task info={task} key={`next-task-${index}`} />
+          ))}
+        </>
+      ) : (
+        <></>
+      )}
+      {currTask != 0 ? (
+        <>
+          <h1 className='section-title'>EV1 Past Tasks</h1>
+          {tasks.slice(0, currTask).map((task, index) => (
+            <Task info={task} key={`next-task-${index}`} />
+          ))}
         </>
       ) : (
         <></>
