@@ -135,8 +135,8 @@ public class SimpleCamera : MonoBehaviour
         // TODO: POST it here to the LMCC server.
         uploadVideoImageToServer();
 
-        systemMsg.text = "Image Saved!";
-        StartCoroutine(DisplaySystemMsgForSeconds(systemMsgDurationSecs));
+        // systemMsg.text = "Image Saved!";
+        // StartCoroutine(DisplaySystemMsgForSeconds(systemMsgDurationSecs));
 
         optionButtons.SetActive(false);
         shutterButton.SetActive(true);
