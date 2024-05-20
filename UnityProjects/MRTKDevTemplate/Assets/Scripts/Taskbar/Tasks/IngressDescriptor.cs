@@ -81,7 +81,7 @@ public class IngressDescriptor : TaskDescriptor
 
         UIA uia = tss.GetUIA();
         DCU dcu = tss.GetDCU();
-        
+
         if (uia == null || dcu == null) return false;
 
         switch (currTask)
@@ -94,7 +94,7 @@ public class IngressDescriptor : TaskDescriptor
                     case 1: // (UIA) EV-1, EV-2 PWR - ON
                         return uia.eva1_power && uia.eva2_power;
                     case 2: // (BOTH DCU) BATT - UMB
-                        return dcu.eva1.batt && dcu.eva2.batt;
+                        return !dcu.eva1.batt && !dcu.eva2.batt;
                     default:
                         return false;
                 }
@@ -105,11 +105,11 @@ public class IngressDescriptor : TaskDescriptor
                     case 0: //(UIA) OXYGEN O2 VENT - OPEN 
                         return uia.oxy_vent;
                     case 1: //(UIA) OXYGEN O2 VENT - CLOSE
-                        return uia.oxy_vent;
+                        return !uia.oxy_vent;
                     default:
                         return false;
                 }
-            
+
 
             case 2: // Empty Water Tanks
                 switch (currStep)
@@ -119,7 +119,7 @@ public class IngressDescriptor : TaskDescriptor
                     case 1: // (UIA) EV-1, EV-2 WASTE WATER – OPEN
                         return uia.eva1_water_waste && uia.eva2_water_waste;
                     case 2: // (UIA) EV-1, EV-2 WASTE WATER – CLOSE
-                        return uia.eva1_water_waste && uia.eva1_water_waste;
+                        return !uia.eva1_water_waste && !uia.eva1_water_waste;
                     default:
                         return false;
                 }
@@ -128,7 +128,7 @@ public class IngressDescriptor : TaskDescriptor
                 switch (currStep)
                 {
                     case 0: // (UIA) EV-1, EV-2 EMU PWR – OFF
-                        return uia.eva1_power && uia.eva2_power;
+                        return !uia.eva1_power && !uia.eva2_power;
                     case 1: // (DCU) EV1 and EV2 disconnect umbilical
                         return false;
                     default:

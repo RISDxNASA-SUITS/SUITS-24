@@ -5,6 +5,8 @@ using UnityEngine.XR.MagicLeap;
 using UnityEngine.UI;
 using TMPro;
 using Newtonsoft.Json;
+using static LMCCAgent;
+using UnityEngine.Networking;
 
 static class GraphicExtension
 {
@@ -66,6 +68,9 @@ public class SimpleCamera : MonoBehaviour
     [SerializeField]
     private Image flashImage;
 
+    [SerializeField]
+    private Texture2D _testTexture;
+
     void Start()
     {
         flashObject.SetActive(false);
@@ -77,6 +82,7 @@ public class SimpleCamera : MonoBehaviour
     {
         //This script assumes that camera permissions were already granted.
         _updateViewFinder = true;
+        // _updateViewFinder = false;
         StartCoroutine(EnableMLCamera());
         shutterButton.SetActive(true);
     }
@@ -152,19 +158,52 @@ public class SimpleCamera : MonoBehaviour
         return note;
     }
 
-    public virtual void uploadVideoImageToServer()
+    public void PostUpdateState(string jsonPayload)
+    {
+        string url = "http://localhost:5000";
+
+        IEnumerator UpdateState()
+        {
+            var request = new UnityWebRequest(url + "/post-sample", "POST");
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonPayload);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            Debug.Log(bodyRaw);
+
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                string responseJson = request.downloadHandler.text;
+                // Handle the response from the Flask backend
+                Debug.Log("Response: " + responseJson);
+            }
+            else
+            {
+                Debug.LogError("Error: " + request.error);
+            }
+        }
+
+        StartCoroutine(UpdateState());
+    }
+
+    public void uploadVideoImageToServer()
     {
         try
         {
             Note note = newImageNote();
             note.file_ext = "png";
+
             // Convert Texture2D to PNG
-            // note.data = ImageConversion.EncodeToPNG(_videoTextureRgb); 
+            note.data = ImageConversion.EncodeToPNG(_videoTextureRgb);
+            // note.data = ImageConversion.EncodeToPNG(_testTexture);
 
-            var json = JsonConvert.SerializeObject(note);
-            Debug.Log(json);
+            var jsonPayload = JsonConvert.SerializeObject(note);
+            // Debug.Log(json);
             // TODO: Post to server
-
+            // PostUpdateState(jsonPayload);
         }
         catch (Exception e)
         {

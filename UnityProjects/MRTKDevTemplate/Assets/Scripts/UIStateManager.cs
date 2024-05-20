@@ -93,4 +93,14 @@ public class UIStateManager : MonoBehaviour
         transitionToUI(geoSamplingUI);
     }
 
+    public void transitionToRepairUI()
+    {
+        transitionToUI(repairUI);
+    }
+
+    public void transitionOutOfRepairUI()
+    {
+        hideCurrentUI();
+        repairUI.SetActive(true);
+    }
 }
