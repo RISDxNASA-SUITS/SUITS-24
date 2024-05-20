@@ -16,22 +16,33 @@ public class GPS : MonoBehaviour
     private Camera mainCamera;
     private RectTransform mapRT, canvasRT;
     private Vector2 userGps = new Vector2(SatCenterLatitude, SatCenterLongitude);
+    private TSScConnection tssConn;
 
     void Start()
     {
         mainCamera = Camera.main;
         mapRT = GameObject.Find("Map").GetComponent<RectTransform>();
         canvasRT = GameObject.Find("Nav Canvas").GetComponent<RectTransform>();
+        tssConn = GameObject.Find("TSS Agent").GetComponent<TSScConnection>();
+    }
+
+    void Update()
+    {
+        if (tssConn.isIMUUpdated())
+        {
+            IMU imu = tssConn.GetIMU();
+            userGps = new Vector2(imu.eva1.posx, imu.eva1.posy);
+        }
     }
 
     // For simulation in Unity
     public Vector2 GetGpsCoords()
     {
-        Vector3 worldPos = mainCamera.transform.position;
-        Vector2 gpsCoords = new Vector2(SatCenterLatitude, SatCenterLongitude);
-        gpsCoords += 50 * new Vector2(worldPos.z, worldPos.x); // in mapnav, shift+w/a/s/d to move cur position
-        return gpsCoords;
-        // return userGps;
+        // Vector3 worldPos = mainCamera.transform.position;
+        // Vector2 gpsCoords = new Vector2(SatCenterLatitude, SatCenterLongitude);
+        // gpsCoords += 50 * new Vector2(worldPos.z, worldPos.x); // in mapnav, shift+w/a/s/d to move cur position
+        // return gpsCoords;
+        return userGps;
     }
 
     public Vector2 GpsToMapPos(float latitudeDeg, float longitudeDeg)

@@ -20,19 +20,19 @@ public class UpdateGeoFields : MonoBehaviour
 
     public TextMeshProUGUI AL2O3;
 
-     public TextMeshProUGUI FeO;
+    public TextMeshProUGUI FeO;
 
-     public TextMeshProUGUI MnO;
+    public TextMeshProUGUI MnO;
 
-     public TextMeshProUGUI MgO;
+    public TextMeshProUGUI MgO;
 
-     public TextMeshProUGUI CaO;
+    public TextMeshProUGUI CaO;
 
-     public TextMeshProUGUI K2O;
+    public TextMeshProUGUI K2O;
 
-     public TextMeshProUGUI P2O3;
+    public TextMeshProUGUI P2O3;
 
-     public TextMeshProUGUI other;
+    public TextMeshProUGUI other;
 
     private bool eva1 = true;
     private bool eva2 = false;
@@ -54,7 +54,7 @@ public class UpdateGeoFields : MonoBehaviour
 
 
             RockInfo rockInfo = JsonConvert.DeserializeObject<DeserializeRock>(tssConn.GetSPECJsonString()).spec;
-            Rock toShow = eva1?rockInfo.eva1:rockInfo.eva2;
+            Rock toShow = eva1 ? rockInfo.eva1 : rockInfo.eva2;
 
             if (Title is not null)
             {

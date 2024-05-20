@@ -24,6 +24,10 @@ public class UIStateManager : MonoBehaviour
     [SerializeField]
     private GameObject egressUI;
 
+    [Tooltip("The ingress game object")]
+    [SerializeField]
+    private GameObject ingressUI;
+
     [Tooltip("The geo sampling game object")]
     [SerializeField]
     private GameObject geoSamplingUI;
@@ -44,6 +48,7 @@ public class UIStateManager : MonoBehaviour
     {
         navUI.SetActive(false);
         egressUI.SetActive(false);
+        ingressUI.SetActive(false);
         geoSamplingUI.SetActive(false);
         repairUI.SetActive(false);
 
@@ -87,6 +92,7 @@ public class UIStateManager : MonoBehaviour
         handMenuUI.SetActive(false);
         transitionToUI(egressUI);
     }
+
 
     public void transitionToGeoSamplingUI()
     {

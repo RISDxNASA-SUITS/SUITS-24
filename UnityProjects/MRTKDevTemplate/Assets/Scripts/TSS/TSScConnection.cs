@@ -35,6 +35,8 @@ public class TSScConnection : MonoBehaviour
     // Deserialized Jsons
     UIA uia;
     DCU dcu;
+    SPEC spec;
+    IMU imu;
 
     // Connect to TSSc with a specific team number
     public void ConnectToHost(string host, int team_number)
@@ -164,9 +166,9 @@ public class TSScConnection : MonoBehaviour
                 case UnityWebRequest.Result.Success:
                     if (this.DCUJsonString != webRequest.downloadHandler.text)
                     {
-                        this.DCUUpdated = true;
                         this.DCUJsonString = webRequest.downloadHandler.text;
                         this.dcu = JsonConvert.DeserializeObject<DCUWrapper>(this.DCUJsonString).dcu;
+                        this.DCUUpdated = true;
                     }
                     break;
             }
@@ -205,8 +207,8 @@ public class TSScConnection : MonoBehaviour
                 case UnityWebRequest.Result.Success:
                     if (this.ROVERJsonString != webRequest.downloadHandler.text)
                     {
-                        this.ROVERUpdated = true;
                         this.ROVERJsonString = webRequest.downloadHandler.text;
+                        this.ROVERUpdated = true;
                         // Debug.Log(this.ROVERJsonString);
                     }
                     break;
@@ -240,9 +242,9 @@ public class TSScConnection : MonoBehaviour
                 case UnityWebRequest.Result.Success:
                     if (this.SPECJsonString != webRequest.downloadHandler.text)
                     {
-                        this.SPECUpdated = true;
                         this.SPECJsonString = webRequest.downloadHandler.text;
-                        // Debug.Log(this.SPECJsonString);
+                        this.spec = JsonConvert.DeserializeObject<SPECWrapper>(this.SPECJsonString).spec;
+                        this.SPECUpdated = true;
                     }
                     break;
             }
@@ -254,6 +256,12 @@ public class TSScConnection : MonoBehaviour
     {
         SPECUpdated = false;
         return this.SPECJsonString;
+    }
+
+    public SPEC GetSPEC()
+    {
+        this.SPECUpdated = false;
+        return this.spec;
     }
 
     public bool isSPECUpdated()
@@ -345,9 +353,9 @@ public class TSScConnection : MonoBehaviour
                 case UnityWebRequest.Result.Success:
                     if (this.IMUJsonString != webRequest.downloadHandler.text)
                     {
-                        this.IMUUpdated = true;
                         this.IMUJsonString = webRequest.downloadHandler.text;
-                        // Debug.Log(this.IMUJsonString);
+                        this.imu = JsonConvert.DeserializeObject<IMUWrapper>(this.IMUJsonString).imu;
+                        this.IMUUpdated = true;
                     }
                     break;
             }
@@ -361,12 +369,14 @@ public class TSScConnection : MonoBehaviour
         return this.IMUJsonString;
     }
 
+    public IMU GetIMU()
+    {
+        IMUUpdated = false;
+        return this.imu;
+    }
+
     public bool isIMUUpdated()
     {
         return IMUUpdated;
     }
-
-
-
-
 }

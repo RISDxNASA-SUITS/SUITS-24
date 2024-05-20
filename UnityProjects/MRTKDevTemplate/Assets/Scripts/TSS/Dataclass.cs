@@ -43,3 +43,53 @@ public record DCU_EVA
     public bool pump;
     public bool co2;
 }
+
+public record SPECWrapper
+{
+    public SPEC spec;
+}
+
+public record SPEC
+{
+    public SPEC_EVA eva1;
+    public SPEC_EVA eva2;
+}
+
+public record SPEC_EVA
+{
+    public string name;
+    public int id;
+    public SPEC_DATA data;
+}
+
+public record SPEC_DATA
+{
+    public float SiO2;
+    public float TiO2;
+    public float Al2O3;
+    public float FeO;
+    public float MnO;
+    public float MgO;
+    public float CaO;
+    public float K2O;
+    public float P2O3;
+    public float other;
+}
+
+public record IMUWrapper
+{
+    public IMU imu;
+}
+
+public record IMU
+{
+    public IMU_DATA eva1;
+    public IMU_DATA eva2;
+}
+
+public record IMU_DATA
+{
+    public float posx;
+    public float posy;
+    public float heading;
+}
