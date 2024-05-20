@@ -1,3 +1,58 @@
 .file-card {
     width: 40%;
 }
+
+.tss-button {
+    font-size: 1.5rem;
+    height: 4rem;
+    width: 4rem;
+    padding: 0.5rem 1rem;
+
+    background-color: transparent;
+    border: 2px solid transparent;
+    border-radius: 16px;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tss-button:hover {
+    border-color: white;
+    /* border-radius: 16px; */
+    /* border-image: linear-gradient(to bottom, #ffffff, #78f7d9) 1; */
+}
+
+.tss-button:focus {
+    outline: none;
+    border-color: white;
+    /* border-radius: 16px; */
+    /* border-image: linear-gradient(to bottom, #ffffff, #78f7d9) 1; */
+
+    background-image: url('/bg.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.tss-button-primary {
+    outline: none;
+    border-color: white;
+
+    background-image: url('/bg.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    width: 6rem;
+}
+
+.tss-button-primary:hover {
+    border-color: yellow;
+}
+
+.tss-button-img {
+    height: 75%;
+    object-fit: contain;
+}

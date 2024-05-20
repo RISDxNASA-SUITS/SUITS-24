@@ -2,15 +2,16 @@ import { useState } from 'react';
 import BuildingIcon from '../../assets/icons/building.png';
 import UpArrowIcon from '../../assets/icons/up.png';
 import DownArrowIcon from '../../assets/icons/down.png';
+import { TaskInfo } from './TaskTypes';
 import './Task.css';
+import TaskItem from './TaskItem';
 
 interface TaskProps {
-  title: string;
-  location: string;
+  info: TaskInfo;
   current: boolean;
 }
 
-function Task({ title, location, current }: TaskProps) {
+function Task({ info, current }: TaskProps) {
   const [expanded, setExpended] = useState(false);
 
   return (
@@ -19,16 +20,25 @@ function Task({ title, location, current }: TaskProps) {
         expanded ? ' expanded' : ''
       }`}
     >
-      <h1 className='text-xl'>{title}</h1>
+      <h1 className='text-xl'>{info.name}</h1>
       <span className='text-base'>
         <img src={BuildingIcon} alt='Location' className='inline-block pr-1' />
-        {location}
+        {info.location}
       </span>
       <img
         className='expand-icon'
         src={expanded ? UpArrowIcon : DownArrowIcon}
         onClick={() => setExpended(!expanded)}
       />
+      {expanded ? (
+        <div className='pt-3'>
+          {info.instructions.map((ins, index) => (
+            <TaskItem instruction={ins} key={`${ins.name}-${index}`} />
+          ))}
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

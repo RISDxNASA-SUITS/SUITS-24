@@ -3,9 +3,10 @@ import Task from '../task/Task';
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
+  const [currTask, setCurrTask] = useState(0);
   const fetchTasks = async () => {
     try {
-      const res = await fetch('http://localhost:5000/get-tasks');
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/get-tasks`);
       const data = await res.json();
       console.log(data);
       setTasks(data);
@@ -20,12 +21,28 @@ function Tasks() {
 
   return (
     <div className='flex flex-col w-full h-[59.5rem] p-5'>
-      <h1 className='section-title'>EV1 Current Task</h1>
-      <Task title='Egress' location='UIA Panel' current={true} />
-      <h1 className='section-title'>EV1 Next Tasks</h1>
-      <Task title='Navigation' location='Comms Tower' />
-      <Task title='Repair' location='Comms Tower' />
-      <Task title='Inspect Comms Tower Worksite' location='Comms Tower' />
+      {currTask != 0 ? (
+        <>
+          <h1 className='section-title'>EV1 Past Tasks</h1>
+        </>
+      ) : (
+        <></>
+      )}
+      {currTask <= tasks.length - 1 ? (
+        <>
+          <h1 className='section-title'>EV1 Current Task</h1>
+          <Task info={tasks[currTask]} current={true} />
+        </>
+      ) : (
+        <></>
+      )}
+      {currTask < tasks.length - 1 ? (
+        <>
+          <h1 className='section-title'>EV1 Next Tasks</h1>
+        </>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

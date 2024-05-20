@@ -1,77 +1,77 @@
-.tss-button {
-    font-size: 1.5rem;
-    height: 4rem;
-    width: 4rem;
-    padding: 0.5rem 1rem;
+.tss-category-button {
+  font-size: 1rem;
+  height: auto;
+  width: 10rem;
+  padding: 0.5rem 1rem;
 
-    background-color: transparent;
-    border: 2px solid transparent;
-    border-radius: 16px;
-    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.tss-button:hover {
-    border-color: white;
-    /* border-radius: 16px; */
-    /* border-image: linear-gradient(to bottom, #ffffff, #78f7d9) 1; */
+.tss-category-button:hover {
+  border-color: white;
+  /* border-radius: 16px; */
+  /* border-image: linear-gradient(to bottom, #ffffff, #78f7d9) 1; */
 }
 
-.tss-button:focus {
-    outline: none;
-    border-color: white;
-    /* border-radius: 16px; */
-    /* border-image: linear-gradient(to bottom, #ffffff, #78f7d9) 1; */
-    
-    background-image: url('/bg.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+.tss-category-button:focus {
+  outline: none;
+  border-color: white;
+  /* border-radius: 16px; */
+  /* border-image: linear-gradient(to bottom, #ffffff, #78f7d9) 1; */
+
+  background-image: url('/bg.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
-.tss-button-primary {
-    outline: none;
-    border-color: white;
+.tss-category-button-primary {
+  outline: none;
+  border-color: white;
 
-    background-image: url('/bg.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+  background-image: url('/bg.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 
-    width: 6rem;
+  width: 6rem;
 }
 
-.tss-button-primary:hover {
-    border-color: yellow;
+.tss-category-button-primary:hover {
+  border-color: yellow;
 }
 
-.tss-button-img {
-    height: 75%;
-    object-fit: contain;
+.tss-category-button-img {
+  height: 75%;
+  object-fit: contain;
 }
 
 .table-container {
-    padding: 1rem 0 0 0;
+  padding: 1rem 0 0 0;
 }
 
 table {
-    font-size: 1rem;
-    font-weight: 300;
+  font-size: 1rem;
+  font-weight: 300;
 
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
-  
+
 th,
 td {
-    padding: 10px 18px 10px 18px;
-    text-align: left;
-    font-weight: 300;
+  padding: 10px 18px 10px 18px;
+  text-align: left;
+  font-weight: 300;
 }
 
 thead tr:first-child {
-    background-color: #f2f2f21a;
+  background-color: #f2f2f21a;
 }
