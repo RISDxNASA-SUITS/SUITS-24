@@ -16,7 +16,7 @@ api_path = "http://localhost:5000"
 # LMCC -> HMD
 # actions = []
 
-geo_samples = {"A":[{"name":"Geo Site A","location":"(G,5)"}],"B":[{"name":"Geo Site B","location":"(I,9)"}],"C":[{"name":"Geo Site C","location":"(K,7)"}],"D":[{"name":"Geo Site D","location":"(M,9)"}],"E":[{"name":"Geo Site E","location":"(L,14)"}],"F":[{"name":"Geo Site F","location":"(P,19)"}],"G":[{"name":"Geo Site G","location":"(P,14)"}]}
+geo_samples = {"A":[{"name":"Geo Site A","location":"(G,5)"},{"name":"1", "location":"50,50"}],"B":[{"name":"Geo Site B","location":"(I,9)"}],"C":[{"name":"Geo Site C","location":"(K,7)"}],"D":[{"name":"Geo Site D","location":"(M,9)"}],"E":[{"name":"Geo Site E","location":"(L,14)"}],"F":[{"name":"Geo Site F","location":"(P,19)"}],"G":[{"name":"Geo Site G","location":"(P,14)"}]}
 
 
 
@@ -188,11 +188,11 @@ def delete_file():
     os.remove(full_fpath)
     return jsonify({"message": "File deleted successfully"}), 200
 
-@app.route("/post-sample",methods=["POST"])
-def post_sample():
+@app.route("/update-sample",methods=["POST"])
+def post_sample(station_num):
     global geo_samples
     print(request)
-    data = request.get_data()
+    data = request.get_json()
     try:
         print(data)
         geo_samples[data['sample_site']].append(data['rock_info'])
@@ -203,16 +203,16 @@ def post_sample():
 
     return jsonify({"message":"yay"},200)
 
-@app.route("/num-samples",methods=["GET"])
-def num_samples():
+@app.route("/num-samples/<sample_site>",methods=["GET"])
+def num_samples(sample_site):
     global geo_samples
-    target_site = request.args.get("sample_site")
-    return jsonify({"num_samples":len(geo_samples[target_site])})
+
+    return jsonify({"num_samples":len(geo_samples[sample_site])})
 @app.route("/get-sample",methods=["GET"])
 def get_sample():
     global geo_samples
     station_num = request.args.get('sample_site')
-    rock_id = request.args.get('rock_info')
+    rock_id = request.args.get('rock_id')
     return jsonify({"sample": geo_samples[station_num][int(rock_id)]}, 200)
 
 
@@ -220,7 +220,7 @@ def get_sample():
 def get_station_info():
     global geo_samples
     station_num = request.args.get('station_num')
-    return jsonify({"station_info":geo_samples[station_num]},200)
+    return jsonify({"station_info": geo_samples[station_num][0]},200)
 
 
 
@@ -228,6 +228,7 @@ def get_station_info():
 def get_tss():
     # global tss
     # return jsonify(tss), 200
+    return jsonify({"x":"y"},200)
     res = requests.get(f"{TSS_URL}/json_data/teams/{TEAM_NUM}/TELEMETRY.json")
     return res.json(), 200
 
