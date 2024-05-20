@@ -1,7 +1,12 @@
 from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
+import requests
 import json
 import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
@@ -30,6 +35,10 @@ new_state = False
 EVA_NUM = 1
 FS_ROOT = "root"
 MISSION_FOLDER = "mission"
+
+TSS_URL = os.environ.get("TSS_URL")
+TEAM_NUM = os.environ.get("TEAM_NUM")
+
 if not os.path.exists(FS_ROOT):
     os.makedirs(FS_ROOT)
 
@@ -203,8 +212,11 @@ tss = {
 
 @app.route("/get-tss", methods=["GET"])
 def get_tss():
-    global tss
-    return jsonify(tss), 200
+    # global tss
+    # return jsonify(tss), 200
+    res = requests.get(f"{TSS_URL}/json_data/teams/{TEAM_NUM}/TELEMETRY.json")
+    print(res.json())
+    return res.json(), 200
 
 
 if __name__ == "__main__":

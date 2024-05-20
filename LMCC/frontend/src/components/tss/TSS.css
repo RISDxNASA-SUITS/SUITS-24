@@ -72,6 +72,6 @@ td {
   font-weight: 300;
 }
 
-thead tr:first-child {
+tbody tr:nth-child(odd) {
   background-color: #f2f2f21a;
 }

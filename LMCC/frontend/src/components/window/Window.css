@@ -1,37 +1,38 @@
 .window {
-    background-color: #13141980;
-    overflow: hidden;
-    opacity: 99%;
+  background-color: #13141980;
+  overflow: hidden;
+  opacity: 99%;
 
-    width: 100%;
-    min-height: 40vh;
+  width: 100%;
+  /* min-height: 150px; */
+  height: auto;
 
-    border-radius: 16px;
-    /* border-color: white;
+  border-radius: 16px;
+  /* border-color: white;
     border-width: 2px; */
 
-    margin-bottom: 4rem;
-    z-index: 1;
+  margin-bottom: 4rem;
+  z-index: 1;
 
-    user-select: none;
-    overflow: auto;
+  user-select: none;
+  overflow: auto;
 }
 
 .window::-webkit-scrollbar {
-    width: 0;
-    background: transparent;
-  }
+  width: 0;
+  background: transparent;
+}
 
 .window-cover {
-    background-image: url('/bg.svg');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+  background-image: url('/bg.svg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 
-    position: absolute;
+  position: absolute;
 
-    width: 100%;
-    min-height: 150px;
-    border-radius: 16px;
+  width: 100%;
+  min-height: 50px;
+  border-radius: 16px;
 
-    z-index: 0;
+  z-index: 0;
 }
