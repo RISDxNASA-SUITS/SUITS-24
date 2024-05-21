@@ -18,11 +18,17 @@ import GeoPinF from "../../assets/icons/GeoPinF.png";
 import GeoPinG from "../../assets/icons/GeoPinG.png";
 import UiaPin from "../../assets/icons/UiaPin.png";
 import CommPin from "../../assets/icons/CommPin.png";
+import {User} from "./UserComponent.tsx";
+import UserCircle from "../../assets/icons/UserCircle.png"
+import RoverCircle from "../../assets/icons/RoverCircle.png"
+
+
 function Map() {
   const [poi,setPoi] = useState(false);
   const [poiList, setPoiList] = useState<JSX.Element[]>([]);
   const [hazard,setHazard] = useState<boolean>(false)
   const [hazardList,setHazardList] = useState<JSX.Element[]>([]);
+  const UserRoverList = [<User endPoint={"/get-imu"} img={UserCircle}></User>,<User endPoint={"/get-imu"} img={RoverCircle}></User>]
 
   const vLineWidth = useRef<number>(0)
   const wLineWidth = useRef<number>(0)
@@ -32,7 +38,6 @@ function Map() {
   const right = useRef<number>(0);
   const [geoMapMarkers,setGeoMapMarkers] = useState<JSX.Element[]>([]);
   const [hasLoaded,setHasLoaded] = useState(false);
-  const [timer,setTimer] = useState(1);
   const map = useRef<HTMLImageElement | null>(null)
 
     useEffect(()=>{
@@ -87,6 +92,8 @@ function Map() {
     }
   }
 
+
+
   return (<>
     <div className='flex w-full h-full p-5'>
       <img
@@ -100,6 +107,7 @@ function Map() {
 
       />
       {geoMapMarkers}
+      {UserRoverList}
 
       <div className='flex flex-col w-1/6 h-full p-5 justify-between'>
         <button className='map-button'>
