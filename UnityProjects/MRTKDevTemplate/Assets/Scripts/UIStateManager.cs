@@ -16,28 +16,11 @@ using UnityEngine.XR.Interaction.Toolkit.UI.BodyUI;
 
 public class UIStateManager : MonoBehaviour
 {
-    [Tooltip("The navigation game object")]
-    [SerializeField]
     private GameObject navUI;
-
-    [Tooltip("The egress game object")]
-    [SerializeField]
     private GameObject egressUI;
-
-    [Tooltip("The ingress game object")]
-    [SerializeField]
     private GameObject ingressUI;
-
-    [Tooltip("The geo sampling game object")]
-    [SerializeField]
-    private GameObject geoSamplingUI;
-
-    [Tooltip("The repair game object")]
-    [SerializeField]
+    private GameObject geoUI;
     private GameObject repairUI;
-
-    [Tooltip("The hand menu game object")]
-    [SerializeField]
     private GameObject handMenuUI;
 
     // UI object currently in display
@@ -46,10 +29,17 @@ public class UIStateManager : MonoBehaviour
 
     void Start()
     {
+        navUI = GameObject.Find("Nav Canvas");
+        egressUI = GameObject.Find("Egress Canvas");
+        ingressUI = GameObject.Find("Ingress Canvas");
+        geoUI = GameObject.Find("Geo Canvas");
+        repairUI = GameObject.Find("Repair Canvas");
+        handMenuUI = GameObject.Find("Hand Menu");
+
         navUI.SetActive(false);
         egressUI.SetActive(false);
         ingressUI.SetActive(false);
-        geoSamplingUI.SetActive(false);
+        geoUI.SetActive(false);
         repairUI.SetActive(false);
 
         transitionToEgressUI();
@@ -94,9 +84,9 @@ public class UIStateManager : MonoBehaviour
     }
 
 
-    public void transitionToGeoSamplingUI()
+    public void transitionToGeoUI()
     {
-        transitionToUI(geoSamplingUI);
+        transitionToUI(geoUI);
     }
 
     public void transitionToRepairUI()
