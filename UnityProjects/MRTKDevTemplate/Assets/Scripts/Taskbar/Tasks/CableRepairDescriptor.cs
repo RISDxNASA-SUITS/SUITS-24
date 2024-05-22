@@ -7,78 +7,79 @@ public class CableRepairDescriptor : TaskDescriptor
     private string myTaskName = "cable";
     private string[] myTaskHeadings = {
         // step 1
-        "EV1",
-        "EV1",
-        "EV1",
-        "EV1",
-        "EV1",
-        "EV1",
-        "EV1",
-        "EV1",
-        "EV1"
+        "EV2",
+        "EV2",
+        "EV2",
+        "EV2",
+        "EV2",
+        "EV2",
+        "EV2",
+        "EV2"
+
     };
 
     private string[] myTaskTitles = {
         // step 1
         "INSP",
         // step 2
-        "COMM",
-        "",
+        "MMRTG",
         "",
         "",
         "",
         "",
         "",
         // step3
-        "Confirm"
+        "Completed"
     };
 
     private string[][] myTaskSteps = {
         new string[] {
             //step 1
-            "1. Before beginning the repair process, please proceed with inspecting the worksite",
-            "2. Scan Comm Tower for possible issues",
-            "3. If issue is found, relay to LMCC and standby for procedure"
+            "Upon arrival, notify LMCC2 and begin inspecting the worksite.",
+            "Scan MMRTG for possible issues.",
+            "If issue is found, notify LMCC2."
         },
         new string[] {
             // step 2 
-            "1. Direct to Comm Tower screen",
-            "2. Select gear icon",
-            "3. Select SHUT DOWN"
+            "1. Procedure steps will be displayed here, click NEXT to proceed.",
         },
         new string[] {
             // step 2 part 1
-            "1. Verify SHUT DOWN completed to LMCC and EV2"
+            "1. Wait for EV1 to verify Shutdown complete.",
+            "2. On MMRTG Panel, move POWER - OFF, notify EV1 and LMCC1."
         },
         new string[] {
             // step 2 part 2
-            "1. From tool box, retrieve spare cable"
+            "1. Navigate to Comm Tower and retrieve one end of power cable.",
+            "2. Take appropriate end of cable to MMRTG.",
+            "3. Notify EV1 and LMCC1 upon arrival at MMRTG."
         },
         new string[] {
             // step 2 part 3 
-            "1. Disconnect damaged cable from Comm Tower",
-            "2. When completed, notify LMCC and EV2"
+            "1. Wait for EV1 to disconnect damaged cable from Comm Tower.",
+            "2. Disconnect damaged cable from MMRTG, notify EV1 and LMCC1."
         },
         new string[] {
             // step 2 part 4
-            "1. Connect new spare cable from Comm Towerr",
-            "2. When completed, notify LMCC and EV2"
+            "1. Wait for EV1 to connect new cable from Comm Tower.",
+            "2. Connect new cable from MMRTG, notify EV1 and LMCC1."
         },
         new string[] {
             // step 2 part 5 
-            "1. Wait for start-up complete from EV2, click NEXT when status received",
-            "EV2 STATUS: ..."
+            "1. Move Power - ON, notify EV1 and LMCC1.",
+            "2. Wait for EV1 to move Power - ON and complete start up."
         },
         new string[] {
             // step 2 part 6
-            "1. Wait for start-up complete from EV2, click DONE when status received",
-            "EV2 STATUS: Complete"
+            "1. Wait for EV1 to verify channel “B” is operational.",
+            "2. On LMCC1 Go, switch to COM-B.",
+            "3. Perform Comm check.",
+            "If Comm good, continue on COM-B. Else, all switch to COM-A."
+
         },
         new string[] {
             // step 3
-            "1. Direct to Comm Tower screen",
-            "2. Verify channel “B” is operational",
-            "3. When completed, notify LMCC and EV2"
+            "Click NEXT when repair has been confirmed."
         },
     };
 
