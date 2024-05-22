@@ -64,7 +64,8 @@ export default function RenderOpenFile({fType}:RenderFileInfo){
     const [geoFiles,setGeoFiles] = useState<FileInfo[]>([]);
     const [childShowing,setChildShowing] = useState(false);
     const [parentCounts,setParentCounts] = useState<number[]>([]);
-    
+    console.log(geoFile,"is geoFile")
+    console.log(geoFiles,"are geofiles");
     const  ShowFile = ({name,location,parent,elements}:FileInfo)=> {
         return !parent?<div className={"h-full w-full flex flex-col"}>
             <span className={"text-2xl"}>{name}</span>
@@ -116,9 +117,13 @@ export default function RenderOpenFile({fType}:RenderFileInfo){
 
     useEffect(() => {
         fetchRover();
+        const toCall = async () => setGeoFiles(await handleFetchGeoData())
+        handleFetchGeoData().then((x)=>setGeoFiles(x))
         const interval = setInterval(fetchRover, 1000);
+        const interval1 = setInterval(toCall,1000)
         return () => {
             clearInterval(interval);
+            clearInterval(interval1);
         };
     }, []);
     useEffect(()=>{
@@ -129,7 +134,7 @@ export default function RenderOpenFile({fType}:RenderFileInfo){
             }
 
         })
-        console.log("geo files are ",geoFiles);
+
         setParentCounts(tmp_parent_counts)
     },[geoFiles])
     useEffect( ()  =>{
@@ -178,7 +183,7 @@ export default function RenderOpenFile({fType}:RenderFileInfo){
                 return x.parent === geo_stations[stationFile]}).map((x)=><div className={"flex flex-row justify-start"}><button onClick={()=>{
                     if(rockIndex.has(x.id)){
                         // @ts-expect-error
-                        setGeoFile(rockIndex.get(x.id))
+                        setGeoFile(x.rockId - 1)
                         setChildShowing(true);
                     }}} className={'tss-button tss-button-primary h-10 w-20'} style={x.flagged?{color:"green"}:{}}>{!x.flagged?x.rockId:x.rockId!.toString() +"(flagged)" }
                 </button></div>)}
@@ -223,15 +228,19 @@ const handleFetchGeoData = async ():Promise<FileInfo[]> =>{
                 for (let i = 0; i < data!.num_samples - 1; i++) {
                     const sample_data = await fetch(backend_url + "/get-sample?sample_site=" + x + "&rock_id=" + (i + 1).toString());
                     const file:FileInfo = ((await sample_data.json()) as GeoInfoWrapper).sample
+
                     file.id = uuidv4()
                     file.parent = x;
-                    rockIndex.set(file.id,iCount);
-                    iCount++;
-                    console.log(file);
+                    console.log(iCount,"is icount");
+                    rockIndex.set(file.id,file.rockId!);
+
+
                     tmp_files.push(file)
+
                 }
 
             }
+            console.log(tmp_files);
             return tmp_files
 
 }
