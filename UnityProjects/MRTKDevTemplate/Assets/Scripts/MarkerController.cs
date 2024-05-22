@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
-
+using TMPro;
 
 namespace MixedReality.Toolkit.Suits.Map
 {
@@ -35,14 +35,15 @@ public class MarkerController : MonoBehaviour
         public readonly GameObject MapMarkerObj;
         public readonly RectTransform MapMarkerRT;
         public readonly int ID;
-
-        public Marker(MarkerType type, GameObject prefab, Vector2 gpsCoord)
+        public readonly string Name;
+        public Marker(MarkerType type, GameObject prefab, Vector2 gpsCoord, string name)
         {
             Type = type;
             GpsCoord = gpsCoord;
             MapMarkerObj = Instantiate(prefab, markersTf);
             MapMarkerRT = MapMarkerObj.GetComponent<RectTransform>();
             ID = nextID++;
+            Name = name;
         }
 
         public void CleanUp()
@@ -121,7 +122,7 @@ public class MarkerController : MonoBehaviour
     private GameObject roverPrefab;
     private Marker rover;
 
-    [SerializeField] private MapController mapController;
+    private MapController mapController;
 
     private readonly Dictionary<string, Tuple<float, float>> stations = new Dictionary<string, Tuple<float, float>>
     {
@@ -153,6 +154,7 @@ public class MarkerController : MonoBehaviour
         mainCamera = Camera.main;
         gps = GameObject.Find("GPS").GetComponent<GPS>();
         mapRT = GameObject.Find("Map").GetComponent<RectTransform>();
+        mapController = GameObject.Find("Map Panel").GetComponent<MapController>();
         markersTf = transform;
         currLocRT = GameObject.Find("CurrLoc").GetComponent<RectTransform>();
         actionButtons = GameObject.Find("Marker Action Buttons");
@@ -199,15 +201,27 @@ public class MarkerController : MonoBehaviour
         {
             Vector2 utmCoord = new Vector2(kvp.Value.Item1, kvp.Value.Item2);
             string path = "Prefabs/Markers/" + kvp.Key;
-            // string path = "Prefabs/red_dot";  // to check exact position
-            // string path = "Prefabs/Markers/new";  // to check exact position
-            var stationMarker = new Marker(MarkerType.Stations, Resources.Load<GameObject>(path), utmCoord);
+            // var stationMarker = new Marker(MarkerType.Stations, Resources.Load<GameObject>(path), utmCoord, "Station " + kvp.Key);
+            string name;
+            switch (kvp.Key)
+            {
+                case "UIA":                   
+                    name = "UIA Panel";
+                    break;
+                case "COMM":
+                    name = "Comm Tower";
+                    break;
+                default:
+                    name = "Geo Station " + kvp.Key;
+                    break;
+            }
+            var stationMarker = new Marker(MarkerType.Stations, Resources.Load<GameObject>(path), utmCoord, name);
             markers.Add(stationMarker.MapMarkerObj, stationMarker);
         }
 
         // Initialize rover
         Vector2 roverGpsCoord = new Vector2(GPS.SatCenterLatitude, GPS.SatCenterLongitude);
-        rover = new Marker(MarkerType.Rover, prefabDict[MarkerType.Rover], roverGpsCoord);
+        rover = new Marker(MarkerType.Rover, prefabDict[MarkerType.Rover], roverGpsCoord, "Rover");
         markers.Add(rover.MapMarkerObj, rover);
     }
 
@@ -284,7 +298,19 @@ public class MarkerController : MonoBehaviour
 
     private void AddMarker(Vector2 touchCoord)
     {
-        currMarker = new Marker(selectedMarkerType, prefabDict[selectedMarkerType], gps.MapPosToGps(touchCoord));
+        
+        // currMarker = new Marker(selectedMarkerType, prefabDict[selectedMarkerType], gps.MapPosToGps(touchCoord), "POI");
+        switch(selectedMarkerType)
+        {
+            case MarkerType.POI:
+                currMarker = new Marker(selectedMarkerType, prefabDict[selectedMarkerType], gps.MapPosToGps(touchCoord), "POI");
+                break;
+            case MarkerType.Obstacle:
+                currMarker = new Marker(selectedMarkerType, prefabDict[selectedMarkerType], gps.MapPosToGps(touchCoord), "Obstacle");
+                break;
+        }
+
+
         currMarker.SetOpacity(0.5f);
         markers.Add(currMarker.MapMarkerObj, currMarker);
         markerImages[selectedMarkerType].SetActive(true);
@@ -358,10 +384,6 @@ public class MarkerController : MonoBehaviour
 
     public void OnMarkerDeletePressed()
     {
-        if (currMarker.Type == MarkerType.Stations)
-        {
-        return;
-        }
         if (navigation.destMarkerRT == currMarker.MapMarkerRT)
         {
             navigation.StopMarkerNavigate();
