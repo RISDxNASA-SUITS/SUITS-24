@@ -6,7 +6,7 @@ import os
 from collections import defaultdict
 
 from dotenv import load_dotenv
-count = 0
+count = 2
 load_dotenv()
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ api_path = "http://localhost:5000"
 geo_samples = {
     "A": [
         {"name": "Geo Site A", "location": "(G,5)"},
-        {"rockId": "1", "location": "50,50","flagged":"true","elements":{
+        {"rockId": "1","flagged":"true","elements":{
             "SiO2": 36.64,
                 "TiO2": 0.92,
                 "Al2O3": 8.33,
@@ -243,10 +243,13 @@ def get_sample():
 @app.route("/make-rock",methods=['POST'])
 def make_rock():
     global count
-    data = request.json()
-    data['station_id']['rock']['rockId'] = count
-    geo_samples[data['station_id']][count] = data['rock']
+    print(request.get_json())
+    data = request.get_json()
+    geo_samples[data['station_id']].append(data['rock'])
+    geo_samples[data['station_id']][len(geo_samples[data['station_id']]) - 1]['rockId'] = count
+    geo_samples[data['station_id']][len(geo_samples[data['station_id']]) - 1]['flagged'] = False
     count += 1
+    print(geo_samples[data['station_id']])
     return jsonify({"sample":"gg"}), 200
 
 @app.route("/flag-rock",methods=["POST"])
@@ -328,7 +331,6 @@ def get_poi():
 pois_our = []
 @app.route("/lmcc-send-poi",methods=['get'])
 def send_poi_l():
-    def send_poi():
         global pois_our
         x = request.args.get("x")
         y = request.args.get("y")
@@ -341,7 +343,7 @@ def send_poi_l():
         return jsonify({'good': "gg"}), 200
 
 @app.route("/get-pois-l",methods=['get'])
-def get_poi():
+def get_poi_l():
     global pois_our
     if pois_our:
         to_send = {'poi_list':pois_our}
