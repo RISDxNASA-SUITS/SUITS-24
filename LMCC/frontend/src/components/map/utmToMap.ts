@@ -22,8 +22,9 @@ const vertical_dist = 108;
 
 export function mapPosToUtm(user:UserPosition):location{
 
-
-    return {x:user.leftOffset * lr_dist + TOP_LEFT.x, y:user.bottomOffset * vertical_dist + BOTTOM_LEFT.y}
+    const x:number = (120 * user.leftOffset) + 45/28;
+    const y:number = (648/5) * (user.bottomOffset - (1/27))
+    return {x:x, y:y}
 
 }
 
@@ -31,8 +32,7 @@ export function mapPosToUtm(user:UserPosition):location{
 export function utmToMapPos(user:location):UserPosition{
     const left_distance = Math.max(user.x - TOP_LEFT.x,0);
     const up_distance = Math.max(user.y - BOTTOM_RIGHT.y,0);
-    console.log(user,up_distance,left_distance,"are all of the distances in utm")
 
-    return {leftOffset:(left_distance / lr_dist) * 5/6 - ((3/8) * 1/28),bottomOffset:(up_distance / vertical_dist) * 5/6 + (1/27)}
+    return {leftOffset:Math.max((left_distance / lr_dist) * 5/6 - ((3/8) * 1/28),0),bottomOffset:Math.max((up_distance / vertical_dist) * 5/6 + (1/27),0)}
 
 }
