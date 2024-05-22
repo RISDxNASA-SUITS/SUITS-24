@@ -7,7 +7,7 @@ public class EgressDescriptor : TaskDescriptor
     private string myTaskName = "egress";
     private string[] myTaskHeadings = {
         // step 1
-        "Connect UIA to DCU and start Depress",
+        "Connect UIA to DCU",
         // step 2
         "Prep O2 Tanks (1)",
         "Prep O2 Tanks (2)",
@@ -40,64 +40,64 @@ public class EgressDescriptor : TaskDescriptor
     private string[][] myTaskSteps = {
         new string[] {
             // step 1
-            "(UIA and DCU) EV1 and EV2 connect UIA and DCU umbilical",
-            "(UIA) EV-1, EV-2 PWR - ON",
-            "(BOTH DCU) BATT - UMB",
-            "(DCU) EPRESS PUMP PWR - ON"
+            "(UIA and DCU) 1. EV1 and EV2 connect UIA and DCU umbilical",
+            "(UIA) 2. EV-1, EV-2 PWR - ON",
+            "(BOTH DCU) 3. BATT - UMB",
+            "(DCU) 4. EPRESS PUMP PWR - ON"
         },
         new string[] {
             // step 2 part 1
-            "(UIA) OXYGEN O2 VENT - OPEN",
-            "(HMD) Wait until both Primary and Secondary OXY tanks are < 10psi",
-            "(UIA) OXYGEN O2 VENT - CLOSE",
-            "(BOTH DCU) OXY - PRI"
+            "(UIA) 1. OXYGEN O2 VENT - OPEN",
+            "(HMD) 2. Wait until both Primary and Secondary OXY tanks are < 10psi",
+            "(UIA) 3. OXYGEN O2 VENT - CLOSE",
+            "(BOTH DCU) 4. OXY - PRI"
         },
         new string[] {
             // step 2 part 2
-            "(UIA) OXYGEN EMU-1, EMU-2 - OPEN",
-            "(HMD) Wait until EV1 and EV2 Primary O2 tanks > 3000 psi",
-            "(UIA) OXYGEN EMU-1, EMU-2 - CLOSE",
-            "(BOTH DCU) OXY - SEC"
+            "(UIA) 1. OXYGEN EMU-1, EMU-2 - OPEN",
+            "(HMD) 2. Wait until EV1 and EV2 Primary O2 tanks > 3000 psi",
+            "(UIA) 3. OXYGEN EMU-1, EMU-2 - CLOSE",
+            "(BOTH DCU) 4. OXY - SEC"
         },
         new string[] {
             // step 2 part 3
-            "(UIA) OXYGEN EMU-1, EMU-2 - OPEN",
-            "(HMD) Wait until EV1 and EV2 Secondary O2 tanks > 3000 psi",
-            "(UIA) OXYGEN EMU-1, EMU-2 - CLOSE",
-            "(BOTH DCU) OXY - PRI"
+            "(UIA) 1. OXYGEN EMU-1, EMU-2 - OPEN",
+            "(HMD) 2. Wait until EV1 and EV2 Secondary O2 tanks > 3000 psi",
+            "(UIA) 3. OXYGEN EMU-1, EMU-2 - CLOSE",
+            "(BOTH DCU) 4. OXY - PRI"
         },
         new string[] {
             // step 3 part 1
-            "(BOTH DCU) PUMP - OPEN",
-            "(UIA) EV-1, EV-2 WASTE WATER - OPEN",
-            "(HMD) Wait until water EV1 and EV2 Coolant tank is < 5%",
-            "(UIA) EV-1, EV-2 WASTE WATER - CLOSE"
+            "(BOTH DCU) 1. PUMP - OPEN",
+            "(UIA) 2. EV-1, EV-2 WASTE WATER - OPEN",
+            "(HMD) 3. Wait until water EV1 and EV2 Coolant tank is < 5%",
+            "(UIA) 4. EV-1, EV-2 WASTE WATER - CLOSE"
         },
         new string[] {
             // step 3 part 2
-            "(UIA) EV-1, EV-2 SUPPLY WATER - OPEN",
-            "(HMD) Wait until water EV1 and EV2 Coolant tank is > 95%",
-            "(UIA) EV-1, EV-2 SUPPLY WATER - CLOSE",
-            "(BOTH DCU) PUMP - CLOSE"
+            "(UIA) 1. EV-1, EV-2 SUPPLY WATER - OPEN",
+            "(HMD) 2. Wait until water EV1 and EV2 Coolant tank is > 95%",
+            "(UIA) 3. EV-1, EV-2 SUPPLY WATER - CLOSE",
+            "(BOTH DCU) 3. PUMP - CLOSE"
         },
         new string[] {
             // step 4 part 1
-            "(HMD) Wait until SUIT P, O2 P = 4",
-            "(UIA) DEPRESS PUMP PWR - OFF",
-            "(BOTH DCU) BATT - LOCAL",
-            "(UIA) EV-1, EV-2 PWR - OFF"
+            "(HMD) 1. Wait until SUIT P, O2 P = 4",
+            "(UIA) 2. DEPRESS PUMP PWR - OFF",
+            "(BOTH DCU) 3. BATT - LOCAL",
+            "(UIA) 4. EV-1, EV-2 PWR - OFF"
         },
         new string[] {
             // step 4 part 2
-            "(BOTH DCU) Verify OXY - PRI",
-            "(BOTH DCU) Verify COMMS - A",
-            "(BOTH DCU) Verify FAN - PRI",
-            "(BOTH DCU) Verify PUMP - CLOSE"
+            "(BOTH DCU) 1. Verify OXY - PRI",
+            "(BOTH DCU) 2. Verify COMMS - A",
+            "(BOTH DCU) 3. Verify FAN - PRI",
+            "(BOTH DCU) 4. Verify PUMP - CLOSE"
         },
         new string[] {
             // step 4 part 3
-            "(BOTH DCU) Verify CO2 - PRI",
-            "(UIA and DCU) EV1 and EV2 disconnect UIA and DCU umbilical"
+            "(BOTH DCU) 1. Verify CO2 - PRI",
+            "(UIA and DCU) 2. EV1 and EV2 disconnect UIA and DCU umbilical"
         }
     };
 
