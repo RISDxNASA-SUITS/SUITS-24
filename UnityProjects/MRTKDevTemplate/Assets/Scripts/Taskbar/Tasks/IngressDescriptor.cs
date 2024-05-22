@@ -33,26 +33,26 @@ public class IngressDescriptor : TaskDescriptor
         new string[] {
             // step 1
             "[UIA & DCU] 1. Connect UIA to the DCU via their umbilical cords",
-            "[UIA] Turn  2. EMU PWR on",
-            "[BOTH DCU]  3. Connect BATT to UMB"
+            "[UIA] 2. Turn EMU PWR on",
+            "[BOTH DCU] 3. Connect BATT to UMB"
         },
         new string[] {
             // step 2
-            "[UIA]       1. Open OXYGEN O2 VENT",
-            "[HMD]       2. Wait until both Primary and Secondary OXY tanks are < 10psi",
-            "[UIA]       3. Close OXYGEN O2 VENT"
+            "[UIA] 1. Open OXYGEN O2 VENT",
+            "[HMD] 2. Wait until both Primary and Secondary OXY tanks are < 10psi",
+            "[UIA] 3. Close OXYGEN O2 VENT"
         },
         new string[] {
             // step 3
-            "[BOTH DCU]  1. Open PUMP",
-            "[UIA]       2. Open WASTE WATER",
-            "[HMD]       3. Wait until water EV1 and EV2 Coolant tank is < 5%",
-            "[UIA]       4. Close WASTE WATER"
+            "[BOTH DCU] 1. Open PUMP",
+            "[UIA] 2. Open WASTE WATER",
+            "[HMD] 3. Wait until water EV1 and EV2 Coolant tank is < 5%",
+            "[UIA] 4. Close WASTE WATER"
         },
         new string[] {
             // step 4
             "[UIA & DCU] 1. Turn EMU PWR off",
-            "[DCU]       2. Disconnect umbilical"
+            "[DCU] 2. Disconnect umbilical"
         },
     };
 

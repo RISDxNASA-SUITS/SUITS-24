@@ -44,64 +44,64 @@ public class EgressDescriptor : TaskDescriptor
         new string[] {
             // step 1
             "[UIA and DCU] 1. Connect UIA and DCU via their umbilical cords",
-            "[UIA]         2. Turn PWR-ON",
-            "[BOTH DCU]    3. Connect BATT to UMB",
-            "[DCU]         4. DEPRESS PUMP by turning PWR - ON"
+            "[UIA] 2. Turn PWR-ON",
+            "[BOTH DCU] 3. Connect BATT to UMB",
+            "[DCU] 4. DEPRESS PUMP by turning PWR - ON"
         },
         new string[] {
             // step 2 part 1
-            "[UIA]         1. Open OXYGEN O2 VENT",
-            "[HMD]         2. Wait until both Primary and Secondary OXY tanks are < 10psi",
-            "[UIA]         3. Close OXYGEN O2 VENT",
-            "[BOTH DCU]    4. Connect OXY to PRI"
+            "[UIA] 1. Open OXYGEN O2 VENT",
+            "[HMD] 2. Wait until both Primary and Secondary OXY tanks are < 10psi",
+            "[UIA] 3. Close OXYGEN O2 VENT",
+            "[BOTH DCU] 4. Connect OXY to PRI"
         },
         new string[] {
             // step 2 part 2
-            "[UIA]         1. Open OXYGEN EMU-1, EMU-2",
-            "[HMD]         2. Wait until EV1 and EV2 Primary O2 tanks > 3000 psi",
-            "[UIA]         3. Close OXYGEN EMU-1, EMU-2",
-            "[BOTH DCU)    4. Connect OXY to SEC"
+            "[UIA] 1. Open OXYGEN EMU-1, EMU-2",
+            "[HMD] 2. Wait until EV1 and EV2 Primary O2 tanks > 3000 psi",
+            "[UIA] 3. Close OXYGEN EMU-1, EMU-2",
+            "[BOTH DCU] 4. Connect OXY to SEC"
         },
         new string[] {
             // step 2 part 3
-            "[UIA]         1. Open OXYGEN EMU-1, EMU-2",
-            "[HMD]         2. Wait until EV1 and EV2 Secondary O2 tanks > 3000 psi",
-            "[UIA]         3. Close OXYGEN EMU-1, EMU-2",
-            "[BOTH DCU]    4. Connect OXY to PRI"
+            "[UIA] 1. Open OXYGEN EMU-1, EMU-2",
+            "[HMD] 2. Wait until EV1 and EV2 Secondary O2 tanks > 3000 psi",
+            "[UIA] 3. Close OXYGEN EMU-1, EMU-2",
+            "[BOTH DCU] 4. Connect OXY to PRI"
         },
         new string[] {
             // step 3 part 1
-            "[BOTH DCU]    1. Open PUMP",
-            "[UIA]         2. Open WASTE WATER",
-            "[HMD]         3. Wait until water EV1 and EV2 Coolant tank is < 5%",
-            "[UIA]         4. Close WASTE WATER"
+            "[BOTH DCU] 1. Open PUMP",
+            "[UIA] 2. Open WASTE WATER",
+            "[HMD] 3. Wait until water EV1 and EV2 Coolant tank is < 5%",
+            "[UIA] 4. Close WASTE WATER"
         },
         new string[] {
             // step 3 part 2
-            "[BOTH DCU]    1. Open PUMP",
-            "[UIA]         2. Open SUPPLY WATER",
-            "[HMD]         3. Wait until water EV1 and EV2 Coolant tank is < 5%",
-            "[UIA]         4. Close SUPPLY WATER",
-            "[UIA]         5. Close PUMP"
+            "[BOTH DCU] 1. Open PUMP",
+            "[UIA] 2. Open SUPPLY WATER",
+            "[HMD] 3. Wait until water EV1 and EV2 Coolant tank is < 5%",
+            "[UIA] 4. Close SUPPLY WATER",
+            "[UIA] 5. Close PUMP"
         },
         new string[] {
             // step 4 part 1
-            "[HMD]         1. Wait until SUIT P, O2 P = 4",
-            "[UIA]         2. Turn DEPRESS PUMP PWR OFF",
-            "[BOTH DCU]    3. Connect BATT to LOCAL",
-            "[UIA]         4. Turn PWR OFF"
+            "[HMD] 1. Wait until SUIT P, O2 P = 4",
+            "[UIA] 2. Turn DEPRESS PUMP PWR OFF",
+            "[BOTH DCU] 3. Connect BATT to LOCAL",
+            "[UIA] 4. Turn PWR OFF"
         },
         new string[] {
             // step 4 part 2
-            "[BOTH DCU]    1. Verify OXY is on PRI",
-            "[BOTH DCU]    2. Verify COMMS is on A",
-            "[BOTH DCU]    3. Verify FAN is on PRI",
-            "[BOTH DCU]    4. Verify PUMP is on CLOSE",
-            "[BOTH DCU]    5. Verify CO2 is on A",
+            "[BOTH DCU] 1. Verify OXY is on PRI",
+            "[BOTH DCU] 2. Verify COMMS is on A",
+            "[BOTH DCU] 3. Verify FAN is on PRI",
+            "[BOTH DCU] 4. Verify PUMP is on CLOSE",
+            "[BOTH DCU] 5. Verify CO2 is on A",
         },
         new string[] {
             // step 4 part 3
-            "[UIA and DCU] 2. EV1 and EV2 disconnect UIA and DCU umbilical"
+            "[UIA and DCU] 1. EV1 and EV2 disconnect UIA and DCU umbilical"
         }
     };
 
