@@ -79,7 +79,6 @@ function Telemetry() {
     <div className='w-full h-full p-5 flex flex-col'>
       <div className='w-full h-5 flex justify-between items-center pt-3'>
         <span className='block flex items-center'>
-          {/* <img src={BatterySymbol} className='inline h-4 pr-2' /> */}{' '}
           Battery Time: {tss == null ? '---' : tss['batt_time_left'].toFixed(2)}
         </span>
         <button className='tss-category-button tss-category-button-primary ml-5'>

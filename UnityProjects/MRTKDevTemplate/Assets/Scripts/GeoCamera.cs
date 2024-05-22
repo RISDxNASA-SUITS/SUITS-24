@@ -24,7 +24,8 @@ public class GeoCamera : SimpleCamera
 
         var stationName = _mapController.ClosestGeoStationName();
         note.station_id = stationName[stationName.Length - 1].ToString();
-        note.rock = _geoSampleController.GetRockData();
+        note.rock = new RockDataWrapper();
+        note.rock.elements = _geoSampleController.GetRockData();
 
         return note;
     }

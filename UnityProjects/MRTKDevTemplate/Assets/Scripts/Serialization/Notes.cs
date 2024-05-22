@@ -19,5 +19,12 @@ public record NavNote : Note
 public record GeoNote : Note
 {
     public string station_id; // {"A", ..., "F"}
+    public RockDataWrapper rock;
+}
+
+/*public record GeoSendNote : Note
+{
+    public string station_id; // {"A", ..., "F"}
     public RockData rock;
 }
+*/

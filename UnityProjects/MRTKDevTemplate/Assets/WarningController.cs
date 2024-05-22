@@ -12,6 +12,7 @@ public class WarningController : MonoBehaviour
     private float beenShowingFor;
     private float totalDisplayTime = 7f;
     private TSScConnection tSScConnection;
+    private LMCCAgent lMCCAgent;
 
     void Start()
     {
@@ -21,6 +22,7 @@ public class WarningController : MonoBehaviour
         beenShowingFor = 0f;
 
         tSScConnection = GameObject.Find("TSS Agent").GetComponent<TSScConnection>();
+        lMCCAgent = GameObject.Find("LMCCAgent").GetComponent<LMCCAgent>();
         warning.SetActive(false);
     }
 
@@ -39,6 +41,7 @@ public class WarningController : MonoBehaviour
                 if (title != "")
                 {
                     ShowWarning(title, "Assess situation with LMCC");
+                    lMCCAgent.PostNotification(title, "warning");
                 }
             }
         }

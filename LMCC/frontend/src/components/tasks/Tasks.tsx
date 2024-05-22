@@ -8,7 +8,6 @@ function Tasks() {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/get-tasks`);
       const data = await res.json();
-      console.log(data);
       setTasks(data);
     } catch (err) {
       console.log('Failed to fetch tasks:', err);
