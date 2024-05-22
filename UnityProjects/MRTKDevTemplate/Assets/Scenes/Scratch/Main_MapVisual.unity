@@ -33390,17 +33390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e17c32f65a319a2449da20b2553abb9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tssConn: {fileID: 1809557831}
-  SiO2: {fileID: 0}
-  TiO2: {fileID: 0}
-  AL2O3: {fileID: 0}
-  FeO: {fileID: 0}
-  MnO: {fileID: 0}
-  MgO: {fileID: 0}
-  CaO: {fileID: 0}
-  K2O: {fileID: 0}
-  P2O3: {fileID: 0}
-  other: {fileID: 0}
 --- !u!114 &1270809404
 MonoBehaviour:
   m_ObjectHideFlags: 0
