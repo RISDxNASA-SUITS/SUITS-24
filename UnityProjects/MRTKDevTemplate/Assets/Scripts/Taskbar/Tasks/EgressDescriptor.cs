@@ -78,10 +78,10 @@ public class EgressDescriptor : TaskDescriptor
         },
         new string[] {
             // step 3 part 2
-            "[UIA] 2. Open SUPPLY WATER",
-            "[HMD] 3. Wait until water EV1 and EV2 Coolant tank is < 5%",
-            "[UIA] 4. Close SUPPLY WATER",
-            "[UIA] 5. Close PUMP"
+            "[UIA] 1. Open SUPPLY WATER",
+            "[HMD] 2. Wait until water EV1 and EV2 Coolant tank is < 5%",
+            "[UIA] 3. Close SUPPLY WATER",
+            "[UIA] 4. Close PUMP"
         },
         new string[] {
             // step 4 part 1
