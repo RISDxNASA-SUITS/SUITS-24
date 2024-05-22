@@ -54,6 +54,5 @@ export const User = ({endPoint,img}:UserProps):JSX.Element=>{
         };
     }, []);
 
-    console.log(loc,"is loc");
     return <img className={"absolute h-10 w-10 bottom-6 left-6 z-10"} style={{left: `${loc.leftOffset * 100}%`, bottom:`${loc.bottomOffset * 100}%`}} src={img} alt={"image for user/rover"}/>
 }
