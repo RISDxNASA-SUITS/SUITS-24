@@ -463,5 +463,9 @@ public class MarkerController : MonoBehaviour
             selectedMarkerType = type;
         }
     }
+        public void DeleteTitle()
+    {
+        GameObject.Find("Delete Confirmation/Delete Title").GetComponent<TMP_Text>().text = "Delete " + currMarker.Name + "?";
+    }
 }
 }
