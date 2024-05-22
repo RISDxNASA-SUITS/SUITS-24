@@ -203,7 +203,7 @@ public class SimpleCamera : MonoBehaviour
             var jsonPayload = JsonConvert.SerializeObject(note);
             // Debug.Log(json);
             // TODO: Post to server
-            // PostUpdateState(jsonPayload);
+            PostUpdateState(jsonPayload);
         }
         catch (Exception e)
         {
