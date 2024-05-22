@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13598,7 +13598,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Delete POI 1?
+  m_text: Confirm Delete?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 89af698dcb5c3d449ab3b617d736e0d6, type: 2}
   m_sharedMaterial: {fileID: 7170793476916532993, guid: 89af698dcb5c3d449ab3b617d736e0d6, type: 2}
@@ -34596,7 +34596,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 3
-  mapController: {fileID: 0}
 --- !u!224 &1341952636
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37526,7 +37525,7 @@ GameObject:
   - component: {fileID: 1472764687}
   - component: {fileID: 1472764686}
   m_Layer: 5
-  m_Name: Station
+  m_Name: Map Details Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47179,13 +47178,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '- Field Notes
+  m_text: '- XRF Scan
 
 
-    - XRF Scan
-
-
-    - Sampling Procedure'
+    - Field Notes'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

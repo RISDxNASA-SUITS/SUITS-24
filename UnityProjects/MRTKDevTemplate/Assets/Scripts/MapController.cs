@@ -312,7 +312,7 @@ namespace MixedReality.Toolkit.Suits.Map
             newPos.x = (detailMapPanelWidth - mapPanelWidth) * 0.5f;
             xCoordsRT.anchoredPosition = newPos;
 
-            GameObject.Find("Map Details/Map Details Title").GetComponent<TMP_Text>().text = markerController.currMarker.Name;
+            GameObject.Find("Map Details/Map Details Titlev").GetComponent<TMP_Text>().text = markerController.currMarker.Name;
         }
 
         public void closeDetailPage()
