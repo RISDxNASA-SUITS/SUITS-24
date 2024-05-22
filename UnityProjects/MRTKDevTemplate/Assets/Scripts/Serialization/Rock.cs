@@ -8,6 +8,11 @@
     using UnityEngine;
     using UnityEngine.Networking;
 
+    public record RockDataWrapper
+    {
+        public RockData elements;
+    }
+
     public record RockData
     {
         public float SiO2;

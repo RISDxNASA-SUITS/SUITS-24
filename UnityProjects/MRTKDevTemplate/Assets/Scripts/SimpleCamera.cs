@@ -160,11 +160,11 @@ public class SimpleCamera : MonoBehaviour
 
     public void PostUpdateState(string jsonPayload)
     {
-        string url = "http://localhost:5000";
+        string url = "http://172.20.3.8:5000";
 
         IEnumerator UpdateState()
         {
-            var request = new UnityWebRequest(url + "/post-sample", "POST");
+            var request = new UnityWebRequest(url + "/make-rock", "POST");
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonPayload);
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
@@ -197,7 +197,7 @@ public class SimpleCamera : MonoBehaviour
             note.file_ext = "png";
 
             // Convert Texture2D to PNG
-            note.data = ImageConversion.EncodeToPNG(_videoTextureRgb);
+            // note.data = ImageConversion.EncodeToPNG(_videoTextureRgb);
             // note.data = ImageConversion.EncodeToPNG(_testTexture);
 
             var jsonPayload = JsonConvert.SerializeObject(note);
