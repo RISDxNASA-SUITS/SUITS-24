@@ -8,42 +8,45 @@ public class StructuralDamageDescriptor : TaskDescriptor
 
     private string[] myTaskHeadings = {
         // step 1
-        "EV1",
-        "EV1",
-        "EV1",
-        "EV1"
+        "EV2",
+        "EV2",
+        "EV2",
+        "EV2",
+        "EV2"
         // step 2
 
     };
 
     private string[] myTaskTitles = {
         // step 1
-        "INSP",
-        // step 2
-        "COMM",
+        "Repair",
         "",
-        // step3
-        "Confirm"
+        "",
+        // step 2
+        "End"
     };
 
     private string[][] myTaskSteps = {
         new string[] {
             // step 1 INSP
-            "1. Assess tower for visible structural damage",
-            "2. If issue is found, click NEXT to relay to LMCC and standby for procedure"
+            "1. Assemble safety gear for climbing and securing both crew members.",
         },
         new string[] {
             // step 2 COMM part 1
-            "1. Apply metal patches over holes or tears using welding tools"
+            "1.   Assist EV1 in removing debris and damaged components."
         },
         new string[] {
             // step 2 COMM part 2
-            "1. Secure larger structural issues with adhesives and temporary supports"
+            "1.    Support EV1 in applying patches or adhesives."
         },
         new string[] {
             // step 3 Confirm 
-            "2. Click NEXT when verification on all ends are complete"
+            "1.   Ensure safety protocols are followed during high or difficult access points."
         },
+        new string[] {
+            //step 4
+            "1. Click NEXT when repair has been confirmed."
+        }
     };
 
     private UIStateManager uiStateManager;
@@ -70,7 +73,7 @@ public class StructuralDamageDescriptor : TaskDescriptor
     {
         get { return myTaskSteps; }
     }
-
+    
     public override bool StepCompleted(int currTask, int currStep, TSScConnection tss)
     {
         return false;
@@ -78,7 +81,8 @@ public class StructuralDamageDescriptor : TaskDescriptor
 
     public override void TaskCompleted()
     {
-        Debug.Log("omplete Repair");
+        Debug.Log("Complete Repair");
         uiStateManager.transitionOutOfRepairUI();
     }
+    
 }

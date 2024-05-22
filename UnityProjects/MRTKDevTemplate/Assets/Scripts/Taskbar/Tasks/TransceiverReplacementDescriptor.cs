@@ -7,22 +7,20 @@ public class TransceiverReplacementDescriptor : TaskDescriptor
     private string myTaskName = "transceiver";
     private string[] myTaskHeadings = {
         // step 1
-        "EV1",
-        "EV1",
-        "EV1",
-        "EV1",
-        "EV1"
+        "EV2",
+        "EV2",
+        "EV2",
+        "EV2",
+        "EV2"
     };
 
     private string[] myTaskTitles = {
         // step 1
-        "INSP",
+        "Repair",
         // step 2
-        "COMM",
-        "",
         "",
         // step3
-        "Confirm"
+        "End"
     };
 
     private string[][] myTaskSteps = {
@@ -30,20 +28,20 @@ public class TransceiverReplacementDescriptor : TaskDescriptor
             "",
         },
         new string[] {
-            // step 2 
-            "1. Collect replacement transceiver module and non-conductive tools"
+            // step 1 
+            "1.   Prepare electrostatic discharge safety equipment."
         },
         new string[] {
-            // step 2 part 1
-            "1. Remove the faulty module"
+            // step 2
+            "1.  Assist in isolating power supply."
         },
         new string[] {
-            // step 2 part 2
-            "1. Install the new module ensuring all connections are secure"
+            // step 3
+            "1.  Ensure module installation is correctly performed; conduct systems check to verify functionality."
         },
         new string[] {
-            // step 3 
-            "1.  Click NEXT when verification on all ends are complete"
+            // step 4
+            "1.  Click NEXT when verification on all ends are complete."
         },
     };
 
