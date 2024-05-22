@@ -4,6 +4,7 @@ import './Notifications.css';
 interface Notification {
   message: string;
   timestamp: string;
+  type: string;
 }
 
 function Notifications() {
@@ -15,7 +16,6 @@ function Notifications() {
         `${import.meta.env.VITE_API_URL}/get-notifications`
       );
       const data = await res.json();
-      console.log(data);
       setNotifications(data);
     } catch (err) {
       console.log('Failed to fetch notifications:', err);
@@ -24,50 +24,27 @@ function Notifications() {
 
   useEffect(() => {
     fetchNotifications();
-    // const interval = setInterval(fetchNotifications, 1000);
-    // return () => {
-    //   clearInterval(interval);
-    // };
+    const interval = setInterval(fetchNotifications, 1000);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   return (
     <div className='flex flex-col w-full p-5 h-[5rem]'>
       {notifications.map((notification: Notification, index) => (
-        <div className='notification' key={`notification-${index}`}>
+        <div
+          className={`notification${
+            notification.type == 'warning' ? ' text-orange-500' : ''
+          }`}
+          key={`notification-${index}`}
+        >
           <span className='notification-msg'>{notification.message}</span>
           <span className='notification-timestamp'>
             {notification.timestamp}
           </span>
         </div>
       ))}
-      {/* <div className='notification'>
-        <span className='notification-msg'>Begin EVA</span>
-        <span className='notification-timestamp'>00:00:00</span>
-      </div>
-      <div className='notification'>
-        <span className='notification-msg'>Begin Navigation</span>
-        <span className='notification-timestamp'>00:05:00</span>
-      </div>
-      <div className='notification'>
-        <span className='notification-msg'>Begin Navigation</span>
-        <span className='notification-timestamp'>00:05:00</span>
-      </div>
-      <div className='notification'>
-        <span className='notification-msg'>Begin Navigation</span>
-        <span className='notification-timestamp'>00:05:00</span>
-      </div>
-      <div className='notification'>
-        <span className='notification-msg'>Begin Navigation</span>
-        <span className='notification-timestamp'>00:05:00</span>
-      </div>
-      <div className='notification'>
-        <span className='notification-msg'>Begin Navigation</span>
-        <span className='notification-timestamp'>00:05:00</span>
-      </div>
-      <div className='notification'>
-        <span className='notification-msg'>Begin Navigation</span>
-        <span className='notification-timestamp'>00:05:00</span>
-      </div> */}
       <div className='min-h-2' />
     </div>
   );

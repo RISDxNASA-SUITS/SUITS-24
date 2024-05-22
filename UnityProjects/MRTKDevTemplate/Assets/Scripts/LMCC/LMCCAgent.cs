@@ -6,14 +6,8 @@ using UnityEngine;
 
 public class LMCCAgent : MonoBehaviour
 {
-    string url = "http://192.168.51.81:5000";
-    // float time_since_last_update;
-
-    // // Update is called once per frame
-    // void Update()
-    // {
-
-    // }
+    // string url = "http://192.168.51.81:5000";
+    string url = "localhost:5000";
 
     public record UpdateStatePayload
     {
@@ -26,6 +20,12 @@ public class LMCCAgent : MonoBehaviour
         public int id;
         public float utm_x;
         public float utm_y;
+    }
+
+    public record NotificationPayload
+    {
+        public string message;
+        public string type;
     }
 
     public void PostUpdateState(string taskName, int step)
@@ -86,5 +86,35 @@ public class LMCCAgent : MonoBehaviour
         }
 
         StartCoroutine(UpdateSample());
+    }
+
+    public void PostNotification(string message, string type)
+    {
+        NotificationPayload payload = new NotificationPayload { message = message, type = type };
+
+        IEnumerator UpdateNotification()
+        {
+            string jsonPayload = JsonConvert.SerializeObject(payload);
+            var request = new UnityWebRequest(url + "/post-notification", "POST");
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonPayload);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                string responseJson = request.downloadHandler.text;
+                // Handle the response from the Flask backend
+                Debug.Log("Response: " + responseJson);
+            }
+            else
+            {
+                Debug.LogError("Error: " + request.error);
+            }
+        }
+
+        StartCoroutine(UpdateNotification());
     }
 }

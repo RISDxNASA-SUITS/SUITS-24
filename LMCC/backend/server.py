@@ -1,11 +1,14 @@
 from flask import Flask, request, send_file, jsonify, url_for
+from collections import deque
+from datetime import datetime
 from flask_cors import CORS
 import requests
 import json
 import os
-from collections import defaultdict
+
 
 from dotenv import load_dotenv
+
 count = 2
 load_dotenv()
 
@@ -19,8 +22,11 @@ api_path = "http://localhost:5000"
 geo_samples = {
     "A": [
         {"name": "Geo Site A", "location": "(G,5)"},
-        {"rockId": "1","flagged":"true","elements":{
-            "SiO2": 36.64,
+        {
+            "rockId": "1",
+            "flagged": "true",
+            "elements": {
+                "SiO2": 36.64,
                 "TiO2": 0.92,
                 "Al2O3": 8.33,
                 "FeO": 18.68,
@@ -29,9 +35,9 @@ geo_samples = {
                 "CaO": 5.91,
                 "K2O": 0.5,
                 "P2O3": 1.19,
-                "other": 20.56
-
-        }},
+                "other": 20.56,
+            },
+        },
     ],
     "B": [{"name": "Geo Site B", "location": "(I,9)"}],
     "C": [{"name": "Geo Site C", "location": "(J,7)"}],
@@ -42,10 +48,12 @@ geo_samples = {
 }
 
 # HMD -> LMCC
-notifications = [
-    # Mock
-    {"message": "Begin EVA", "timestamp": "00:00:00"},
-]
+notifications = deque(
+    [
+        # Mock
+        # {"message": "Begin EVA", "timestamp": "00:00:00"},
+    ]
+)
 
 # Backend configuration
 EVA_NUM = 1
@@ -57,7 +65,7 @@ TASK_TITLES = ["egress", "inspection", "repair", "geo", "ingress"]
 INCOMPLETE = "incomplete"
 INPROGRESS = "inprogress"
 COMPLETE = "complete"
-end_point = [0,0]
+end_point = [0, 0]
 
 pois = []
 tasks = []
@@ -83,9 +91,9 @@ def get_tasks():
 def update_state():
     data = request.get_json()
     curr_task = None
-    for task in tasks:
-        if task["name"] == data["taskName"]:
-            curr_task = task
+    for i, task in enumerate(TASK_TITLES):
+        if data["taskName"] == task:
+            curr_task = tasks[i]
 
     if curr_task is None:
         return jsonify({"message": "Task does not exist"}), 500
@@ -142,14 +150,19 @@ def update_state():
 def post_notification():
     global notifications
     data = request.get_json()
-    notifications.append(data)
+    notification = {}
+    notification["timestamp"] = datetime.now().strftime("%H:%M:%S")
+    notification["message"] = data["message"]
+    notification["type"] = data["type"]
+
+    notifications.appendleft(notification)
     return jsonify({"message": "Received notification"}), 200
 
 
 @app.route("/get-notifications", methods=["GET"])
 def get_notifications():
     global notifications
-    return jsonify(notifications)
+    return jsonify(list(notifications))
 
 
 @app.route("/upload", methods=["POST"])
@@ -240,24 +253,30 @@ def get_sample():
     return jsonify({"sample": geo_samples[station_num][int(rock_id)]}), 200
 
 
-@app.route("/make-rock",methods=['POST'])
+@app.route("/make-rock", methods=["POST"])
 def make_rock():
     global count
     print(request.get_json())
     data = request.get_json()
-    geo_samples[data['station_id']].append(data['rock'])
-    geo_samples[data['station_id']][len(geo_samples[data['station_id']]) - 1]['rockId'] = count
-    geo_samples[data['station_id']][len(geo_samples[data['station_id']]) - 1]['flagged'] = False
+    geo_samples[data["station_id"]].append(data["rock"])
+    geo_samples[data["station_id"]][len(geo_samples[data["station_id"]]) - 1][
+        "rockId"
+    ] = count
+    geo_samples[data["station_id"]][len(geo_samples[data["station_id"]]) - 1][
+        "flagged"
+    ] = False
     count += 1
-    print(geo_samples[data['station_id']])
-    return jsonify({"sample":"gg"}), 200
+    print(geo_samples[data["station_id"]])
+    return jsonify({"sample": "gg"}), 200
 
-@app.route("/flag-rock",methods=["POST"])
+
+@app.route("/flag-rock", methods=["POST"])
 def update_spec_rock():
     global geo_samples
     data = request.get_json()
-    geo_samples[data['station_id']][int(data['rock_id'])]['flagged'] = data['flagged']
-    return jsonify({'good':"gg"}),200
+    geo_samples[data["station_id"]][int(data["rock_id"])]["flagged"] = data["flagged"]
+    return jsonify({"good": "gg"}), 200
+
 
 @app.route("/get-station", methods=["GET"])
 def get_station_info():
@@ -270,7 +289,7 @@ def get_station_info():
 def get_tss():
     # global tss
     # return jsonify(tss), 200
-    return jsonify({"x":"y"}),200
+    return jsonify({"x": "y"}), 200
     res = requests.get(f"{TSS_URL}/json_data/teams/{TEAM_NUM}/TELEMETRY.json")
     return res.json(), 200
 
@@ -295,18 +314,20 @@ def get_rover():
     res = requests.get(f"{TSS_URL}/json_data/ROVER.json")
     return res.json(), 200
 
-@app.route("/draw-end",methods=["GET"])
+
+@app.route("/draw-end", methods=["GET"])
 def send_draw():
     global end_point
-    print(request.args);
+    print(request.args)
     x = request.args.get("x")
     y = request.args.get("y")
     end_point[0] = x
     end_point[1] = y
 
-    return jsonify({'good':"gg"}), 200
+    return jsonify({"good": "gg"}), 200
 
-@app.route("/send-poi",methods=['get'])
+
+@app.route("/send-poi", methods=["get"])
 def send_poi():
     global pois
     x = request.args.get("x")
@@ -315,41 +336,47 @@ def send_poi():
     r.append(x)
     r.append(y)
     pois.append(r)
-    return jsonify({'good':"gg"}), 200
+    return jsonify({"good": "gg"}), 200
 
 
-@app.route("/get-pois",methods=['get'])
+@app.route("/get-pois", methods=["get"])
 def get_poi():
     global pois
-    if(pois):
-        to_send = {'poi_list':pois}
+    if pois:
+        to_send = {"poi_list": pois}
         pois = []
-        return jsonify(to_send),200
+        return jsonify(to_send), 200
     else:
-        return jsonify({'poi_list':[]}),200
+        return jsonify({"poi_list": []}), 200
+
 
 pois_our = []
-@app.route("/lmcc-send-poi",methods=['get'])
-def send_poi_l():
-        global pois_our
-        x = request.args.get("x")
-        y = request.args.get("y")
-        types = request.args.get("types")
-        r = []
-        r.append(x)
-        r.append(y)
-        r.append(types)
-        pois.append(r)
-        return jsonify({'good': "gg"}), 200
 
-@app.route("/get-pois-l",methods=['get'])
+
+@app.route("/lmcc-send-poi", methods=["get"])
+def send_poi_l():
+    global pois_our
+    x = request.args.get("x")
+    y = request.args.get("y")
+    types = request.args.get("types")
+    r = []
+    r.append(x)
+    r.append(y)
+    r.append(types)
+    pois.append(r)
+    return jsonify({"good": "gg"}), 200
+
+
+@app.route("/get-pois-l", methods=["get"])
 def get_poi_l():
     global pois_our
     if pois_our:
-        to_send = {'poi_list':pois_our}
+        to_send = {"poi_list": pois_our}
         pois_our = []
-        return jsonify(to_send),200
+        return jsonify(to_send), 200
     else:
-        return jsonify({'poi_list':[]}),200
+        return jsonify({"poi_list": []}), 200
+
+
 if __name__ == "__main__":
     app.run()

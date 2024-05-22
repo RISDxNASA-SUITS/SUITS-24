@@ -60,6 +60,7 @@ public class TaskbarController : MonoBehaviour
         }
 
         SetupTask();
+        lMCCAgent.PostNotification($"Begin {taskDescriptor.TaskName}", "Update");
     }
 
     void Update()
@@ -136,6 +137,7 @@ public class TaskbarController : MonoBehaviour
             else
             {
                 // All tasks are complete
+                lMCCAgent.PostNotification($"End {taskDescriptor.TaskName}", "Update");
                 taskDescriptor.TaskCompleted();
             }
         }

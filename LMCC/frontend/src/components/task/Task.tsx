@@ -3,8 +3,8 @@ import BuildingIcon from '../../assets/icons/building.png';
 import UpArrowIcon from '../../assets/icons/up.png';
 import DownArrowIcon from '../../assets/icons/down.png';
 import { TaskInfo } from './TaskTypes';
-import './Task.css';
 import TaskItem from './TaskItem';
+import './Task.css';
 
 interface TaskProps {
   info: TaskInfo;
