@@ -1,13 +1,22 @@
 using MixedReality.Toolkit.Suits.Map;
 using Newtonsoft.Json;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class UpdateGeoFields : MonoBehaviour
+public class GeoSampleController : MonoBehaviour
 {
-    public TSScConnection tssConn;
+    private int numSamplesScaned = 0;
+    private int session = 0;
 
-    public TextMeshProUGUI Title;
+    private GameObject geoStatus;
+    private GameObject geoImageNote;
+    private SimpleCamera geoImageNoteCamera;
+    private GameObject geoSampleScan;
+    private GameObject geoVoiceNote;
+
+    public TSScConnection tssConn;
 
     public TextMeshProUGUI SiO2;
 
@@ -28,34 +37,38 @@ public class UpdateGeoFields : MonoBehaviour
     public TextMeshProUGUI P2O3;
 
     public TextMeshProUGUI other;
-
+        
     private bool eva1 = true;
     private bool eva2 = false;
 
-    // Start is called before the first frame update
+    bool firstUpdate = true;
+    Rock lastInfo;
+
     void Start()
     {
-        tssConn = GameObject.Find("SceneContent/TSS Agent").GetComponent<TSScConnection>();
+        geoStatus = transform.Find("Geo Status").gameObject;
+        geoImageNote = transform.Find("Geo Image Note").gameObject;
+        geoImageNoteCamera = geoImageNote.GetComponent<SimpleCamera>();
+        geoSampleScan = transform.Find("Geo Sample Scan").gameObject;
+        geoVoiceNote = transform.Find("Geo Voice Note").gameObject;
+
+        geoStatus.SetActive(true);
+        geoImageNote.SetActive(true);
+        geoSampleScan.SetActive(false);
+        geoVoiceNote.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
-
-
         if (tssConn.isSPECUpdated())
         {
-
-
-
             RockInfo rockInfo = JsonConvert.DeserializeObject<DeserializeRock>(tssConn.GetSPECJsonString()).spec;
             Rock toShow = eva1 ? rockInfo.eva1 : rockInfo.eva2;
 
-            if (Title is not null)
+            if (toShow == lastInfo && !firstUpdate)
             {
-                Title.text = toShow.name;
+                return;
             }
-
 
             SiO2.text = toShow.data.SiO2.ToString("0.0") + "%";
             TiO2.text = toShow.data.TiO2.ToString("0.0") + "%";
@@ -68,8 +81,11 @@ public class UpdateGeoFields : MonoBehaviour
             P2O3.text = toShow.data.P2O3.ToString("0.0") + "%";
             other.text = toShow.data.other.ToString("0.0") + "%";
 
+            geoImageNoteCamera.CaptureCallback();
 
-
+            lastInfo = toShow;
+            firstUpdate = false;
         }
+
     }
 }
