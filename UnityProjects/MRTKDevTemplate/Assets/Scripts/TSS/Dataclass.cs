@@ -93,3 +93,15 @@ public record IMU_DATA
     public float posy;
     public float heading;
 }
+
+public record ERRORWrapper
+{
+    public ERROR error;
+}
+
+public record ERROR
+{
+    public bool fan_error;
+    public bool oxy_error;
+    public bool pump_error;
+}
