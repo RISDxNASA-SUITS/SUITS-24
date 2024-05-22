@@ -1,29 +1,22 @@
 import React, {useEffect, useState} from "react";
-import {mapPosToUtm,utmToMapPos,Location,UserPosition} from "./utmToMap.ts";
+import {mapPosToUtm,utmToMapPos,location,UserPosition} from "./utmToMap.ts";
 
 interface FetchFormat{
     imu:LocationWrapper
 }
 
 interface LocationWrapper{
-    eva1:ApiLoc,
-    eva2:ApiLoc,
+    eva1:LocationWrapperLocation,
+    eva2:LocationWrapperLocation,
 }
 
-class ApiLoc{
-    public x: number;
-    public y:number;
+interface LocationWrapperLocation{
+    posx:number,
+    posy:number,
 
-    constructor(heading:number,posx:number,posy:number){
-        this.x = posx;
-        this.y = posy;
-
-    }
-
-    convert(){
-        return utmToMapPos({x:this.x,y:this.y});
-    }
 }
+
+
 
 
 interface UserProps{
@@ -36,13 +29,17 @@ interface UserProps{
 export const User = ({endPoint,img}:UserProps):JSX.Element=>{
     const[loc,setLoc] = useState<UserPosition>({leftOffset:0,bottomOffset:0})
     const fetchUserLoc = async () => {
+
         try {
             const res = await fetch(`${import.meta.env.VITE_API_URL}` + endPoint, {
                 method: 'GET',
             });
-            const data:FetchFormat = await res.json();
 
-            setLoc(data.imu.eva2.convert());
+            const data:FetchFormat = await res.json();
+            const loc = utmToMapPos({x:data.imu.eva2.posx,y: data.imu.eva2.posy})
+
+
+            setLoc(loc);
         } catch (err) {
             console.log('Failed to fetch TSS:', err);
         }
@@ -51,11 +48,12 @@ export const User = ({endPoint,img}:UserProps):JSX.Element=>{
     useEffect(() => {
         fetchUserLoc();
         const interval = setInterval(fetchUserLoc, 1000);
+
         return () => {
             clearInterval(interval);
         };
     }, []);
 
-
-    return <img className={"absolute h-10 w-10 bottom-6 left-6"} style={{paddingLeft:`${loc!.leftOffset * 100}%`, paddingBottom:`${loc!.leftOffset * 100}%`}} src={img} alt={"image for user/rover"}/>
+    console.log(loc,"is loc");
+    return <img className={"absolute h-10 w-10 bottom-6 left-6 z-10"} style={{left: `${loc.leftOffset * 100}%`, bottom:`${loc.bottomOffset * 100}%`}} src={img} alt={"image for user/rover"}/>
 }

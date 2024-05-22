@@ -10,7 +10,7 @@ import {FileType} from "./FileTypes.ts";
 
 
 function Files() {
-    const[openFile,setOpenFile] = useState<FileType | null>(FileType.Geo)
+    const[openFile,setOpenFile] = useState<FileType | null>(null)
   return (
 
       openFile !== null? <div className='flex-row w-[30rem] h-80 justify-between'>  <RenderOpenFile fType={openFile}/> </div>:
