@@ -1,0 +1,32 @@
+{
+    "name": "Repair",
+    "location": "Power System",
+    "instruction": [
+        {
+            "name": "Repair",
+            "steps": [
+                {
+                    "name": "1. Carry additional spare parts and protective equipment.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "2. Assist EV1 in identifying damaged components.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "3. Help EV1 in repairing or replacing wiring, ensuring secure connections.",
+                    "status": "incomplete"
+                }
+            ]
+        },
+        {
+            "name": "End",
+            "steps": [
+                {
+                    "name": "Click NEXT when verification on all ends are complete.",
+                    "status": "incomplete"
+                }
+            ]
+        }
+    ]
+}

@@ -3,30 +3,27 @@
     "location": "Comm Tower Antenna",
     "instructions": [
         {
-            "name": "Antenna Alignment and Calibration",
+            "name": "Repair",
             "steps": [
                 {
-                    "name": "1. EV1: Prepare alignment tools and calibration software on a portable device.",
+                    "name": "1. Assemble securing gear and safety equipment for both crew members.",
                     "status": "incomplete"
                 },
                 {
-                    "name": "2. EV2: Assemble securing gear and safety equipment for both crew members",
+                    "name": "2. Assist EV1 in antenna inspection for misalignment or damage.",
                     "status": "incomplete"
                 },
                 {
-                    "name": "3. EV1: Adjust the antenna to correct orientation using tools.",
+                    "name": "3. Support EV1 in adjustment and calibration process; maintain communication with mission control.",
                     "status": "incomplete"
-                },
+                }
+            ]
+        },
+        {
+            "name": "End",
+            "steps": [
                 {
-                    "name": "4. EV2: Assist in antenna inspection for misalignment or damage.",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "5. EV1: Secure antenna position; perform calibration test.",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "6. EV2: Support in adjustment and calibration process; maintain communication with mission control.",
+                    "name": "Click NEXT when verification on all ends are complete.",
                     "status": "incomplete"
                 }
             ]

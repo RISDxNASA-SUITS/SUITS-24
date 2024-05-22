@@ -3,77 +3,99 @@
     "location": "COMM Tower Screen",
     "instructions": [
         {
-            "name": "Cable Repair",
+            "name": "INSP",
             "steps": [
                 {
-                    "name": "1. EV1 Select Gear icon",
+                    "name": "1. Upon arrival, notify LMCC2 and begin inspecting the worksite.",
                     "status": "incomplete"
                 },
                 {
-                    "name": "2. EV1 Select Shutdown",
+                    "name": "2. Scan MMRTG for possible issues.",
                     "status": "incomplete"
                 },
                 {
-                    "name": "3. EV1 Verify shutdown complete and notify EV2 and LMCC1",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "4. EV2 Move POWER – OFF, notify EV1 and LMCC1",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "5. EV2 Navigate to Comm Tower to retrieve one end of power cable",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "6. EV1 Retrieve spare cable",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "7. take appropriate end of cable to MMRTG, notify EV1 and LMCC1 when at MMRTG",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "8. EV1 Disconnect damaged cable from Comm Tower, notify EV2 and LMCC1",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "9. EV2 Disconnect damaged cable from MMRTG, notify EV1 and LMCC1",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "10. EV1 Connect new cable from Comm Tower, notify EV2 and LMCC1",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "11. EV2 Connect new cable from MMRTG, notify EV1 and LMCC1",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "12. EV2 Move POWER – ON, notify EV1 and LMCC1",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "13. EV1 POWER – ON, notify EV2 and LMCC1",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "14. EV1 when start up complete, notify EV2 and LMCC1",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "15. EV1 Verify channel “B” is operational, notify EV2 and LMCC1",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "16. Perform comm check",
-                    "status": "incomplete"
-                },
-                {
-                    "name": "17. If Comm good, EV1/LMCC1 switch back to COM-A, EV2/LMCC2 continue COM-B, Else all to COM – A",
+                    "name": "3. If issue is found, notify LMCC2.",
                     "status": "incomplete"
                 }
             ]
-        }
-    ]
+        },
+        {
+            "name": "MMRTG",
+            "steps": [
+                {
+                    "name": "1. Procedure steps will be displayed here, click NEXT to proceed.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "2. Wait for EV1 to verify Shutdown complete.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "3. On MMRTG Panel, move POWER - OFF, notify EV1 and LMCC1.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "4. Navigate to Comm Tower and retrieve one end of power cable.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "5. Take appropriate end of cable to MMRTG.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "6. Notify EV1 and LMCC1 upon arrival at MMRTG.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "7. Wait for EV1 to disconnect damaged cable from Comm Tower.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "8. Disconnect damaged cable from MMRTG, notify EV1 and LMCC1.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "9. Wait for EV1 to connect new cable from Comm Tower.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "10. Connect new cable from MMRTG, notify EV1 and LMCC1.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "11. Move Power - ON, notify EV1 and LMCC1.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "12. Wait for EV1 to move Power - ON and complete start up.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "13. Wait for EV1 to verify channel “B” is operational.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "14. On LMCC1 Go, switch to COM-B.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "15. Perform Comm check.",
+                    "status": "incomplete"
+                },
+                {
+                    "name": "16. If Comm good, continue on COM-B. Else, all switch to COM-A.",
+                    "status": "incomplete"
+                }
+            ]
+        },
+            {
+                "name": "Completed",
+                "steps": [
+                {
+                    "name": "Click NEXT when repair has been confirmed.",
+                    "status": "incomplete"
+                }
+            ]
+            }
+            ]
 }
