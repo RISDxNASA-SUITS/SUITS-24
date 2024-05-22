@@ -78,7 +78,6 @@ public class EgressDescriptor : TaskDescriptor
         },
         new string[] {
             // step 3 part 2
-            "[BOTH DCU] 1. Open PUMP",
             "[UIA] 2. Open SUPPLY WATER",
             "[HMD] 3. Wait until water EV1 and EV2 Coolant tank is < 5%",
             "[UIA] 4. Close SUPPLY WATER",
