@@ -20,7 +20,7 @@
             ]
         },
         {
-            "name": "Repair",
+            "name": "End",
             "steps": [
                 {
                     "name": "Click NEXT when verification on all ends are complete.",
