@@ -32,7 +32,7 @@ function Task({ info, current }: TaskProps) {
       />
       {expanded ? (
         <div className='pt-3'>
-          {info.instructions.map((ins, index) => (
+          {info.instructions?.map((ins, index) => (
             <TaskItem instruction={ins} key={`${ins.name}-${index}`} />
           ))}
         </div>

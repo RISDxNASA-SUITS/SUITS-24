@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file, jsonify,url_for
+from flask import Flask, request, send_file, jsonify, url_for
 from flask_cors import CORS
 import requests
 import json
@@ -16,21 +16,22 @@ api_path = "http://localhost:5000"
 # LMCC -> HMD
 # actions = []
 
-geo_samples = {"A":[{"name":"Geo Site A","location":"(G,5)"},{"name":"1", "location":"50,50"}],"B":[{"name":"Geo Site B","location":"(I,9)"}],"C":[{"name":"Geo Site C","location":"(J,7)"}],"D":[{"name":"Geo Site D","location":"(L,9)"}],"E":[{"name":"Geo Site E","location":"(K,14)"}],"F":[{"name":"Geo Site F","location":"(O,18)"}],"G":[{"name":"Geo Site G","location":"(O,14)"}]}
-
-
-
+geo_samples = {
+    "A": [
+        {"name": "Geo Site A", "location": "(G,5)"},
+        {"name": "1", "location": "50,50"},
+    ],
+    "B": [{"name": "Geo Site B", "location": "(I,9)"}],
+    "C": [{"name": "Geo Site C", "location": "(J,7)"}],
+    "D": [{"name": "Geo Site D", "location": "(L,9)"}],
+    "E": [{"name": "Geo Site E", "location": "(K,14)"}],
+    "F": [{"name": "Geo Site F", "location": "(O,18)"}],
+    "G": [{"name": "Geo Site G", "location": "(O,14)"}],
+}
 
 # HMD -> LMCC
 notifications = [
     # Mock
-    {"message": "Begin EVA", "timestamp": "00:00:00"},
-    {"message": "Begin EVA", "timestamp": "00:00:00"},
-    {"message": "Begin EVA", "timestamp": "00:00:00"},
-    {"message": "Begin EVA", "timestamp": "00:00:00"},
-    {"message": "Begin EVA", "timestamp": "00:00:00"},
-    {"message": "Begin EVA", "timestamp": "00:00:00"},
-    {"message": "Begin EVA", "timestamp": "00:00:00"},
     {"message": "Begin EVA", "timestamp": "00:00:00"},
 ]
 
@@ -38,7 +39,18 @@ notifications = [
 EVA_NUM = 1
 FS_ROOT = "root"
 MISSION_FOLDER = "mission"
-TASK_TITLES = ["egress", "repair", "geo", "ingress"]
+TASK_TITLES = ["egress", "inspection", "repair", "geo", "ingress"]
+
+# Task status
+INCOMPLETE = "incomplete"
+INPROGRESS = "inprogress"
+COMPLETE = "complete"
+
+tasks = []
+for title in TASK_TITLES:
+    with open(f"{MISSION_FOLDER}/{title}.json", "r") as f:
+        tasks.append(json.load(f))
+tasks[0]["instructions"][0]["steps"][0]["status"] = INPROGRESS
 
 TSS_URL = os.environ.get("TSS_URL")
 TEAM_NUM = os.environ.get("TEAM_NUM")
@@ -49,40 +61,34 @@ if not os.path.exists(FS_ROOT):
 
 @app.route("/get-tasks", methods=["GET"])
 def get_tasks():
-    tasks = []
-
-    for title in TASK_TITLES:
-        with open(f"{MISSION_FOLDER}/{title}.json", "r") as f:
-            tasks.append(json.load(f))
-
+    global tasks
     return jsonify(tasks), 200
 
 
 @app.route("/update-state", methods=["POST"])
 def update_state():
     data = request.get_json()
-    fpath = os.path.join(MISSION_FOLDER, data["taskName"] + ".json")
+    curr_task = None
+    for task in tasks:
+        if task["name"] == data["taskName"]:
+            curr_task = task
 
-    with open(fpath, "r") as f:
-        state = json.load(f)
+    if curr_task is None:
+        return jsonify({"message": "Task does not exist"}), 500
 
-    with open(fpath, "w") as f:
-        curr_step = 0
-        complete = False
-        for ins in state["instructions"]:
-            for step in ins["steps"]:
-                if curr_step == data["step"]:
-                    if complete:
-                        step["status"] = "inprogress"
-                        f.write(json.dumps(state))
-                        return jsonify({"message": "Updated app state"}), 200
-                    else:
-                        complete = True
-                        step["status"] = "complete"
+    curr_step = 0
+    complete = False
+    for ins in curr_task["instructions"]:
+        for step in ins["steps"]:
+            if curr_step == data["step"]:
+                if complete:
+                    step["status"] = INPROGRESS
+                    return jsonify({"message": "Updated app state"}), 200
                 else:
-                    curr_step += 1
-
-        f.write(json.dumps(state))
+                    complete = True
+                    step["status"] = COMPLETE
+            else:
+                curr_step += 1
 
     if complete:
         return jsonify({"message": "Updated app state"}), 200
@@ -188,48 +194,71 @@ def delete_file():
     os.remove(full_fpath)
     return jsonify({"message": "File deleted successfully"}), 200
 
-@app.route("/update-sample",methods=["POST"])
+
+@app.route("/update-sample", methods=["POST"])
 def post_sample(station_num):
     global geo_samples
     print(request)
     data = request.get_json()
     try:
         print(data)
-        geo_samples[data['sample_site']].append(data['rock_info'])
+        geo_samples[data["sample_site"]].append(data["rock_info"])
         # rock_info
     except Exception as e:
         print(e)
-        return jsonify({"message":"no"},400)
+        return jsonify({"message": "no"}, 400)
 
-    return jsonify({"message":"yay"}),200
+    return jsonify({"message": "yay"}), 200
 
-@app.route("/num-samples/<sample_site>",methods=["GET"])
+
+@app.route("/num-samples/<sample_site>", methods=["GET"])
 def num_samples(sample_site):
     global geo_samples
 
-    return jsonify({"num_samples":len(geo_samples[sample_site])})
-@app.route("/get-sample",methods=["GET"])
+    return jsonify({"num_samples": len(geo_samples[sample_site])})
+
+
+@app.route("/get-sample", methods=["GET"])
 def get_sample():
     global geo_samples
-    station_num = request.args.get('sample_site')
-    rock_id = request.args.get('rock_id')
+    station_num = request.args.get("sample_site")
+    rock_id = request.args.get("rock_id")
     return jsonify({"sample": geo_samples[station_num][int(rock_id)]}), 200
 
 
-@app.route("/get-station",methods=["GET"])
+@app.route("/get-station", methods=["GET"])
 def get_station_info():
     global geo_samples
-    station_num = request.args.get('station_num')
-    return jsonify({"station_info": geo_samples[station_num][0]}),200
-
+    station_num = request.args.get("station_num")
+    return jsonify({"station_info": geo_samples[station_num][0]}), 200
 
 
 @app.route("/get-tss", methods=["GET"])
 def get_tss():
     # global tss
     # return jsonify(tss), 200
-
     res = requests.get(f"{TSS_URL}/json_data/teams/{TEAM_NUM}/TELEMETRY.json")
+    return res.json(), 200
+
+
+mock_imu = {
+    "imu": {
+        "eva1": {"posx": 298355, "posy": 3272383, "heading": 0.000000},
+        "eva2": {"posx": 298355, "posy": 3272383, "heading": 0.000000},
+    }
+}
+
+
+@app.route("/get-imu", methods=["GET"])
+def get_imu():
+    # res = requests.get(f"{TSS_URL}/json_data/IMU.json")
+    # return res.json(), 200
+    return jsonify(mock_imu), 200
+
+
+@app.route("/get-rover", methods=["GET"])
+def get_rover():
+    res = requests.get(f"{TSS_URL}/json_data/ROVER.json")
     return res.json(), 200
 
 
