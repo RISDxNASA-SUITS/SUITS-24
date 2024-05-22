@@ -7,43 +7,39 @@ public class AntennaAlignmentDescriptor : TaskDescriptor
     private string myTaskName = "antenna";
     private string[] myTaskHeadings = {
         // step 1
-        "EV1",
-        "EV1",
-        "EV1",
-        "EV1",
-        "EV1"
+        "EV2",
+        "EV2",
+        "EV2",
+        "EV2",
+        "EV2"
     };
 
     private string[] myTaskTitles = {
         // step 1
-        "INSP",
+        "Repair",
         // step 2
-        "COMM",
         "",
         "",
         // step3
-        "Confirm"
+        "End"
     };
 
     private string[][] myTaskSteps = {
         new string[] {
-            "",
+            // step 1
+            "1. Assemble securing gear and safety equipment for both crew members."
+        },
+        new string[] {
+            // step 1 part 1
+            "1. Assist EV1 in antenna inspection for misalignment or damage."
+        },
+        new string[] {
+            // step 1 part 2
+            "1. Support EV1 in adjustment and calibration process; maintain communication with mission control."
         },
         new string[] {
             // step 2
-            "1. Prepare alignment tools and calibration software on a portable device"
-        },
-        new string[] {
-            // step 2 part 1
-            "1. Adjust the antenna to correct orientation using tools"
-        },
-        new string[] {
-            // step 2 part 2
-            "1. Secure antenna position; perform calibration test"
-        },
-        new string[] {
-            // step 3
-            "1. Click NEXT when verification on all ends are complete"
+            "Click NEXT when verification on all ends are complete."
         },
     };
 

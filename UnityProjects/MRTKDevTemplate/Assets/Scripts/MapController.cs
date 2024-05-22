@@ -337,6 +337,19 @@ namespace MixedReality.Toolkit.Suits.Map
             newPos.x = 0.0f;
             xCoordsRT.anchoredPosition = newPos;
         }
+
+        private KeyValuePair<GameObject, MarkerController.Marker> closestGeoStation()
+        {
+            return markerController.ClosestGeoStation(currLocRT.offsetMin);
+        }
+
+        public string ClosestGeoStationName()
+        {
+            var closest = closestGeoStation();
+            if (closest.Key == null) return "";
+
+            return closest.Value.Name;
+        }
     }
 
 

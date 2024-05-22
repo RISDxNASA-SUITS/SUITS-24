@@ -1,3 +1,4 @@
+using MixedReality.Toolkit.Suits.Map;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,8 @@ public record NavNote : Note
     public string marker_type; // nameof(Marker.MarkerType): {POI, Rover, Obstacle, Stations}
 }
 
-public record GeoSampleNote : Note
+public record GeoNote : Note
 {
-    public string site_name; // {"A", ..., "F"}
+    public string station_id; // {"A", ..., "F"}
+    public RockData rock;
 }

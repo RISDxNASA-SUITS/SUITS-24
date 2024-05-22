@@ -38,11 +38,14 @@ public class GPS : MonoBehaviour
     // For simulation in Unity
     public Vector2 GetGpsCoords()
     {
-        // Vector3 worldPos = mainCamera.transform.position;
-        // Vector2 gpsCoords = new Vector2(SatCenterLatitude, SatCenterLongitude);
-        // gpsCoords += 50 * new Vector2(worldPos.z, worldPos.x); // in mapnav, shift+w/a/s/d to move cur position
-        // return gpsCoords;
+#if false // Use simulated gps coords in Unity?
+        Vector3 worldPos = mainCamera.transform.position;
+        Vector2 gpsCoords = new Vector2(SatCenterLatitude, SatCenterLongitude);
+        gpsCoords += 50 * new Vector2(worldPos.z, worldPos.x); // in mapnav, shift+w/a/s/d to move cur position
+        return gpsCoords;
+#else
         return userGps;
+#endif
     }
 
     public Vector2 GpsToMapPos(float latitudeDeg, float longitudeDeg)

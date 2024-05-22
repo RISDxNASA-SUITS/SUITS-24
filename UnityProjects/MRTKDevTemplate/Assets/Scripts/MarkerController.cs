@@ -463,9 +463,32 @@ public class MarkerController : MonoBehaviour
             selectedMarkerType = type;
         }
     }
-        public void DeleteTitle()
+    public void DeleteTitle()
     {
         GameObject.Find("Delete Confirmation/Delete Title").GetComponent<TMP_Text>().text = "Delete " + currMarker.Name + "?";
     }
+
+    public KeyValuePair<GameObject, Marker> ClosestGeoStation(Vector2 currentOffset)
+    {
+        float minDist2 = float.PositiveInfinity;
+        var closestMarker = new KeyValuePair<GameObject, Marker>(null, null);
+        foreach (var markerKV in markers)
+        {
+            var marker = markerKV.Value;
+            if (marker.Type != MarkerType.Stations) continue;
+
+            var mo = marker.MapMarkerRT.offsetMin;
+            var dx = mo.x - currentOffset.x;
+            var dy = mo.y - currentOffset.y;
+            var dist2 = dx * dx + dy * dy;
+            if (dist2 < minDist2)
+            {
+                closestMarker = markerKV;
+                minDist2 = dist2;
+            }
+        }
+        return closestMarker;
+    }
+
 }
 }

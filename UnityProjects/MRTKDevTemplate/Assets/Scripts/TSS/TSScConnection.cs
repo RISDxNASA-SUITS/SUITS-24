@@ -62,7 +62,8 @@ public class TSScConnection : MonoBehaviour
     // This Function is called when the program begins
     void Start()
     {
-        ConnectToHost("localhost", 9);
+        // ConnectToHost("localhost", 9);
+        ConnectToHost("172.20.3.97", 9);
     }
 
     // This Function is called each render frame
