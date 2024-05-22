@@ -120,7 +120,7 @@ export default function RenderOpenFile({fType}:RenderFileInfo){
         const toCall = async () => setGeoFiles(await handleFetchGeoData())
         handleFetchGeoData().then((x)=>setGeoFiles(x))
         const interval = setInterval(fetchRover, 1000);
-        const interval1 = setInterval(toCall,1000)
+        const interval1 = setInterval(toCall,5000)
         return () => {
             clearInterval(interval);
             clearInterval(interval1);
