@@ -16,6 +16,7 @@ public enum MarkerType
     Rover,
     Obstacle,
     Stations,
+    History,
 };
 
 public enum MarkerActionMode
@@ -164,11 +165,13 @@ public class MarkerController : MonoBehaviour
         {
             { MarkerType.POI, GameObject.Find("POI Marker Image") },
             { MarkerType.Obstacle, GameObject.Find("Obstacle Marker Image") },
+            { MarkerType.History, GameObject.Find("History Button Image")}
         };
         glowingMarkerImages = new Dictionary<MarkerType, GameObject>
         {
             { MarkerType.POI, GameObject.Find("Glowing POI Marker Image") },
             { MarkerType.Obstacle, GameObject.Find("Glowing Obstacle Marker Image") },
+            { MarkerType.History, GameObject.Find("Glowing History Button Image")}
         };
         prefabDict = new Dictionary<MarkerType, GameObject>
         {
@@ -176,6 +179,7 @@ public class MarkerController : MonoBehaviour
             { MarkerType.Rover, Resources.Load<GameObject>("CustomPrefabs/Rover") },
             // { MarkerType.Rover, Resources.Load<Ga/meObject>("Prefabs/red_dot") },
             { MarkerType.Obstacle, Resources.Load<GameObject>("CustomPrefabs/Obstacle Marker") },
+
         };
 
         // Initialize marker-related fields and states
@@ -186,7 +190,8 @@ public class MarkerController : MonoBehaviour
             { MarkerType.POI, true },
             { MarkerType.Obstacle, true },
             { MarkerType.Rover, false },
-            { MarkerType.Stations, true }
+            { MarkerType.Stations, true },
+            { MarkerType.History, true}
         };
 
         actionButtons.SetActive(false);
@@ -375,6 +380,10 @@ public class MarkerController : MonoBehaviour
         SelectNewMarkerType(MarkerType.POI);
     }
 
+    public void OnHistoryPressed()
+    {
+        SelectNewMarkerType(MarkerType.History);
+    }
     public void OnMarkerMovePressed()
     {
         currMarker.SetOpacity(0.5f);
@@ -441,6 +450,7 @@ public class MarkerController : MonoBehaviour
             {
                 case MarkerType.POI:
                 case MarkerType.Obstacle:
+                case MarkerType.History:
                     mode = MarkerActionMode.Add;
                     break;
                 default:
