@@ -14,6 +14,7 @@ public class CableRepairDescriptor : TaskDescriptor
         "EV2",
         "EV2",
         "EV2",
+        "EV2",
         "EV2"
 
     };
@@ -28,6 +29,7 @@ public class CableRepairDescriptor : TaskDescriptor
         "",
         "",
         "",
+        "",
         // step3
         "Completed"
     };
@@ -35,9 +37,9 @@ public class CableRepairDescriptor : TaskDescriptor
     private string[][] myTaskSteps = {
         new string[] {
             //step 1
-            "Upon arrival, notify LMCC2 and begin inspecting the worksite.",
-            "Scan MMRTG for possible issues.",
-            "If issue is found, notify LMCC2."
+            "1. Upon arrival, notify LMCC2 and begin inspecting the worksite.",
+            "2. Scan MMRTG for possible issues.",
+            "3. If issue is found, notify LMCC2."
         },
         new string[] {
             // step 2 

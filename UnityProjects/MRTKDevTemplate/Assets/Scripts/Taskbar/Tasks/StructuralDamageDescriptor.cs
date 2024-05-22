@@ -22,6 +22,7 @@ public class StructuralDamageDescriptor : TaskDescriptor
         "Repair",
         "",
         "",
+        "",
         // step 2
         "End"
     };
@@ -33,19 +34,19 @@ public class StructuralDamageDescriptor : TaskDescriptor
         },
         new string[] {
             // step 2 COMM part 1
-            "1.   Assist EV1 in removing debris and damaged components."
+            "1. Assist EV1 in removing debris and damaged components."
         },
         new string[] {
             // step 2 COMM part 2
-            "1.    Support EV1 in applying patches or adhesives."
+            "1. Support EV1 in applying patches or adhesives."
         },
         new string[] {
             // step 3 Confirm 
-            "1.   Ensure safety protocols are followed during high or difficult access points."
+            "1. Ensure safety protocols are followed during high or difficult access points."
         },
         new string[] {
             //step 4
-            "1. Click NEXT when repair has been confirmed."
+            "Click NEXT when repair has been confirmed."
         }
     };
 

@@ -18,6 +18,7 @@ public class PowerSystemDescriptor : TaskDescriptor
         "Repair",
         // step 2
         "",
+        "",
         // step3
         "End"
     };
@@ -36,7 +37,7 @@ public class PowerSystemDescriptor : TaskDescriptor
         },
         new string[] {
             // step 2 part 1
-            "1. Click NEXT when verification on all ends are complete."
+            "Click NEXT when verification on all ends are complete."
         }
         
     };
