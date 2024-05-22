@@ -9542,6 +9542,10 @@ PrefabInstance:
       propertyPath: seeItSayItLabel
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1866913943237063782, guid: ff9102b30747b04419e13c4be18b5b59, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1951506073814095922, guid: ff9102b30747b04419e13c4be18b5b59, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -9744,7 +9748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6392072323540165892, guid: ff9102b30747b04419e13c4be18b5b59, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -135
+      value: -160
       objectReference: {fileID: 0}
     - target: {fileID: 6684508951755321699, guid: ff9102b30747b04419e13c4be18b5b59, type: 3}
       propertyPath: seeItSayItLabel
