@@ -118,5 +118,6 @@ public class CableRepairDescriptor : TaskDescriptor
     {
         Debug.Log("Complete Repair");
         uiStateManager.transitionOutOfRepairUI();
+        
     }
 }
