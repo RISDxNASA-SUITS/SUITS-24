@@ -61,6 +61,8 @@ end_point = [0,0]
 
 pois = []
 tasks = []
+
+rock_id_to_station_idx = {1:1}
 for title in TASK_TITLES:
     with open(f"{MISSION_FOLDER}/{title}.json", "r") as f:
         tasks.append(json.load(f))
@@ -235,18 +237,21 @@ def num_samples(sample_site):
 @app.route("/get-sample", methods=["GET"])
 def get_sample():
     global geo_samples
+    global rock_id_to_station_idx
     station_num = request.args.get("sample_site")
     rock_id = request.args.get("rock_id")
-    return jsonify({"sample": geo_samples[station_num][int(rock_id)]}), 200
+    return jsonify({"sample": geo_samples[station_num][rock_id_to_station_idx[int(rock_id)]]}), 200
 
 
 @app.route("/make-rock",methods=['POST'])
 def make_rock():
     global count
+    global rock_id_to_station_idx
     print(request.get_json())
     data = request.get_json()
     geo_samples[data['station_id']].append(data['rock'])
     geo_samples[data['station_id']][len(geo_samples[data['station_id']]) - 1]['rockId'] = count
+    rock_id_to_station_idx[count] = len(geo_samples[data['station_id']]) - 1
     geo_samples[data['station_id']][len(geo_samples[data['station_id']]) - 1]['flagged'] = False
     count += 1
     print(geo_samples[data['station_id']])
@@ -255,8 +260,10 @@ def make_rock():
 @app.route("/flag-rock",methods=["POST"])
 def update_spec_rock():
     global geo_samples
+    global rock_id_to_station_idx
+
     data = request.get_json()
-    geo_samples[data['station_id']][int(data['rock_id'])]['flagged'] = data['flagged']
+    geo_samples[data['station_id']][rock_id_to_station_idx[int(data['rock_id'])]]['flagged'] = data['flagged']
     return jsonify({'good':"gg"}),200
 
 @app.route("/get-station", methods=["GET"])
