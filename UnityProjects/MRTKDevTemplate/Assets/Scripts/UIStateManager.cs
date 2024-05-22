@@ -37,7 +37,7 @@ public class UIStateManager : MonoBehaviour
         handMenuUI = GameObject.Find("Hand Menu");
 
         navUI.SetActive(false);
-        // egressUI.SetActive(false);
+        egressUI.SetActive(true);
         ingressUI.SetActive(false);
         geoUI.SetActive(false);
         repairUI.SetActive(false);

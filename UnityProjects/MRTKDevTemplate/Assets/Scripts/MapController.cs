@@ -7,6 +7,8 @@ using MixedReality.Toolkit.Input;
 using RectTransform = UnityEngine.RectTransform;
 using UnityEngine.UI;
 // using UnityEditor.PackageManager;
+using TMPro;
+
 
 namespace MixedReality.Toolkit.Suits.Map
 {
@@ -309,6 +311,8 @@ namespace MixedReality.Toolkit.Suits.Map
             var newPos = xCoordsRT.anchoredPosition;
             newPos.x = (detailMapPanelWidth - mapPanelWidth) * 0.5f;
             xCoordsRT.anchoredPosition = newPos;
+
+            GameObject.Find("Map Details/Map Details Title").GetComponent<TMP_Text>().text = markerController.currMarker.Name;
         }
 
         public void closeDetailPage()

@@ -385,4 +385,9 @@ public class SimpleCamera : MonoBehaviour
         }
         videoTextureRGB.Apply();
     }
+
+    public Texture2D GetTextureRGB()
+    {
+        return _videoTextureRgb;
+    }
 }

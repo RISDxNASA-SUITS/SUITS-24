@@ -5,18 +5,13 @@ using UnityEngine;
 
 public class UpdateGeoFields : MonoBehaviour
 {
-
     public TSScConnection tssConn;
-
 
     public TextMeshProUGUI Title;
 
-
     public TextMeshProUGUI SiO2;
 
-
     public TextMeshProUGUI TiO2;
-
 
     public TextMeshProUGUI AL2O3;
 

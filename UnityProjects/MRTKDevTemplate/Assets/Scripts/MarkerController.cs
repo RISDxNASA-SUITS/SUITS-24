@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
-
+using TMPro;
 
 namespace MixedReality.Toolkit.Suits.Map
 {
@@ -16,6 +16,7 @@ public enum MarkerType
     Rover,
     Obstacle,
     Stations,
+    History,
 };
 
 public enum MarkerActionMode
@@ -35,14 +36,15 @@ public class MarkerController : MonoBehaviour
         public readonly GameObject MapMarkerObj;
         public readonly RectTransform MapMarkerRT;
         public readonly int ID;
-
-        public Marker(MarkerType type, GameObject prefab, Vector2 gpsCoord)
+        public readonly string Name;
+        public Marker(MarkerType type, GameObject prefab, Vector2 gpsCoord, string name)
         {
             Type = type;
             GpsCoord = gpsCoord;
             MapMarkerObj = Instantiate(prefab, markersTf);
             MapMarkerRT = MapMarkerObj.GetComponent<RectTransform>();
             ID = nextID++;
+            Name = name;
         }
 
         public void CleanUp()
@@ -121,7 +123,7 @@ public class MarkerController : MonoBehaviour
     private GameObject roverPrefab;
     private Marker rover;
 
-    [SerializeField] private MapController mapController;
+    private MapController mapController;
 
     private readonly Dictionary<string, Tuple<float, float>> stations = new Dictionary<string, Tuple<float, float>>
     {
@@ -153,6 +155,7 @@ public class MarkerController : MonoBehaviour
         mainCamera = Camera.main;
         gps = GameObject.Find("GPS").GetComponent<GPS>();
         mapRT = GameObject.Find("Map").GetComponent<RectTransform>();
+        mapController = GameObject.Find("Map Panel").GetComponent<MapController>();
         markersTf = transform;
         currLocRT = GameObject.Find("CurrLoc").GetComponent<RectTransform>();
         actionButtons = GameObject.Find("Marker Action Buttons");
@@ -162,11 +165,13 @@ public class MarkerController : MonoBehaviour
         {
             { MarkerType.POI, GameObject.Find("POI Marker Image") },
             { MarkerType.Obstacle, GameObject.Find("Obstacle Marker Image") },
+            { MarkerType.History, GameObject.Find("History Button Image")}
         };
         glowingMarkerImages = new Dictionary<MarkerType, GameObject>
         {
             { MarkerType.POI, GameObject.Find("Glowing POI Marker Image") },
             { MarkerType.Obstacle, GameObject.Find("Glowing Obstacle Marker Image") },
+            { MarkerType.History, GameObject.Find("Glowing History Button Image")}
         };
         prefabDict = new Dictionary<MarkerType, GameObject>
         {
@@ -174,6 +179,7 @@ public class MarkerController : MonoBehaviour
             { MarkerType.Rover, Resources.Load<GameObject>("CustomPrefabs/Rover") },
             // { MarkerType.Rover, Resources.Load<Ga/meObject>("Prefabs/red_dot") },
             { MarkerType.Obstacle, Resources.Load<GameObject>("CustomPrefabs/Obstacle Marker") },
+
         };
 
         // Initialize marker-related fields and states
@@ -184,7 +190,8 @@ public class MarkerController : MonoBehaviour
             { MarkerType.POI, true },
             { MarkerType.Obstacle, true },
             { MarkerType.Rover, false },
-            { MarkerType.Stations, true }
+            { MarkerType.Stations, true },
+            { MarkerType.History, true}
         };
 
         actionButtons.SetActive(false);
@@ -199,15 +206,27 @@ public class MarkerController : MonoBehaviour
         {
             Vector2 utmCoord = new Vector2(kvp.Value.Item1, kvp.Value.Item2);
             string path = "Prefabs/Markers/" + kvp.Key;
-            // string path = "Prefabs/red_dot";  // to check exact position
-            // string path = "Prefabs/Markers/new";  // to check exact position
-            var stationMarker = new Marker(MarkerType.Stations, Resources.Load<GameObject>(path), utmCoord);
+            // var stationMarker = new Marker(MarkerType.Stations, Resources.Load<GameObject>(path), utmCoord, "Station " + kvp.Key);
+            string name;
+            switch (kvp.Key)
+            {
+                case "UIA":                   
+                    name = "UIA Panel";
+                    break;
+                case "COMM":
+                    name = "Comm Tower";
+                    break;
+                default:
+                    name = "Geo Station " + kvp.Key;
+                    break;
+            }
+            var stationMarker = new Marker(MarkerType.Stations, Resources.Load<GameObject>(path), utmCoord, name);
             markers.Add(stationMarker.MapMarkerObj, stationMarker);
         }
 
         // Initialize rover
         Vector2 roverGpsCoord = new Vector2(GPS.SatCenterLatitude, GPS.SatCenterLongitude);
-        rover = new Marker(MarkerType.Rover, prefabDict[MarkerType.Rover], roverGpsCoord);
+        rover = new Marker(MarkerType.Rover, prefabDict[MarkerType.Rover], roverGpsCoord, "Rover");
         markers.Add(rover.MapMarkerObj, rover);
     }
 
@@ -284,7 +303,19 @@ public class MarkerController : MonoBehaviour
 
     private void AddMarker(Vector2 touchCoord)
     {
-        currMarker = new Marker(selectedMarkerType, prefabDict[selectedMarkerType], gps.MapPosToGps(touchCoord));
+        
+        // currMarker = new Marker(selectedMarkerType, prefabDict[selectedMarkerType], gps.MapPosToGps(touchCoord), "POI");
+        switch(selectedMarkerType)
+        {
+            case MarkerType.POI:
+                currMarker = new Marker(selectedMarkerType, prefabDict[selectedMarkerType], gps.MapPosToGps(touchCoord), "POI");
+                break;
+            case MarkerType.Obstacle:
+                currMarker = new Marker(selectedMarkerType, prefabDict[selectedMarkerType], gps.MapPosToGps(touchCoord), "Obstacle");
+                break;
+        }
+
+
         currMarker.SetOpacity(0.5f);
         markers.Add(currMarker.MapMarkerObj, currMarker);
         markerImages[selectedMarkerType].SetActive(true);
@@ -349,6 +380,10 @@ public class MarkerController : MonoBehaviour
         SelectNewMarkerType(MarkerType.POI);
     }
 
+    public void OnHistoryPressed()
+    {
+        SelectNewMarkerType(MarkerType.History);
+    }
     public void OnMarkerMovePressed()
     {
         currMarker.SetOpacity(0.5f);
@@ -358,10 +393,6 @@ public class MarkerController : MonoBehaviour
 
     public void OnMarkerDeletePressed()
     {
-        if (currMarker.Type == MarkerType.Stations)
-        {
-        return;
-        }
         if (navigation.destMarkerRT == currMarker.MapMarkerRT)
         {
             navigation.StopMarkerNavigate();
@@ -419,6 +450,7 @@ public class MarkerController : MonoBehaviour
             {
                 case MarkerType.POI:
                 case MarkerType.Obstacle:
+                case MarkerType.History:
                     mode = MarkerActionMode.Add;
                     break;
                 default:
@@ -430,6 +462,10 @@ public class MarkerController : MonoBehaviour
             glowingMarkerImages[type].SetActive(true);
             selectedMarkerType = type;
         }
+    }
+        public void DeleteTitle()
+    {
+        GameObject.Find("Delete Confirmation/Delete Title").GetComponent<TMP_Text>().text = "Delete " + currMarker.Name + "?";
     }
 }
 }

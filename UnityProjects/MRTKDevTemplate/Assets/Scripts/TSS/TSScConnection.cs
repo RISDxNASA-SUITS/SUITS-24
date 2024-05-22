@@ -31,18 +31,21 @@ public class TSScConnection : MonoBehaviour
     string COMMJsonString;
     bool IMUUpdated;
     string IMUJsonString;
+    bool ERRORUpdated;
+    string ERRORJsonString;
 
     // Deserialized Jsons
     UIA uia;
     DCU dcu;
     SPEC spec;
     IMU imu;
+    ERROR error;
 
     // Connect to TSSc with a specific team number
     public void ConnectToHost(string host, int team_number)
     {
         this.host = host;
-        this.port = "14141";
+        this.port = "8080";
         this.team_number = team_number;
         this.url = "http://" + this.host + ":" + this.port;
         Debug.Log(this.url);
@@ -59,7 +62,7 @@ public class TSScConnection : MonoBehaviour
     // This Function is called when the program begins
     void Start()
     {
-        ConnectToHost("192.168.51.110", 9);
+        ConnectToHost("localhost", 9);
     }
 
     // This Function is called each render frame
@@ -80,6 +83,7 @@ public class TSScConnection : MonoBehaviour
                 StartCoroutine(GetTELEMETRYState());
                 StartCoroutine(GetCOMMState());
                 StartCoroutine(GetIMUState());
+                StartCoroutine(GetERRORState());
                 time_since_last_update = 0.0f;
             }
         }
@@ -378,5 +382,46 @@ public class TSScConnection : MonoBehaviour
     public bool isIMUUpdated()
     {
         return IMUUpdated;
+    }
+
+    ///////////////////////////////////////////// ERROR
+
+    IEnumerator GetERRORState()
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(this.url + "/json_data/ERROR.json"))
+        {
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
+
+            switch (webRequest.result)
+            {
+                case UnityWebRequest.Result.Success:
+                    if (this.ERRORJsonString != webRequest.downloadHandler.text)
+                    {
+                        this.ERRORJsonString = webRequest.downloadHandler.text;
+                        this.error = JsonConvert.DeserializeObject<ERRORWrapper>(this.ERRORJsonString).error;
+                        this.ERRORUpdated = true;
+                    }
+                    break;
+            }
+
+        }
+    }
+
+    public string GetERRORJsonString()
+    {
+        ERRORUpdated = false;
+        return this.ERRORJsonString;
+    }
+
+    public ERROR GetERROR()
+    {
+        ERRORUpdated = false;
+        return this.error;
+    }
+
+    public bool isERRORUpdated()
+    {
+        return ERRORUpdated;
     }
 }
