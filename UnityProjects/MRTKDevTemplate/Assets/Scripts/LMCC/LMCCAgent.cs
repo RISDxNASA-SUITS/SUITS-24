@@ -6,8 +6,7 @@ using UnityEngine;
 
 public class LMCCAgent : MonoBehaviour
 {
-    // string url = "http://192.168.51.81:5000";
-    string url = "localhost:5000";
+    string url = "http://192.168.51.81:5000";
 
     public record UpdateStatePayload
     {

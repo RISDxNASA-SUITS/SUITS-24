@@ -157,11 +157,11 @@ public class EgressDescriptor : TaskDescriptor
                     case 0: // (UIA and DCU) EV1 and EV2 connect UIA and DCU umbilical
                         return false;
                     case 1: // (UIA) EV-1, EV-2 PWR - ON
-                        return uia.eva1_power && uia.eva2_power;
+                        return uia.eva2_power && uia.eva1_power;
                     case 2: // (BOTH DCU) BATT - UMB
-                        return dcu.eva1.batt && dcu.eva2.batt;
+                        return dcu.eva2.batt && dcu.eva1.batt;
                     case 3: // (DCU) EPRESS PUMP PWR - ON
-                        return dcu.eva1.pump && dcu.eva2.pump;
+                        return dcu.eva2.pump && dcu.eva1.pump;
                     default:
                         return false;
                 }
@@ -175,7 +175,7 @@ public class EgressDescriptor : TaskDescriptor
                     case 2: // (UIA) OXYGEN O2 VENT - CLOSE
                         return !uia.oxy_vent;
                     case 3: // (BOTH DCU) OXY - PRI
-                        return dcu.eva1.oxy && dcu.eva2.oxy;
+                        return dcu.eva2.oxy && dcu.eva1.oxy;
                     default:
                         return false;
                 }
@@ -183,13 +183,13 @@ public class EgressDescriptor : TaskDescriptor
                 switch (currStep)
                 {
                     case 0: // (UIA) OXYGEN EMU-1, EMU-2 - OPEN
-                        return uia.eva1_oxy && uia.eva2_oxy;
+                        return uia.eva2_oxy && uia.eva1_oxy;
                     case 1: // (HMD) Wait until EV1 and EV2 Primary O2 tanks > 3000 psi
                         return false;
                     case 2: // (UIA) OXYGEN EMU-1, EMU-2 - CLOSE
-                        return !uia.eva1_oxy && !uia.eva2_oxy;
+                        return !uia.eva2_oxy && !uia.eva1_oxy;
                     case 3: // (BOTH DCU) OXY - SEC
-                        return !dcu.eva1.oxy && !dcu.eva2.oxy;
+                        return !dcu.eva2.oxy && !dcu.eva1.oxy;
                     default:
                         return false;
                 }
@@ -197,13 +197,13 @@ public class EgressDescriptor : TaskDescriptor
                 switch (currStep)
                 {
                     case 0: // (UIA) OXYGEN EMU-1, EMU-2 - OPEN
-                        return uia.eva1_oxy && uia.eva2_oxy;
+                        return uia.eva2_oxy && uia.eva1_oxy;
                     case 1: // (HMD) Wait until EV1 and EV2 Secondary O2 tanks > 3000 psi
                         return false;
                     case 2: // (UIA) OXYGEN EMU-1, EMU-2 - CLOSE
-                        return !uia.eva1_oxy && !uia.eva2_oxy;
+                        return !uia.eva2_oxy && !uia.eva1_oxy;
                     case 3: // (BOTH DCU) OXY - PRI
-                        return dcu.eva1.oxy && dcu.eva2.oxy;
+                        return dcu.eva2.oxy && dcu.eva1.oxy;
                     default:
                         return false;
                 }
@@ -211,13 +211,13 @@ public class EgressDescriptor : TaskDescriptor
                 switch (currStep)
                 {
                     case 0: // (BOTH DCU) PUMP - OPEN
-                        return dcu.eva1.pump && dcu.eva2.pump;
+                        return dcu.eva2.pump && dcu.eva1.pump;
                     case 1: // (UIA) EV-1, EV-2 WASTE WATER - OPEN
-                        return uia.eva1_water_waste && uia.eva2_water_waste;
+                        return uia.eva2_water_waste && uia.eva1_water_waste;
                     case 2: // (HMD) Wait until water EV1 and EV2 Coolant tank is < 5%
                         return false;
                     case 3: // (UIA) EV-1, EV-2 WASTE WATER - CLOSE
-                        return !uia.eva1_water_waste && !uia.eva2_water_waste;
+                        return !uia.eva2_water_waste && !uia.eva1_water_waste;
                     default:
                         return false;
                 }
@@ -225,15 +225,15 @@ public class EgressDescriptor : TaskDescriptor
                 switch (currStep)
                 {
                     case 0: // (BOTH DCU) Open PUMP
-                        return dcu.eva1.pump && dcu.eva2.pump;
+                        return dcu.eva2.pump && dcu.eva1.pump;
                     case 1: // (UIA) EV-1, EV-2 SUPPLY WATER - OPEN
-                        return uia.eva1_water_supply && uia.eva2_water_supply;
+                        return uia.eva2_water_supply && uia.eva1_water_supply;
                     case 2: // (HMD) Wait until water EV1 and EV2 Coolant tank is > 95%
                         return false;
                     case 3: // (UIA) EV-1, EV-2 SUPPLY WATER - CLOSE
-                        return !uia.eva1_water_supply && !uia.eva2_water_supply;
+                        return !uia.eva2_water_supply && !uia.eva1_water_supply;
                     case 4: // (BOTH DCU) PUMP - CLOSE
-                        return !dcu.eva1.pump && !dcu.eva2.pump;
+                        return !dcu.eva2.pump && !dcu.eva1.pump;
                     default:
                         return false;
                 }
@@ -245,9 +245,9 @@ public class EgressDescriptor : TaskDescriptor
                     case 1: // (UIA) DEPRESS PUMP PWR - OFF
                         return !uia.depress;
                     case 2: // (BOTH DCU) BATT - LOCAL
-                        return dcu.eva1.batt && dcu.eva2.batt;
+                        return dcu.eva2.batt && dcu.eva1.batt;
                     case 3: // (UIA) EV-1, EV-2 PWR - OFF
-                        return !uia.eva1_power && !uia.eva2_power;
+                        return !uia.eva2_power && !uia.eva1_power;
                     default:
                         return false;
                 }
@@ -255,15 +255,15 @@ public class EgressDescriptor : TaskDescriptor
                 switch (currStep)
                 {
                     case 0: // (BOTH DCU) Verify OXY - PRI
-                        return dcu.eva1.oxy && dcu.eva2.oxy;
+                        return dcu.eva2.oxy && dcu.eva1.oxy;
                     case 1: // (BOTH DCU) Verify COMMS - A
-                        return dcu.eva1.comm && dcu.eva2.comm;
+                        return dcu.eva2.comm && dcu.eva1.comm;
                     case 2: // (BOTH DCU) Verify FAN - PRI
-                        return dcu.eva1.fan && dcu.eva2.fan;
+                        return dcu.eva2.fan && dcu.eva1.fan;
                     case 3: // (BOTH DCU) Verify PUMP - CLOSE
-                        return dcu.eva1.pump && !dcu.eva2.pump;
+                        return dcu.eva2.pump && !dcu.eva1.pump;
                     case 4: // "(BOTH DCU) 5. Verify CO2 is on A"
-                        return dcu.eva1.co2 && dcu.eva2.co2;
+                        return dcu.eva2.co2 && dcu.eva1.co2;
                     default:
                         return false;
                 }

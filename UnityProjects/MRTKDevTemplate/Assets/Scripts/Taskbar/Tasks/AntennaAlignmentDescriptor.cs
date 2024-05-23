@@ -10,7 +10,6 @@ public class AntennaAlignmentDescriptor : TaskDescriptor
         "EV2",
         "EV2",
         "EV2",
-        "EV2",
         "EV2"
     };
 

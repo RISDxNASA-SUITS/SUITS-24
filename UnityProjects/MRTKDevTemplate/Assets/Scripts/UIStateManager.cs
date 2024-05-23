@@ -80,7 +80,7 @@ public class UIStateManager : MonoBehaviour
     public void transitionToIngressUI()
     {
         handMenuUI.SetActive(false);
-        transitionToUI(egressUI);
+        transitionToUI(ingressUI);
     }
 
 

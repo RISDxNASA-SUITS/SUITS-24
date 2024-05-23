@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class IngressDescriptor : TaskDescriptor
 {
+    private string myTaskName = "ingress";
     private string[] myTaskHeadings = {
         // step 1
         "Connect UIA to DCU",
@@ -64,6 +65,12 @@ public class IngressDescriptor : TaskDescriptor
     }
 
 
+    public override string TaskName
+    {
+        get { return myTaskName; }
+    }
+
+
     public override string[] TaskHeadings
     {
         get { return myTaskHeadings; }
@@ -103,9 +110,9 @@ public class IngressDescriptor : TaskDescriptor
                     case 0: // (UIA and DCU) EV1 and EV2 connect UIA and DCU umbilical
                         return false;
                     case 1: // (UIA) EV-1, EV-2 PWR - ON
-                        return uia.eva1_power && uia.eva2_power;
+                        return uia.eva2_power && uia.eva1_power;
                     case 2: // (BOTH DCU) BATT - UMB
-                        return !dcu.eva1.batt && !dcu.eva2.batt;
+                        return !dcu.eva2.batt && !dcu.eva1.batt;
                     default:
                         return false;
                 }
@@ -128,11 +135,11 @@ public class IngressDescriptor : TaskDescriptor
                 switch (currStep)
                 {
                     case 0: // (BOTH DCU) PUMP – OPEN
-                        return dcu.eva1.pump && dcu.eva2.pump;
+                        return dcu.eva2.pump && dcu.eva1.pump;
                     case 1: // (UIA) EV-1, EV-2 WASTE WATER – OPEN
-                        return uia.eva1_water_waste && uia.eva2_water_waste;
+                        return uia.eva2_water_waste && uia.eva1_water_waste;
                     case 2: // (UIA) EV-1, EV-2 WASTE WATER – CLOSE
-                        return !uia.eva1_water_waste && !uia.eva1_water_waste;
+                        return !uia.eva2_water_waste && !uia.eva2_water_waste;
                     default:
                         return false;
                 }
@@ -142,7 +149,7 @@ public class IngressDescriptor : TaskDescriptor
                 switch (currStep)
                 {
                     case 0: // (UIA) EV-1, EV-2 EMU PWR – OFF
-                        return !uia.eva1_power && !uia.eva2_power;
+                        return !uia.eva2_power && !uia.eva1_power;
                     case 1: // (DCU) EV1 and EV2 disconnect umbilical
                         return false;
                     default:

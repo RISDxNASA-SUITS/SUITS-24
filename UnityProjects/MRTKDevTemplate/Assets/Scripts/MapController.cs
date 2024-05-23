@@ -70,6 +70,9 @@ namespace MixedReality.Toolkit.Suits.Map
         private static float mapPanelWidth = 324.0f;
         private static float detailMapPanelWidth = 200.0f;
 
+        [SerializeField] private GameObject markerDeleteBtn;
+        [SerializeField] private GameObject markerNavigateBtn;
+
         void Start()
         {
             mainCamera = Camera.main;
@@ -313,6 +316,16 @@ namespace MixedReality.Toolkit.Suits.Map
             xCoordsRT.anchoredPosition = newPos;
 
             GameObject.Find("Map Details/Map Details Title").GetComponent<TMP_Text>().text = markerController.currMarker.Name;
+            if (markerController.currMarker.Type == MarkerType.Stations)
+            {
+                markerDeleteBtn.SetActive(false);
+                markerNavigateBtn.SetActive(true);
+            }
+            else
+            {
+                markerDeleteBtn.SetActive(true);
+                markerNavigateBtn.SetActive(false);
+            }
         }
 
         public void closeDetailPage()

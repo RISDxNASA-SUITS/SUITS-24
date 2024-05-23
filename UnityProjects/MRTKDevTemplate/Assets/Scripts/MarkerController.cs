@@ -122,6 +122,7 @@ public class MarkerController : MonoBehaviour
     // Rover
     private GameObject roverPrefab;
     private Marker rover;
+    private Marker uia;
 
     private MapController mapController;
 
@@ -222,6 +223,8 @@ public class MarkerController : MonoBehaviour
             }
             var stationMarker = new Marker(MarkerType.Stations, Resources.Load<GameObject>(path), utmCoord, name);
             markers.Add(stationMarker.MapMarkerObj, stationMarker);
+
+            if (kvp.Key == "UIA") uia = stationMarker;
         }
 
         // Initialize rover
@@ -488,6 +491,12 @@ public class MarkerController : MonoBehaviour
             }
         }
         return closestMarker;
+    }
+
+    public void BackToLander()
+    {
+        currMarker = uia;
+        OnMarkerNavigatePressed();
     }
 
 }
